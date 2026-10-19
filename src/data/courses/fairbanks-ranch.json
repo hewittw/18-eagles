@@ -1,0 +1,51 @@
+{
+  "slug": "fairbanks-ranch",
+  "name": "Fairbanks Ranch Country Club (Valley/Lakes)",
+  "shortName": "Fairbanks Ranch",
+  "city": "San Diego",
+  "region": "California",
+  "country": "USA",
+  "access": "private",
+  "established": 1984,
+  "architect": "Ted Robinson",
+  "tags": ["home", "parkland"],
+  "blurb": "Ted Robinson's original 18 (Valley and Lakes nines), opened in 1984 on the site of the 1984 Olympic equestrian cross-country course. A third nine, Ocean, was added in the 2000s. Owned by Bay Club since 2016.",
+  "holes": [
+    { "n": 1, "par": 5, "yards": 511, "hcp": 9 },
+    { "n": 2, "par": 4, "yards": 423, "hcp": 13 },
+    { "n": 3, "par": 5, "yards": 541, "hcp": 5 },
+    { "n": 4, "par": 4, "yards": 442, "hcp": 1 },
+    { "n": 5, "par": 4, "yards": 422, "hcp": 7 },
+    { "n": 6, "par": 3, "yards": 192, "hcp": 17 },
+    { "n": 7, "par": 4, "yards": 409, "hcp": 3 },
+    { "n": 8, "par": 3, "yards": 210, "hcp": 15 },
+    { "n": 9, "par": 4, "yards": 436, "hcp": 11 },
+    { "n": 10, "par": 4, "yards": 389, "hcp": 4 },
+    { "n": 11, "par": 4, "yards": 435, "hcp": 10 },
+    { "n": 12, "par": 3, "yards": 210, "hcp": 16 },
+    { "n": 13, "par": 5, "yards": 546, "hcp": 8 },
+    { "n": 14, "par": 5, "yards": 475, "hcp": 2 },
+    { "n": 15, "par": 4, "yards": 457, "hcp": 12 },
+    { "n": 16, "par": 3, "yards": 232, "hcp": 18 },
+    { "n": 17, "par": 4, "yards": 458, "hcp": 14 },
+    { "n": 18, "par": 4, "yards": 396, "hcp": 6 }
+  ],
+  "tees": [
+    { "name": "Black", "color": "#1a1a1a", "par": 72, "yards": 7184, "rating": 74.9, "slope": 132, "source": "published" },
+    { "name": "Blue", "color": "#1f4fa3", "par": 72, "yards": 6736, "rating": 72.7, "slope": 128, "source": "published" },
+    { "name": "White", "color": "#f2f2f2", "par": 72, "yards": 6395, "rating": 71.2, "slope": 124, "source": "published" },
+    { "name": "Gold", "color": "#d4a017", "par": 72, "yards": 6127, "rating": 69.9, "slope": 121, "source": "published" }
+  ],
+  "hero": null,
+  "gallery": [],
+  "dataNotes": "Fairbanks Ranch has 27 holes in three nines (Valley, Lakes, Ocean) played as three 18-hole combinations. This file is Valley (holes 1–9) + Lakes (holes 10–18): Ted Robinson's original 1984 championship 18, and the longest and highest-rated combination (Lakes/Ocean is about 7,071 yds and Ocean/Valley about 7,079 yds from the Black tees). Hole yards, pars, men's stroke indexes, and men's ratings/slopes come from the current card on Stymie. Greenskeeper's older nine-by-nine card has the same pars and the same stroke-index order, with yardages that differ by a few yards per hole (7,196 total) and Black at 74.9/131. Bay Club's site has no public scorecard, and the USGA NCRDB blocked automated access. Sources disagree on when the Ocean nine opened (2004 or 2005) and who designed it (Ted Robinson Jr. or John Harbottle), so the blurb leaves both out. The mailing address is Rancho Santa Fe, CA 92067. There are no hole names. No freely licensed photo of the course was found (Commons has only maps and hot-air balloons over the area), so hero is null.",
+  "sources": [
+    "https://stymie.golf/golf-courses/california/san-diego-county/rancho-santa-fe/fairbanks-ranch-country-club",
+    "https://www.greenskeeper.org/southern_california/san_diego/fairbanks_ranch_country_club/scorecard.cfm",
+    "https://www.bayclubs.com/clubs/fairbanksranch",
+    "https://course.bluegolf.com/bluegolf/course/course/fairbanksranch/",
+    "https://course.bluegolf.com/bluegolf/course/course/fairbanksranchcvalle/index.htm",
+    "https://en.wikipedia.org/wiki/Fairbanks_Ranch_Country_Club",
+    "https://sandiegoexplorer.com/fairbanks-ranch-country-club/"
+  ]
+}

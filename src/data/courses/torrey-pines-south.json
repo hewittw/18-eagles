@@ -1,0 +1,193 @@
+{
+  "slug": "torrey-pines-south",
+  "name": "Torrey Pines Golf Course, South Course",
+  "shortName": "Torrey Pines South",
+  "city": "San Diego",
+  "region": "California",
+  "country": "USA",
+  "access": "public",
+  "established": 1957,
+  "architect": "William F. Bell (redesigned by Rees Jones, 2001)",
+  "tags": [
+    "home",
+    "major-host",
+    "coastal"
+  ],
+  "blurb": "City-owned clifftop course above the Pacific in La Jolla. Hosted the 2008 (Tiger Woods) and 2021 (Jon Rahm) U.S. Opens and the PGA Tour's annual San Diego event (Farmers Insurance Open; The Sentry from 2027). Rees Jones redesign, 2001.",
+  "signatureHole": 3,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 451,
+      "hcp": 5
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 389,
+      "hcp": 15
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 201,
+      "hcp": 13
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 490,
+      "hcp": 3
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 454,
+      "hcp": 11
+    },
+    {
+      "n": 6,
+      "par": 5,
+      "yards": 564,
+      "hcp": 9
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 462,
+      "hcp": 1
+    },
+    {
+      "n": 8,
+      "par": 3,
+      "yards": 177,
+      "hcp": 17
+    },
+    {
+      "n": 9,
+      "par": 5,
+      "yards": 615,
+      "hcp": 7
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 454,
+      "hcp": 16
+    },
+    {
+      "n": 11,
+      "par": 3,
+      "yards": 225,
+      "hcp": 14
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 505,
+      "hcp": 2
+    },
+    {
+      "n": 13,
+      "par": 5,
+      "yards": 621,
+      "hcp": 6
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 437,
+      "hcp": 8
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 517,
+      "hcp": 12
+    },
+    {
+      "n": 16,
+      "par": 3,
+      "yards": 227,
+      "hcp": 18
+    },
+    {
+      "n": 17,
+      "par": 4,
+      "yards": 443,
+      "hcp": 4
+    },
+    {
+      "n": 18,
+      "par": 5,
+      "yards": 570,
+      "hcp": 10
+    }
+  ],
+  "tees": [
+    {
+      "name": "Black",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 7802,
+      "rating": 78.8,
+      "slope": 148,
+      "source": "published"
+    },
+    {
+      "name": "Brown",
+      "color": "#8b5a2b",
+      "par": 72,
+      "yards": 7015,
+      "rating": 75.0,
+      "slope": 139,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#2e7d32",
+      "par": 72,
+      "yards": 6635,
+      "rating": 73.3,
+      "slope": 134,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f2f2",
+      "par": 72,
+      "yards": 6145,
+      "rating": 70.9,
+      "slope": 128,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/torrey-pines-south/hero.jpg",
+    "alt": "Players on the 3rd green of Torrey Pines South during 2008 U.S. Open week, with the sandstone bluffs, the Pacific, and La Jolla in the distance",
+    "credit": "Flash and Mel from San Diego, CA, USA",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:US_Open_-_2008_-_The_3rd_hole_green_with_La_Jolla_in_the_background_(2578252099).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/torrey-pines-south/g1.jpg",
+      "alt": "Panorama from the grandstand of the 18th hole at Torrey Pines South at the 2008 U.S. Open: the pond guarding the green, with The Lodge at Torrey Pines behind",
+      "credit": "Dirk DBQ",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:US_Open_-_2008_-_Panorama_-18_at_Torrey_Pines_(2578787934).jpg"
+    }
+  ],
+  "dataNotes": "Hole pars, Black-tee yards, men's stroke indexes, and all four men's ratings/slopes come from the official City of San Diego scorecard (Golf ScoreCards Inc., dated 1/2020). The same card is linked from torreypines.com (11-24-20), and SCGA's October 2020 course-handicap chart gives the same ratings. Black tees are 'Permission Only' on the card. Some third-party sites list a 7,607-yd Black tee at 78.1/143 and a different tee lineup; no official source for those was found, so they were not used. The USGA NCRDB (CourseID 3576) blocked automated access, so it could not be checked for a newer rating. The holes have no names. Both photos are from 2008 U.S. Open week, which was played on the South Course.",
+  "sources": [
+    "https://www.sandiego.gov/park-and-recreation/golf/torreypines/course/south",
+    "https://www.sandiego.gov/sites/default/files/torrey_pines_south_1.20.pdf",
+    "https://www.torreypines.com/scorecards/",
+    "https://www.torreypines.com/wp-content/uploads/2020/11/TPS_11-24-20.pdf",
+    "https://www.scga.org/images/uploads/pdfs/jobs/18753/torrey_pines_-_south.pdf",
+    "https://ncrdb.usga.org/courseTeeInfo?CourseID=3576",
+    "https://en.wikipedia.org/wiki/Torrey_Pines_Golf_Course",
+    "https://timesofsandiego.com/sports/2026/01/12/farmers-insurance-leaving-torrey-pines-tournament-continue/"
+  ]
+}

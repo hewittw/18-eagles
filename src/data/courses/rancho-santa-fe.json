@@ -1,0 +1,51 @@
+{
+  "slug": "rancho-santa-fe",
+  "name": "Rancho Santa Fe Golf Club",
+  "shortName": "Rancho Santa Fe",
+  "city": "Rancho Santa Fe",
+  "region": "California",
+  "country": "USA",
+  "access": "private",
+  "established": 1929,
+  "architect": "Max Behr (renovated by David McLay Kidd, 2021–22)",
+  "tags": ["home", "parkland"],
+  "blurb": "Max Behr design that opened in 1929 inside the Rancho Santa Fe Covenant. Original home of Bing Crosby's Clambake (1937–42), host of the 2006 U.S. Junior Amateur, and renovated by David McLay Kidd in 2021–22.",
+  "holes": [
+    { "n": 1, "par": 4, "yards": 380, "hcp": 7 },
+    { "n": 2, "par": 4, "yards": 453, "hcp": 9 },
+    { "n": 3, "par": 3, "yards": 190, "hcp": 15 },
+    { "n": 4, "par": 5, "yards": 617, "hcp": 3 },
+    { "n": 5, "par": 4, "yards": 428, "hcp": 1 },
+    { "n": 6, "par": 4, "yards": 435, "hcp": 13 },
+    { "n": 7, "par": 3, "yards": 181, "hcp": 17 },
+    { "n": 8, "par": 5, "yards": 534, "hcp": 5 },
+    { "n": 9, "par": 4, "yards": 369, "hcp": 11 },
+    { "n": 10, "par": 4, "yards": 293, "hcp": 14 },
+    { "n": 11, "par": 5, "yards": 461, "hcp": 6 },
+    { "n": 12, "par": 4, "yards": 449, "hcp": 4 },
+    { "n": 13, "par": 4, "yards": 455, "hcp": 2 },
+    { "n": 14, "par": 3, "yards": 218, "hcp": 16 },
+    { "n": 15, "par": 4, "yards": 423, "hcp": 10 },
+    { "n": 16, "par": 4, "yards": 409, "hcp": 12 },
+    { "n": 17, "par": 3, "yards": 189, "hcp": 18 },
+    { "n": 18, "par": 5, "yards": 606, "hcp": 8 }
+  ],
+  "tees": [
+    { "name": "Black", "color": "#1a1a1a", "par": 72, "yards": 7090, "rating": 75.2, "slope": 140, "source": "published" },
+    { "name": "Blue", "color": "#1f4fa3", "par": 72, "yards": 6858, "rating": 74.1, "slope": 137, "source": "published" },
+    { "name": "White", "color": "#f2f2f2", "par": 72, "yards": 6418, "rating": 71.9, "slope": 133, "source": "published" },
+    { "name": "Gold", "color": "#d4a017", "par": 72, "yards": 5962, "rating": 69.7, "slope": 128, "source": "published" }
+  ],
+  "hero": null,
+  "gallery": [],
+  "dataNotes": "The club's own scorecard is not public: rsfgolfclub.com puts golf pages behind member login, the old public scorecard page (view_document.asp?DN=SCORECARD) now returns 404, and the Wayback Machine was offline when checked. Hole pars, yards, men's stroke index, and men's rating/slope come from the current post-renovation card (7,090 yds Black) as published on Stymie; BlueGolf independently lists Black at 7,090 yds, 75.2/140. The USGA NCRDB blocked automated access, so ratings were not read from it directly. Greenskeeper and Offcourse still show the older 2002-layout card (7,035 yds, different stroke indexes, Black 74.7–75.0/142); that card predates the 2021–22 Kidd renovation and was not used. Hole 11 is a 461-yard par 5 on the current card. The course has no hole names. No freely licensed photo that clearly shows this course was found (the one Commons file tagged 'Rancho Santa Fe' traces to a Flickr photo of a different course), and club photos were not used, so hero is null.",
+  "sources": [
+    "https://www.rsfgolfclub.com/",
+    "https://www.rsfgolfclub.com/guest-information/club-history",
+    "https://stymie.golf/golf-courses/california/san-diego-county/del-mar/rancho-santa-fe-golf-club",
+    "https://course.bluegolf.com/bluegolf/course/course/ranchosantafe/detailedscorecard.htm",
+    "https://www.greenskeeper.org/southern_california/san_diego/rancho_santa_fe_golf_club/scorecard.cfm",
+    "https://ranchosantafereview.com/news/story/2021-01-12/rsf-golf-clubs-course-renovation-aims-to-begin-in-april",
+    "https://www.golfdigest.com/courses/ca/rancho-santa-fe-golf-club"
+  ]
+}

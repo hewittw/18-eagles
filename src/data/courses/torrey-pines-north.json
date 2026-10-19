@@ -1,0 +1,189 @@
+{
+  "slug": "torrey-pines-north",
+  "name": "Torrey Pines Golf Course, North Course",
+  "shortName": "Torrey Pines North",
+  "city": "San Diego",
+  "region": "California",
+  "country": "USA",
+  "access": "public",
+  "established": 1957,
+  "architect": "William F. Bell (renovated by Tom Weiskopf, 2016)",
+  "tags": [
+    "home",
+    "coastal"
+  ],
+  "blurb": "City-owned course beside Torrey Pines South on the La Jolla bluffs. Tom Weiskopf's 2016 renovation enlarged the greens, cut the bunker count, and swapped the nines. Co-hosts the early rounds of the PGA Tour's San Diego event.",
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 421,
+      "hcp": 5
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 495,
+      "hcp": 1
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 241,
+      "hcp": 13
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 479,
+      "hcp": 3
+    },
+    {
+      "n": 5,
+      "par": 5,
+      "yards": 525,
+      "hcp": 11
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 416,
+      "hcp": 7
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 322,
+      "hcp": 17
+    },
+    {
+      "n": 8,
+      "par": 3,
+      "yards": 214,
+      "hcp": 15
+    },
+    {
+      "n": 9,
+      "par": 5,
+      "yards": 556,
+      "hcp": 9
+    },
+    {
+      "n": 10,
+      "par": 5,
+      "yards": 536,
+      "hcp": 12
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 339,
+      "hcp": 18
+    },
+    {
+      "n": 12,
+      "par": 3,
+      "yards": 203,
+      "hcp": 14
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 459,
+      "hcp": 4
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 451,
+      "hcp": 6
+    },
+    {
+      "n": 15,
+      "par": 3,
+      "yards": 202,
+      "hcp": 16
+    },
+    {
+      "n": 16,
+      "par": 4,
+      "yards": 393,
+      "hcp": 8
+    },
+    {
+      "n": 17,
+      "par": 5,
+      "yards": 520,
+      "hcp": 10
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 486,
+      "hcp": 2
+    }
+  ],
+  "tees": [
+    {
+      "name": "Black",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 7258,
+      "rating": 75.8,
+      "slope": 134,
+      "source": "published"
+    },
+    {
+      "name": "Brown",
+      "color": "#8b5a2b",
+      "par": 72,
+      "yards": 6781,
+      "rating": 73.6,
+      "slope": 129,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#2e7d32",
+      "par": 72,
+      "yards": 6343,
+      "rating": 71.5,
+      "slope": 125,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f2f2",
+      "par": 72,
+      "yards": 5847,
+      "rating": 69.3,
+      "slope": 120,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/torrey-pines-north/hero.jpg",
+    "alt": "A golfer driving from the tee of the hole that was then the 1st on the Torrey Pines North Course, with the fairway rising toward Torrey pines and bunkers (photographed in 2013, before the 2016 renovation swapped the nines)",
+    "credit": "Bernard Gagnon",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Torrey_Pines_North_Course_First_hole.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/torrey-pines-north/g1.jpg",
+      "alt": "The Torrey Pines Golf Course clubhouse and putting green, shared by the North and South courses",
+      "credit": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Torrey_Pines_Golf_Course_clubhouse.jpg"
+    }
+  ],
+  "dataNotes": "Hole pars, Black-tee yards, men's stroke indexes, and men's ratings/slopes come from the official City of San Diego North Course scorecard (Golf ScoreCards Inc., dated 04/2020). The 7,258-yd Black total matches reports on the 2016 Weiskopf renovation, and Black tees are 'Permission Only' on the card. The PDF on torreypines.com is an older 4/2019 print with different tee names (Taupe/Black/Green/Gold/Silver), hole 2 at 496 yds, and a 7,259 total. Pars and stroke indexes are the same on both cards, and the newer city card was used. The city card lists hole 7 at 322 yds from both Black and Brown, while the 2019 card has 290 from its second tee, so the city card's Brown figure for 7 may be a typo. It doesn't affect the yardages used here. The USGA NCRDB blocked automated access, so it could not be checked for a newer rating. The holes have no names. The hero photo is from March 2013, before the renovation, which swapped the front and back nines, so the hole shown as 'first' may now be numbered differently. Some Flickr photos labeled 'North Course' show a clifftop green that looks like the South Course's 3rd, so they were not used.",
+  "sources": [
+    "https://www.sandiego.gov/park-and-recreation/golf/torreypines/course/north",
+    "https://www.sandiego.gov/sites/default/files/torreyscorecardnorth_0.pdf",
+    "https://www.torreypines.com/wp-content/uploads/2020/11/TPN_11-24-20.pdf",
+    "https://www.golfcoursearchitecture.net/content/north-course-at-torrey-pines-reopens-following-weiskopfs-renovation",
+    "https://www.golfdom.com/torrey-pines-golf-course-unveil-renovated-north-course/",
+    "https://en.wikipedia.org/wiki/Torrey_Pines_Golf_Course"
+  ]
+}

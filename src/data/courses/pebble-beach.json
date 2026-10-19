@@ -1,0 +1,71 @@
+{
+  "slug": "pebble-beach",
+  "name": "Pebble Beach Golf Links",
+  "shortName": "Pebble Beach",
+  "city": "Pebble Beach",
+  "region": "California",
+  "country": "USA",
+  "access": "resort",
+  "established": 1919,
+  "architect": "Jack Neville and Douglas Grant",
+  "tags": ["major-host", "coastal", "bucket-list"],
+  "blurb": "Clifftop resort course on Carmel Bay, designed by Jack Neville and Douglas Grant and opened in 1919. Host of six U.S. Opens (1972–2019), the 1977 PGA Championship, the 2023 U.S. Women's Open, and the annual AT&T Pebble Beach Pro-Am.",
+  "signatureHole": 7,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 378, "hcp": 6 },
+    { "n": 2, "par": 5, "yards": 509, "hcp": 10 },
+    { "n": 3, "par": 4, "yards": 397, "hcp": 12 },
+    { "n": 4, "par": 4, "yards": 333, "hcp": 16 },
+    { "n": 5, "par": 3, "yards": 189, "hcp": 14 },
+    { "n": 6, "par": 5, "yards": 498, "hcp": 2 },
+    { "n": 7, "par": 3, "yards": 107, "hcp": 18 },
+    { "n": 8, "par": 4, "yards": 416, "hcp": 4 },
+    { "n": 9, "par": 4, "yards": 483, "hcp": 8 },
+    { "n": 10, "par": 4, "yards": 444, "hcp": 3 },
+    { "n": 11, "par": 4, "yards": 370, "hcp": 9 },
+    { "n": 12, "par": 3, "yards": 202, "hcp": 17 },
+    { "n": 13, "par": 4, "yards": 401, "hcp": 7 },
+    { "n": 14, "par": 5, "yards": 559, "hcp": 1 },
+    { "n": 15, "par": 4, "yards": 392, "hcp": 13 },
+    { "n": 16, "par": 4, "yards": 400, "hcp": 11 },
+    { "n": 17, "par": 3, "yards": 182, "hcp": 15 },
+    { "n": 18, "par": 5, "yards": 541, "hcp": 5 }
+  ],
+  "tees": [
+    { "name": "Blue", "color": "#1f4fa3", "par": 72, "yards": 6801, "rating": 74.9, "slope": 144, "source": "published" },
+    { "name": "Gold", "color": "#c9a227", "par": 72, "yards": 6465, "rating": 73.4, "slope": 137, "source": "published" },
+    { "name": "White", "color": "#f2f2f2", "par": 72, "yards": 6083, "rating": 71.7, "slope": 135, "source": "published" },
+    { "name": "Green", "color": "#2e7d32", "par": 72, "yards": 5547, "rating": 68.7, "slope": 126, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/pebble-beach/hero.jpg",
+    "alt": "The 18th green at Pebble Beach and its lone cypress, with the fairway curving along the seawall of Carmel Bay and the Santa Lucia hills behind",
+    "credit": "Bernard Gagnon",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pebble_Beach_18th_hole.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/pebble-beach/g1.jpg",
+      "alt": "The tiny par-3 7th green at Pebble Beach, ringed by bunkers on a rocky point jutting into the Pacific",
+      "credit": "Metallion",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pebble_Beach_Golf_Links,_hole_7.jpg"
+    },
+    {
+      "src": "/courses/pebble-beach/g2.jpg",
+      "alt": "Golfers on top of the cliff at Pebble Beach's 6th hole, seen from across Stillwater Cove",
+      "credit": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pebble_Beach_6th_hole.jpg"
+    }
+  ],
+  "dataNotes": "Everything comes from the official '2026 Pebble Beach Golf Links Combo Scorecard' (pebblebeach.com PDF, printed 01.26), read from the Internet Archive copy of 3 July 2026 because pebblebeach.com blocks automated downloads. The card includes the pars, Blue yards, men's stroke indexes, and the men's rating/slope for each tee. Combo tees on the card: Gold/White 72.4/136, White/Green 70.2/132, Green/Red 68.2/125. The longest rated public tee is Blue (6,801). The championship 'Black' tees used for U.S. Opens (about 7,075 yds) are not on the resort card and were not included. Greenskeeper's 2020 card (6,828 yds) has older yardages and stroke indexes and was not used. The holes have no official names.",
+  "sources": [
+    "https://www.pebblebeach.com/content/uploads/PebbleBeach-Scorecard.pdf",
+    "https://web.archive.org/web/20260703194739/https://www.pebblebeach.com/content/uploads/PebbleBeach-Scorecard.pdf",
+    "https://stymie.golf/golf-courses/california/monterey-county/pebble-beach/pebble-beach-golf-course",
+    "https://www.greenskeeper.org/central_california/monterey_santa_cruz_san_luis_obispo/Pebble_Beach_Golf_Links/scorecard.cfm",
+    "https://en.wikipedia.org/wiki/Pebble_Beach_Golf_Links"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "slug": "riviera",
+  "name": "The Riviera Country Club",
+  "shortName": "Riviera",
+  "city": "Pacific Palisades",
+  "region": "California",
+  "country": "USA",
+  "access": "private",
+  "established": 1927,
+  "architect": "George C. Thomas Jr. (with William P. Bell)",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "George C. Thomas Jr. design in Santa Monica Canyon. Hosted the 1948 U.S. Open, the 1983 and 1995 PGA Championships, and the 2026 U.S. Women's Open, and is the long-time Genesis Invitational host. Known for the drivable par-4 10th.",
+  "signatureHole": 10,
+  "holes": [
+    {
+      "n": 1,
+      "par": 5,
+      "yards": 503,
+      "hcp": 17
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 471,
+      "hcp": 1
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 434,
+      "hcp": 7
+    },
+    {
+      "n": 4,
+      "par": 3,
+      "yards": 236,
+      "hcp": 9
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 419,
+      "hcp": 5
+    },
+    {
+      "n": 6,
+      "par": 3,
+      "yards": 169,
+      "hcp": 15
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 408,
+      "hcp": 11
+    },
+    {
+      "n": 8,
+      "par": 4,
+      "yards": 416,
+      "hcp": 13
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 420,
+      "hcp": 3
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 315,
+      "hcp": 16
+    },
+    {
+      "n": 11,
+      "par": 5,
+      "yards": 583,
+      "hcp": 10
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 410,
+      "hcp": 8
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 438,
+      "hcp": 6
+    },
+    {
+      "n": 14,
+      "par": 3,
+      "yards": 182,
+      "hcp": 18
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 443,
+      "hcp": 2
+    },
+    {
+      "n": 16,
+      "par": 3,
+      "yards": 166,
+      "hcp": 14
+    },
+    {
+      "n": 17,
+      "par": 5,
+      "yards": 576,
+      "hcp": 12
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 451,
+      "hcp": 4
+    }
+  ],
+  "tees": [
+    {
+      "name": "Blue",
+      "color": "#1f4fa3",
+      "par": 71,
+      "yards": 7040,
+      "rating": 74.6,
+      "slope": 135,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f2f2",
+      "par": 71,
+      "yards": 6526,
+      "rating": 72.2,
+      "slope": 130,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#2e7d32",
+      "par": 71,
+      "yards": 6136,
+      "rating": 70.7,
+      "slope": 126,
+      "source": "published"
+    },
+    {
+      "name": "Gold",
+      "color": "#c9a227",
+      "par": 71,
+      "yards": 5725,
+      "rating": 70.0,
+      "slope": 124,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/riviera/hero.jpg",
+    "alt": "Aerial view of the Riviera Country Club in its Santa Monica Canyon setting, with tree-lined fairways and white bunkers surrounded by Pacific Palisades homes and the clubhouse and tennis courts at the top",
+    "credit": "Benoît Prieur",
+    "license": "CC0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Riviera_Country_Club_(Pacific_Palisades)_July_2022.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/riviera/g1.jpg",
+      "alt": "The 18th green at Riviera below its hillside amphitheater, with the Spanish-style clubhouse at the top",
+      "credit": "Dan (golfpro1) from Schaumburg, IL, USA",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:RivieraCountryClub18th.jpg"
+    },
+    {
+      "src": "/courses/riviera/g2.jpg",
+      "alt": "Riviera's par-3 6th, seen from the tee: a bunker sits in the middle of the green",
+      "credit": "Dan Perry from Chicago, USA",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Riviera_Country_Club,_Golf_Course_in_Pacific_Palisades,_California_(168829105).jpg"
+    }
+  ],
+  "dataNotes": "Riviera is private and publishes no scorecard. Hole pars, men's stroke indexes, Blue-tee yards, and the men's ratings/slopes come from the USGA-derived card on Stymie. BlueGolf and Stymie also list a 7,400-yd Black tee (75.6/137), but Stymie's per-hole Black yardages are exactly Blue + 20 on every hole, including 335 on the 10th, which can't be right because the hole maxed out at 315 for the 2026 Genesis Invitational. That tee was left out, so Blue (7,040) is the first tee here. All Golf Holes lists different stroke indexes for holes 3, 4, 5, and 7 and different ratings (Black 76.3/144, Blue 74.7/139); those could not be verified against an official source. Tournament setup for the 2026 Genesis was 7,383 yds, par 71. The USGA NCRDB blocked automated access. The aerial is a portrait photo, and the two gallery photos are only 640 px wide. The holes have no names. The club website says the course opened in 1927, and Wikipedia gives 1926 (as the Los Angeles Athletic Club Golf Course); the club's year is used. Upcoming: 2028 Olympic golf and the 2031 U.S. Open.",
+  "sources": [
+    "https://www.therivieracountryclub.com/golf-club",
+    "https://stymie.golf/golf-courses/california/los-angeles-county/pacific-palisades/riviera-country-club",
+    "https://course.bluegolf.com/bluegolf/course/course/rivieracc/detailedscorecard.htm",
+    "https://www.allgolfholes.com/courses/california/riviera-country-club-the",
+    "https://thegolfnewsnet.com/golfnewsnetteam/2026/02/17/riviera-country-club-course-scorecard-and-course-breakdown-for-2026-the-genesis-invitational-host-140729/",
+    "https://en.wikipedia.org/wiki/Riviera_Country_Club"
+  ]
+}

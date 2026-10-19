@@ -1,0 +1,217 @@
+{
+  "slug": "chambers-bay",
+  "name": "Chambers Bay",
+  "shortName": "Chambers Bay",
+  "city": "University Place",
+  "region": "Washington",
+  "country": "USA",
+  "access": "public",
+  "established": 2007,
+  "architect": "Robert Trent Jones Jr.",
+  "tags": [
+    "major-host",
+    "links",
+    "coastal",
+    "bucket-list"
+  ],
+  "blurb": "Walking-only Pierce County links built in a former sand and gravel quarry on Puget Sound, designed by Robert Trent Jones Jr. and opened in 2007. Hosted the 2010 U.S. Amateur and the 2015 U.S. Open, won by Jordan Spieth.",
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 494,
+      "hcp": 3,
+      "name": "Puget Sound"
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 415,
+      "hcp": 9,
+      "name": "Foxy"
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 167,
+      "hcp": 15,
+      "name": "Blown Out"
+    },
+    {
+      "n": 4,
+      "par": 5,
+      "yards": 522,
+      "hcp": 13,
+      "name": "Hazard's Accent"
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 457,
+      "hcp": 5,
+      "name": "Free Fall"
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 452,
+      "hcp": 7,
+      "name": "Deception Point"
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 467,
+      "hcp": 1,
+      "name": "Humpback"
+    },
+    {
+      "n": 8,
+      "par": 5,
+      "yards": 558,
+      "hcp": 17,
+      "name": "High Road; Low Road"
+    },
+    {
+      "n": 9,
+      "par": 3,
+      "yards": 197,
+      "hcp": 11,
+      "name": "Olympus"
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 394,
+      "hcp": 4,
+      "name": "High Dunes"
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 460,
+      "hcp": 8,
+      "name": "Shadows"
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 295,
+      "hcp": 18,
+      "name": "The Narrows"
+    },
+    {
+      "n": 13,
+      "par": 5,
+      "yards": 519,
+      "hcp": 14,
+      "name": "Eagle Eye"
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 455,
+      "hcp": 2,
+      "name": "Cape Fear"
+    },
+    {
+      "n": 15,
+      "par": 3,
+      "yards": 171,
+      "hcp": 16,
+      "name": "Lone Fir"
+    },
+    {
+      "n": 16,
+      "par": 4,
+      "yards": 396,
+      "hcp": 10,
+      "name": "Beached"
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 200,
+      "hcp": 6,
+      "name": "Derailed"
+    },
+    {
+      "n": 18,
+      "par": 5,
+      "yards": 539,
+      "hcp": 12,
+      "name": "Tahoma"
+    }
+  ],
+  "tees": [
+    {
+      "name": "Black",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 7158,
+      "rating": 74.4,
+      "slope": 138,
+      "source": "published"
+    },
+    {
+      "name": "Blue",
+      "color": "#1f4fa3",
+      "par": 72,
+      "yards": 6748,
+      "rating": 72.4,
+      "slope": 134,
+      "source": "published"
+    },
+    {
+      "name": "Sand",
+      "color": "#c8a96a",
+      "par": 72,
+      "yards": 6345,
+      "rating": 70.6,
+      "slope": 130,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f2f2",
+      "par": 72,
+      "yards": 5822,
+      "rating": 68.0,
+      "slope": 122,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/chambers-bay/hero.jpg",
+    "alt": "Panorama over Chambers Bay's dunes, fairways and sandy waste areas down to Puget Sound and its wooded islands, with 2015 U.S. Open grandstands going up",
+    "credit": "Atomic Taco from Seattle, WA, USA",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chambers_Bay_Golf_Course_(17998751820).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/chambers-bay/g1.jpg",
+      "alt": "Fescue-brown Chambers Bay during the 2015 U.S. Open, seen from the hilltop above the course, with spectators lining the holes and Puget Sound beyond",
+      "credit": "Atomic Taco from Seattle, WA, USA",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chambers_Bay_during_the_US_Open_(19067123301).jpg"
+    },
+    {
+      "src": "/courses/chambers-bay/g2.jpg",
+      "alt": "A golfer in plus-fours hitting from the 14th fairway at Chambers Bay, with large sand bunkers and grassy dunes ahead",
+      "credit": "Rbirman",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hickory_Golfer.jpg"
+    }
+  ],
+  "dataNotes": "Everything comes from the official Chambers Bay scorecard PDF (Golf ScoreCards Inc., 10/2025) on chambersbaygolf.com: hole pars, Black yards, men's stroke indexes, and men's ratings/slopes. Black/Blue (6,961, 73.4/136) and Blue/Sand (6,542, 71.5/132) combo tees are also on the card but are not listed here. On this card hole 1 is a par 4 and hole 18 a par 5. The 2015 U.S. Open alternated those two holes between par 4 and par 5. The fescue greens were converted to poa annua in 2017–19. Photos are from 2014–15, before that conversion. Hole names come from Cascade Golfer's hole-by-hole guide. Golf Monthly and Kingdom Magazine independently confirm holes 1, 4, 9, 15, and 18.",
+  "sources": [
+    "https://chambersbaygolf.com/golf/",
+    "https://chambersbaygolf.com/wp-content/uploads/2025/10/Chambers-Bay-Scorecard-10-2.pdf",
+    "https://en.wikipedia.org/wiki/Chambers_Bay",
+    "https://cascadegolfer.com/chambers-bay-hole-by-hole",
+    "https://kingdom.golf/chambers-bay-course-guide/",
+    "https://www.golfmonthly.com/us-open/us-open-hole-by-hole-guide-shinnecock-hills/chambers-bay-hole-by-hole-guide-hole-1-72193"
+  ],
+  "signatureHole": 15
+}

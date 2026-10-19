@@ -1,0 +1,195 @@
+{
+  "slug": "olympic-lake",
+  "name": "The Olympic Club, Lake Course",
+  "shortName": "Olympic Club Lake",
+  "city": "San Francisco",
+  "region": "California",
+  "country": "USA",
+  "access": "private",
+  "established": 1924,
+  "architect": "Sam Whiting and Willie Watson (later work by Robert Trent Jones, Bill Love, Gil Hanse and Jim Wagner)",
+  "tags": [
+    "major-host",
+    "parkland",
+    "bucket-list"
+  ],
+  "blurb": "Cypress-lined course beside Lake Merced, opened in 1924. Hosted five U.S. Opens (1955, 1966, 1987, 1998, 2012) and the 2021 U.S. Women's Open; the 2028 PGA Championship and 2033 Ryder Cup are scheduled there.",
+  "holes": [
+    {
+      "n": 1,
+      "par": 5,
+      "yards": 533,
+      "hcp": 13
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 436,
+      "hcp": 5
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 255,
+      "hcp": 11
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 421,
+      "hcp": 7
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 502,
+      "hcp": 1
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 492,
+      "hcp": 3
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 316,
+      "hcp": 17
+    },
+    {
+      "n": 8,
+      "par": 3,
+      "yards": 209,
+      "hcp": 15
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 455,
+      "hcp": 9
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 426,
+      "hcp": 10
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 442,
+      "hcp": 4
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 457,
+      "hcp": 8
+    },
+    {
+      "n": 13,
+      "par": 3,
+      "yards": 195,
+      "hcp": 16
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 428,
+      "hcp": 6
+    },
+    {
+      "n": 15,
+      "par": 3,
+      "yards": 155,
+      "hcp": 18
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 620,
+      "hcp": 2
+    },
+    {
+      "n": 17,
+      "par": 5,
+      "yards": 523,
+      "hcp": 14
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 349,
+      "hcp": 12
+    }
+  ],
+  "tees": [
+    {
+      "name": "Championship",
+      "color": "#7a1f2b",
+      "par": 71,
+      "yards": 7214,
+      "rating": 75.8,
+      "slope": 140,
+      "source": "published"
+    },
+    {
+      "name": "Black",
+      "color": "#1a1a1a",
+      "par": 71,
+      "yards": 6934,
+      "rating": 74.9,
+      "slope": 141,
+      "source": "published"
+    },
+    {
+      "name": "Blue",
+      "color": "#1f4fa3",
+      "par": 71,
+      "yards": 6597,
+      "rating": 73.7,
+      "slope": 136,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f2f2",
+      "par": 71,
+      "yards": 6280,
+      "rating": 72.3,
+      "slope": 131,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/olympic-lake/hero.jpg",
+    "alt": "A green on the Olympic Club's Lake Course during a 2012 U.S. Open practice round, framed by tall cypress trees, with San Francisco's hills in the distance",
+    "credit": "Lisa Suender",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:US_Open_2012_-_Olympic_Club_Golf_Course_(7181767803).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/olympic-lake/g1.jpg",
+      "alt": "Looking down on the bunkered 18th green of the Lake Course, with the fairway climbing between cypress trees behind it",
+      "credit": "Thomas Hawk",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Olympic_Club_18th_hole_lakeside.jpg"
+    },
+    {
+      "src": "/courses/olympic-lake/g2.jpg",
+      "alt": "A narrow, sloping Lake Course fairway lined with cypress and pine during 2012 U.S. Open week",
+      "credit": "Lisa Suender",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:US_Open_2012_-_Narrow_fairways_at_Olympic_Course_(7181768113).jpg"
+    }
+  ],
+  "dataNotes": "Olympic is private and publishes no scorecard. Hole pars (member par 71), Championship-tee yards, men's stroke indexes, and men's ratings/slopes come from the USGA-derived card on Stymie, which includes the 7,214-yd Championship tee added in the 2023 Hanse/Wagner renovation. Greenskeeper's card has the same Black/Blue/White yardages and ratings, but its stroke indexes for holes 4 and 6 are swapped (3 and 7) and it lacks the Championship tee, so it looks older; Stymie's indexes were used. The 2012 U.S. Open was played at par 70, with hole 1 as a long par 4; members play it as a par 5 (par 71). The USGA NCRDB blocked automated access. All photos predate the 2023 renovation (2012 U.S. Open week and earlier). The holes have no names.",
+  "sources": [
+    "https://stymie.golf/golf-courses/california/san-francisco-county/san-francisco/olympic-club-lake-course",
+    "https://www.greenskeeper.org/northern_california/san_francisco_and_north_bay_area/the_olympic_club_lake_course/scorecard.cfm",
+    "https://course.bluegolf.com/bluegolf/course/course/olympiccthelakeside/detailedscorecard.htm",
+    "https://en.wikipedia.org/wiki/Olympic_Club"
+  ]
+}

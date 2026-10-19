@@ -1,0 +1,65 @@
+{
+  "slug": "jackson-park",
+  "name": "Jackson Park Golf Course",
+  "shortName": "Jackson Park",
+  "city": "Chicago",
+  "region": "Illinois",
+  "country": "USA",
+  "access": "public",
+  "established": 1899,
+  "architect": "Tom Bendelow",
+  "tags": ["home", "parkland"],
+  "blurb": "Chicago Park District course on the grounds of the 1893 World's Columbian Exposition, near the University of Chicago. Opened in 1899 as the first public golf course west of the Alleghenies, and expanded to 18 holes in 1900.",
+  "holes": [
+    { "n": 1, "par": 4, "yards": 395, "hcp": 4 },
+    { "n": 2, "par": 4, "yards": 369, "hcp": 6 },
+    { "n": 3, "par": 4, "yards": 288, "hcp": 14 },
+    { "n": 4, "par": 4, "yards": 300, "hcp": 10 },
+    { "n": 5, "par": 5, "yards": 464, "hcp": 2 },
+    { "n": 6, "par": 3, "yards": 176, "hcp": 16 },
+    { "n": 7, "par": 4, "yards": 321, "hcp": 8 },
+    { "n": 8, "par": 3, "yards": 133, "hcp": 18 },
+    { "n": 9, "par": 4, "yards": 300, "hcp": 12 },
+    { "n": 10, "par": 4, "yards": 267, "hcp": 9 },
+    { "n": 11, "par": 4, "yards": 296, "hcp": 7 },
+    { "n": 12, "par": 3, "yards": 144, "hcp": 17 },
+    { "n": 13, "par": 3, "yards": 183, "hcp": 15 },
+    { "n": 14, "par": 5, "yards": 559, "hcp": 1 },
+    { "n": 15, "par": 5, "yards": 470, "hcp": 3 },
+    { "n": 16, "par": 4, "yards": 372, "hcp": 5 },
+    { "n": 17, "par": 3, "yards": 212, "hcp": 13 },
+    { "n": 18, "par": 4, "yards": 259, "hcp": 11 }
+  ],
+  "tees": [
+    { "name": "Blue", "color": "#1f4fa3", "par": 70, "yards": 5508, "rating": 65.7, "slope": 109, "source": "published" },
+    { "name": "White", "color": "#f2f2f2", "par": 70, "yards": 5375, "rating": 65.1, "slope": 108, "source": "published" },
+    { "name": "Red", "color": "#c62828", "par": 70, "yards": 5257, "rating": 63.5, "slope": 104, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/jackson-park/hero.jpg",
+    "alt": "Early-1900s tinted postcard titled 'The Golf Links, Jackson Park, Chicago': golfers on an open fairway beside a gravel path, with spectators on benches near a red-roofed shelter",
+    "credit": "Unknown author (Newberry Library postcard collection)",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Golf_Links,_Jackson_Park,_Chicago_(NBY_416563).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/jackson-park/g1.jpg",
+      "alt": "Early-1900s tinted postcard of the red-roofed Golf Shelter at Jackson Park, Chicago, with a crowd gathered along its porch",
+      "credit": "Unknown author (Newberry Library postcard collection)",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Golf_Shelter,_Jackson_Park,_Chicago_(NBY_417059).jpg"
+    }
+  ],
+  "dataNotes": "Current playable layout, from the official Chicago Park District scorecard (Golf ScoreCards Inc., 10/2020, posted on jacksonpark.cpdgolf.com). Men's par is 70 (women's par is 72: hole 1 and hole 17 are par 5 and par 4 for women). Yards and stroke indexes are from the card, and men's ratings/slopes come from the card's rating box (Blue 65.7/109, White 65.1/108, Red 63.5/104; women's Blue 70.4/113, White 69.7/112, Red 67.8/108). Redesign: in 2016–18 the Park District and the Obama Foundation proposed merging Jackson Park and the 9-hole South Shore course into one Tiger Woods/TGR Design championship course. It has stalled because of funding problems and community opposition over the South Shore Nature Sanctuary, and the Obama Foundation stepped back. As of the latest coverage found (2024), no construction had started, and the Park District's 2025–26 site still describes the existing 18-hole course, so this file is the current layout. Most sources credit Tom Bendelow with the original design, though some say the Olmsted Brothers guided the 1900 expansion. No freely licensed modern photo of the course was found (the Commons file named 'Jackson Park golf course, 2020' is the Seattle course), so both images are public-domain early-1900s postcards. The holes have no names.",
+  "sources": [
+    "https://jacksonpark.cpdgolf.com/",
+    "https://jacksonpark.cpdgolf.com/the-course/",
+    "https://jacksonpark.cpdgolf.com/wp-content/uploads/sites/9682/2025/08/jackson-park-10.20.pdf",
+    "https://www.chicagogolfreport.com/jackson-park-golf-course/",
+    "https://www.chicagogolfreport.com/tiger-woods-golf-course-in-jackson-park-loses-support/",
+    "https://blockclubchicago.org/2023/09/08/obama-foundation-backs-away-from-tiger-woods-golf-course-in-jackson-park/",
+    "https://www.golfcourseindustry.com/news/jackson-park-golf-course-chicago-history/",
+    "https://en.wikipedia.org/wiki/Jackson_Park_(Chicago)"
+  ]
+}
