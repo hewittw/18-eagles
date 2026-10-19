@@ -1,20 +1,240 @@
 @import "tailwindcss";
 
-/* Root defaults only. The tool's tokens live in its own route (see docs/styles/clubhouse.md). */
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ───────────────────────────────────────────────────────────────────────────────
+   18 Eagles · The Members' Ledger. Design tokens (docs/styles/clubhouse.md).
+   Hexes mirror src/components/tokens.ts; measure-contrast.mjs fails if they drift.
+   ─────────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Paper */
+  --color-paper: #F5F0E4;       /* Scorecard Paper: the page */
+  --color-paper-2: #FBFAF6;     /* Tile White: raised (cards, inputs, tiles) */
+  --color-paper-3: #E8E0CC;     /* Linen: sunken (stripes, par row, hover wash) */
+  /* Ink */
+  --color-ink: #1C1B17;         /* body text, numerals */
+  --color-ink-2: #5A544A;       /* Pencil: muted text, ≥ 4.5:1 on all three papers */
+  --color-rule: color-mix(in srgb, #1C1B17 22%, transparent); /* hairlines only, never text */
+  --color-rule-strong: #7D7566; /* Graphite: control borders, ≥ 3:1 on all three papers */
+  /* Greens */
+  --color-green: #2B5E46;       /* Fairway: the one primary action, chart marks */
+  --color-green-2: #1F4A37;     /* hover / pressed */
+  --color-green-3: #143A2C;     /* Locker Green: deep surfaces */
+  --color-on-green: #F5F0E4;    /* text on green and green-3 */
+  /* Brass */
+  --color-gold: #BE9A55;        /* Brass: on Locker Green ONLY (2.32:1 on paper) */
+  --color-gold-ink: #7A5B20;    /* Old Brass: brass-toned text on paper */
+  /* Scores and states */
+  --color-under: #A3272A;       /* under par, always with the minus sign */
+  --color-over: #2B5E46;        /* over par, as the hand-operated board paints it */
+  --color-link: #22485A;        /* Covenant Slate: links, the golfer's notes */
+  --color-focus: #1C1B17;       /* ring on paper; .on-green swaps it to brass */
+  --color-error: #8A3B12;       /* Rust: field errors (icon + words) */
+  --color-success: #2B5E46;
+
+  /* Type. The families come from next/font in src/app/layout.tsx. */
+  --font-display: var(--font-caslon-display), "Libre Caslon Display", Georgia, serif;
+  --font-serif: var(--font-caslon-text), "Libre Caslon Text", Georgia, serif;
+  --font-sans: var(--font-barlow), "Barlow", ui-sans-serif, sans-serif;
+  --font-numeral: var(--font-barlow-condensed), "Barlow Condensed", ui-sans-serif, sans-serif;
+  --font-numeral--font-feature-settings: "tnum" 1, "lnum" 1;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace; /* the hub only */
+
+  /* Type scale (rem at 16px). Display steps are Caslon Display; label is condensed caps. */
+  --text-hero: clamp(5.5rem, 15vw, 11rem);
+  --text-hero--line-height: 0.85;
+  --text-hero--letter-spacing: -0.02em;
+  --text-display-1: clamp(2.6rem, 7vw, 5.5rem);
+  --text-display-1--line-height: 0.95;
+  --text-display-2: clamp(2rem, 4.4vw, 3.4rem);
+  --text-display-2--line-height: 1.02;
+  --text-title: clamp(1.75rem, 2.6vw, 2rem);
+  --text-title--line-height: 1.12;
+  --text-lede: clamp(1.08rem, 1.4vw, 1.25rem);
+  --text-lede--line-height: 1.6;
+  --text-label: 0.78rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.16em;
+
+  /* Sizes: touch targets */
+  --spacing-tap: 2.75rem;       /* 44px: every control */
+  --spacing-tile: 3.5rem;       /* 56px: score tiles and club buttons */
+  --container-ledger: 80rem;
+  --container-measure: 40rem;
+
+  /* Radii: square corners. Rounding is reserved for circles (score marks, pins). */
+  --radius-xs: 1px;
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 3px;
+
+  /* Shadows: no soft SaaS shadows. A tile's bottom lip, a lift for things that float. */
+  --shadow-tile: inset 0 -2px 0 rgb(28 27 23 / 0.07);
+  --shadow-lift: 0 1px 0 rgb(28 27 23 / 0.18), 0 18px 32px -20px rgb(28 27 23 / 0.55);
+  --shadow-plate: inset 0 1px 0 rgb(255 255 255 / 0.45), inset 0 -1px 0 rgb(0 0 0 / 0.25), 0 1px 0 rgb(0 0 0 / 0.35);
+
+  /* Motion */
+  --ease-hang: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-press: cubic-bezier(0.3, 0, 0.2, 1);
+  --animate-hang: hang 420ms var(--ease-hang) both;
+  --animate-fade: fade 300ms ease-out both;
+  --animate-toast: toast-in 300ms var(--ease-hang) both;
+
+  @keyframes hang {
+    from { transform: translateY(-6px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes toast-in {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
 }
 
-body {
-  background: #fbfaf7;
-  color: #1c1b19;
+/* Forced states let /design-system show hover, pressed, and focus without a pointer:
+   data-force="hover|pressed|focus" on an element or any ancestor. Components use these variants. */
+@custom-variant is-hover {
+  @media (hover: hover) { &:hover { @slot; } }
+  &:where([data-force~="hover"], [data-force~="hover"] *) { @slot; }
+}
+@custom-variant is-pressed {
+  &:active { @slot; }
+  &:where([data-force~="pressed"], [data-force~="pressed"] *) { @slot; }
+}
+
+@layer base {
+  :root {
+    --duration-press: 150ms;
+    --duration-fade: 300ms;
+    --duration-hang: 420ms;
+    --hang-stagger: 28ms;
+    /* Paper: a whisper of fibre noise, generated. Contrast is measured on the flat color. */
+    --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--color-paper);
+    background-image: var(--paper-grain);
+    background-size: 220px 220px;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Focus: always visible. 2px, offset 2px, so the ring sits on the surface around a control, never on its fill. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  [data-force~="focus"] :is(a, button, input, select, textarea, [tabindex]):not([tabindex="-1"]):not(.sr-only),
+  :is(a, button, input, select, textarea)[data-force~="focus"] {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  ::selection { background: color-mix(in srgb, var(--color-gold) 45%, transparent); }
+}
+
+@layer components {
+  /* Surfaces */
+  .on-green {
+    --color-focus: var(--color-gold);
+    color: var(--color-on-green);
+  }
+  .tex-paper {
+    background-color: var(--color-paper);
+    background-image: var(--paper-grain);
+    background-size: 220px 220px;
+  }
+  .tex-linen {
+    background-color: var(--color-paper-3);
+    background-image:
+      repeating-linear-gradient(0deg, rgb(28 27 23 / 0.055) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgb(28 27 23 / 0.045) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, transparent 0 37px, rgb(28 27 23 / 0.035) 37px 39px, transparent 39px 83px);
+  }
+  .tex-locker {
+    background-color: var(--color-green-3);
+    background-image:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.018) 0 2px, transparent 2px 7px),
+      var(--paper-grain);
+    background-blend-mode: normal, soft-light;
+    background-size: auto, 220px 220px;
+    color: var(--color-on-green);
+  }
+  .brass-plate {
+    background:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.07) 0 1px, transparent 1px 3px),
+      linear-gradient(180deg, #d9bd80 0%, #c3a161 28%, #a9843f 62%, #c7a766 100%);
+    color: #2a1f0a; /* 4.67:1 on the darkest stop, 8.89:1 on the lightest */
+    box-shadow: var(--shadow-plate);
+  }
+  /* The hand-hung leaderboard tile */
+  .tile {
+    background-color: var(--color-paper-2);
+    border: 1px solid var(--color-rule-strong);
+    box-shadow: var(--shadow-tile);
+  }
+
+  /* Type roles */
+  .caps {
+    font-family: var(--font-numeral);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+  .num { font-variant-numeric: tabular-nums lining-nums; }
+
+  /* The scorecard's "Out" rule: a hairline with a second line 3px below. */
+  .rule-double {
+    height: 5px;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.9;
+  }
+
+  /* Links: slate, underlined, never color alone */
+  .link {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .link:hover { text-decoration-thickness: 2px; }
+  .on-green .link { color: var(--color-on-green); }
+
+  /* Native radio faces (ChoiceGroup, FairwayPicker): the ring follows the hidden input's focus. */
+  .choice:has(input:focus-visible),
+  [data-force~="focus"] .choice {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Scroll regions: relative, so sr-only children never widen a phone. */
+  .scroll-x {
+    position: relative;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hang: stagger with style="--i: n" */
+  .hang { animation: var(--animate-hang); animation-delay: calc(var(--i, 0) * var(--hang-stagger)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
