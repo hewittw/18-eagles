@@ -1,0 +1,58 @@
+"use client";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { allCourses, findCourse } from "./courses";
+import { computeHandicap } from "./handicap";
+import { activeRound } from "./round-actions";
+import { useStore } from "./store";
+
+/** Everything most pages need: the saved data, the derived handicap, and any round in progress. */
+export function useClub() {
+  const { ready, store } = useStore();
+  const handicap = useMemo(
+    () => computeHandicap(store.rounds, store.customCourses, store.profile.enteredIndex),
+    [store.rounds, store.customCourses, store.profile.enteredIndex],
+  );
+  const active = useMemo(() => activeRound(store), [store]);
+  const courses = useMemo(() => allCourses(store.customCourses), [store.customCourses]);
+  const course = useCallback((slug: string) => findCourse(slug, store.customCourses), [store.customCourses]);
+  return { ready, store, handicap, active, courses, course };
+}
+
+/**
+ * Form state that survives leaving the page and coming back (saved to localStorage as you type),
+ * so nothing a golfer typed is ever lost. `clear()` after a successful save.
+ */
+export function useDraft<T>(key: string, initial: T): [T, (next: T | ((p: T) => T)) => void, () => void, boolean] {
+  const full = `18eagles:draft:${key}`;
+  const [value, setValue] = useState<T>(initial);
+  const [restored, setRestored] = useState(false);
+  const loaded = useRef(false);
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(full);
+      if (raw) {
+        setValue({ ...initial, ...JSON.parse(raw) });
+        setRestored(true);
+      }
+    } catch {}
+    loaded.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [full]);
+  const set = useCallback(
+    (next: T | ((p: T) => T)) => {
+      setValue((p) => {
+        const v = typeof next === "function" ? (next as (p: T) => T)(p) : next;
+        try { window.localStorage.setItem(full, JSON.stringify(v)); } catch {}
+        return v;
+      });
+    },
+    [full],
+  );
+  const clear = useCallback(() => {
+    try { window.localStorage.removeItem(full); } catch {}
+    setValue(initial);
+    setRestored(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [full]);
+  return [value, set, clear, restored];
+}

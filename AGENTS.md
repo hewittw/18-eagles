@@ -46,6 +46,7 @@ Details: `docs/brief.md`. Flows: `flows.md` (Mermaid, also shown in `README.md`)
   pushed back. It feeds the in-class explanation.
 
 ## Read When Needed
+- **Resuming in a new session? Read `docs/HANDOFF.md` first:** the current status and next steps.
 - Full requirements and grading checklist → `docs/assignment.md`
 - Tool brief, routes, data → `docs/brief.md`
 - Accessibility checklist (owned by the agent) → `docs/accessibility.md`
