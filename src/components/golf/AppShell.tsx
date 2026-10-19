@@ -62,7 +62,7 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
       </main>
       <footer className="hidden border-t border-rule md:block">
         <div className="mx-auto flex max-w-ledger flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-6 text-[0.92rem] text-ink-2 sm:px-6 lg:px-8">
-          <p className="caps text-[0.72rem] text-gold-ink">18 Eagles · The Members&apos; Ledger</p>
+          <p className="caps text-[0.72rem] text-gold-ink">18 Eagles · A golf journal</p>
           <p>Your rounds are saved in this browser only. Export them from the Locker.</p>
         </div>
       </footer>

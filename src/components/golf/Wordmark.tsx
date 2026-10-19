@@ -23,7 +23,7 @@ export function Wordmark({ size = "sm", tone = "paper", markOnly, className }: W
           <span className={cx("font-display tracking-[0.01em]", lg ? "text-[2.6rem] sm:text-[3.2rem]" : "text-[1.45rem]", tone === "green" ? "text-on-green" : "text-ink")}>
             18 Eagles
           </span>
-          {lg && <span className={cx("caps mt-2 text-[0.72rem] tracking-[0.3em]", tone === "green" ? "text-gold" : "text-gold-ink")}>The Members&apos; Ledger</span>}
+          {lg && <span className={cx("caps mt-2 text-[0.72rem] tracking-[0.3em]", tone === "green" ? "text-gold" : "text-gold-ink")}>A golf journal</span>}
         </span>
       )}
       {markOnly && <span className="sr-only">18 Eagles</span>}

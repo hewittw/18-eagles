@@ -1,4 +1,4 @@
-// The Members' Ledger: the design system's color tokens as data, plus WCAG 2.x contrast math.
+// 18 Eagles · Augusta (matched to masters.com): the design system's color tokens as data, plus WCAG 2.x contrast math.
 // `src/app/globals.css` @theme holds the same hexes for Tailwind (`bg-paper`, `text-ink`…).
 // `node --no-warnings src/app/design-system/measure-contrast.mjs` prints every pair below and fails if
 // globals.css drifts from this file. /design-system renders the swatches and ratios from here, so nothing is typed in.
@@ -6,30 +6,30 @@
 export type Token = { name: string; hex: string; role: string; surface?: "light" | "dark" };
 
 export const tokens = {
-  paper: { name: "Scorecard Paper", hex: "#F5F0E4", role: "The page. Warm card stock everything sits on.", surface: "light" },
-  "paper-2": { name: "Tile White", hex: "#FBFAF6", role: "Raised: cards, inputs, score and club tiles.", surface: "light" },
-  "paper-3": { name: "Linen", hex: "#E8E0CC", role: "Sunken: table stripes, the par row, hover wash, bar tracks.", surface: "light" },
-  ink: { name: "Ink", hex: "#1C1B17", role: "Body text, numerals, rules, the focus ring on paper.", surface: "dark" },
-  "ink-2": { name: "Pencil", hex: "#5A544A", role: "Muted text: captions, hints, metadata.", surface: "dark" },
-  "rule-strong": { name: "Graphite", hex: "#7D7566", role: "Control borders and chart axes (≥ 3:1 on every paper).", surface: "dark" },
-  green: { name: "Fairway", hex: "#2B5E46", role: "The one primary action, chart marks, selected borders.", surface: "dark" },
-  "green-2": { name: "Clubhouse Green", hex: "#1F4A37", role: "Hover and pressed for Fairway.", surface: "dark" },
-  "green-3": { name: "Locker Green", hex: "#143A2C", role: "Deep surfaces: the bar, hero bands, Out/In cells, selected tiles.", surface: "dark" },
-  "on-green": { name: "Scorecard Paper", hex: "#F5F0E4", role: "Text and icons on green and green-3.", surface: "light" },
-  gold: { name: "Brass", hex: "#BE9A55", role: "Honors and ornament on Locker Green only; the focus ring on green.", surface: "light" },
-  "gold-ink": { name: "Old Brass", hex: "#7A5B20", role: "Brass-toned text and eyebrows on paper.", surface: "dark" },
-  under: { name: "Under-Par Red", hex: "#A3272A", role: "Scores under par, with the minus sign. Never decoration.", surface: "dark" },
-  over: { name: "Fairway", hex: "#2B5E46", role: "Over-par numbers, as the hand-operated board paints them.", surface: "dark" },
-  link: { name: "Covenant Slate", hex: "#22485A", role: "Links and the golfer's notes in italic.", surface: "dark" },
-  focus: { name: "Ink", hex: "#1C1B17", role: "Focus ring on paper (2px, offset 2px). Brass on green.", surface: "dark" },
-  error: { name: "Rust", hex: "#8A3B12", role: "Field errors, always with an icon and words.", surface: "dark" },
-  success: { name: "Fairway", hex: "#2B5E46", role: "Saved, done, confirmed. With a tick and words.", surface: "dark" },
+  paper: { name: "Augusta White", hex: "#FFFFFF", role: "The page. Clean white, as masters.com is.", surface: "light" },
+  "paper-2": { name: "Board White", hex: "#FFFFFF", role: "Raised: cards, inputs, score and club tiles, set off by a hairline.", surface: "light" },
+  "paper-3": { name: "Gallery Gray", hex: "#F2F2F2", role: "Sunken: table stripes, the par row, hover wash, bar tracks.", surface: "light" },
+  ink: { name: "Board Black", hex: "#25282A", role: "Body text, numerals, the focus ring on white.", surface: "dark" },
+  "ink-2": { name: "Program Gray", hex: "#53565A", role: "Muted text: captions, hints, metadata.", surface: "dark" },
+  "rule-strong": { name: "Rope Gray", hex: "#85888B", role: "Control borders and chart axes (3:1 or more on white and gray).", surface: "dark" },
+  green: { name: "Masters Green", hex: "#006747", role: "The one primary action, chart marks, selected borders.", surface: "dark" },
+  "green-2": { name: "Pine", hex: "#00563B", role: "Hover and pressed for Masters Green.", surface: "dark" },
+  "green-3": { name: "Masters Green", hex: "#006747", role: "Green surfaces: the bar, hero bands, Out/In cells, selected tiles.", surface: "dark" },
+  "on-green": { name: "White", hex: "#FFFFFF", role: "Text and icons on green.", surface: "light" },
+  gold: { name: "Masters Yellow", hex: "#FCE300", role: "Honors and the focus ring on green. Green surfaces only.", surface: "light" },
+  "gold-ink": { name: "Masters Green", hex: "#006747", role: "Eyebrows and labels on white.", surface: "dark" },
+  under: { name: "Leaderboard Red", hex: "#BA0C2F", role: "Scores under par, with the minus sign. Never decoration.", surface: "dark" },
+  over: { name: "Masters Green", hex: "#006747", role: "Over-par numbers, as the leaderboard paints them.", surface: "dark" },
+  link: { name: "Masters Green", hex: "#006747", role: "Links, underlined, and the golfer’s notes.", surface: "dark" },
+  focus: { name: "Board Black", hex: "#25282A", role: "Focus ring on white (2px, offset 2px). Yellow on green.", surface: "dark" },
+  error: { name: "Rust", hex: "#8A3B12", role: "Field errors, always with an icon and words; never the leaderboard red.", surface: "dark" },
+  success: { name: "Masters Green", hex: "#006747", role: "Saved, done, confirmed. With a tick and words.", surface: "dark" },
 } as const satisfies Record<string, Token>;
 
 export type TokenKey = keyof typeof tokens;
 
 /** `rule` is a translucent hairline (ink at 22%), for dividers only; it is never text or a control boundary. */
-export const RULE = "color-mix(in srgb, #1C1B17 22%, transparent)";
+export const RULE = "#D9D9D9";
 
 export type Kind = "body" | "large" | "ui";
 export const threshold: Record<Kind, number> = { body: 4.5, large: 3, ui: 3 };
@@ -73,10 +73,9 @@ export const pairs: { fg: TokenKey; bg: TokenKey; use: string; kind: Kind }[] = 
 
 /** Measured failures we design around (shown on /design-system so nobody "fixes" them back). */
 export const forbidden: { fg: TokenKey; bg: TokenKey; why: string }[] = [
-  { fg: "gold", bg: "paper", why: "Brass on paper. Use Old Brass (gold-ink) for brass-toned text on paper." },
-  { fg: "gold", bg: "green", why: "A brass ring on a Fairway button. Rings sit offset on the surface around the button instead." },
-  { fg: "under", bg: "green-3", why: "Red on Locker Green. Under-par numbers on green surfaces are set in paper with the minus sign." },
-  { fg: "ink-2", bg: "green-3", why: "Pencil on Locker Green. Muted text on green is set in Linen (paper-3)." },
+  { fg: "gold", bg: "paper", why: "Masters Yellow on white. Yellow only ever sits on green; labels on white are green." },
+  { fg: "under", bg: "green-3", why: "Red on green. Under-par numbers on green surfaces are set in white with the minus sign." },
+  { fg: "ink-2", bg: "green-3", why: "Gray on green. Muted text on green is white at full strength." },
 ];
 
 function channel(c: number) {

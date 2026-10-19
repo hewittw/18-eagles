@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Barlow, Barlow_Condensed, Geist_Mono, Libre_Caslon_Display, Libre_Caslon_Text } from "next/font/google";
+import { Geist_Mono, Libre_Franklin, Newsreader, Oswald } from "next/font/google";
 import "./globals.css";
 
-// The Members' Ledger type system (docs/styles/clubhouse.md), self-hosted at build by next/font.
-// Each exposes a CSS variable that globals.css maps to font-display / font-serif / font-sans / font-numeral.
-const caslonDisplay = Libre_Caslon_Display({ weight: "400", subsets: ["latin"], variable: "--font-caslon-display" });
-const caslonText = Libre_Caslon_Text({ weight: ["400", "700"], style: ["normal", "italic"], subsets: ["latin"], variable: "--font-caslon-text" });
-const barlow = Barlow({ weight: ["400", "500", "600"], subsets: ["latin"], variable: "--font-barlow" });
-const barlowCondensed = Barlow_Condensed({ weight: ["500", "600", "700"], subsets: ["latin"], variable: "--font-barlow-condensed" });
+// Type matched to masters.com, with open-licensed equivalents (its own faces are commercial):
+// Tiempos Headline → Newsreader (headlines and notes), Benton Sans → Libre Franklin (interface),
+// Oswald (the leaderboard numerals, the same face masters.com uses). Self-hosted at build by next/font.
+const newsreader = Newsreader({ weight: ["400", "500", "600"], style: ["normal", "italic"], subsets: ["latin"], variable: "--font-newsreader" });
+const franklin = Libre_Franklin({ weight: ["400", "500", "600", "700"], subsets: ["latin"], variable: "--font-franklin" });
+const oswald = Oswald({ weight: ["400", "500", "600"], subsets: ["latin"], variable: "--font-oswald" });
 // The hub's progress labels still use font-mono.
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${caslonDisplay.variable} ${caslonText.variable} ${barlow.variable} ${barlowCondensed.variable} ${geistMono.variable} h-full bg-paper text-ink antialiased`}
+      className={`${newsreader.variable} ${franklin.variable} ${oswald.variable} ${geistMono.variable} h-full bg-paper text-ink antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper font-sans text-ink">{children}</body>
     </html>

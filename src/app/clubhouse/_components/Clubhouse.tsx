@@ -54,7 +54,7 @@ export function Clubhouse() {
 
   return (
     <>
-      <Hero store={store} welcomed={welcomed} handicap={handicap} done={done} />
+      <Hero store={store} welcomed={welcomed} handicap={handicap} done={done} photo={(teeCourse.hero ?? course("augusta-national")?.hero) || null} />
 
       <Page className="grid gap-14 md:gap-20">
         {active && activeCourse && (
@@ -160,14 +160,22 @@ export function Clubhouse() {
 }
 
 // ───────────────────────── the hero: the handicap, or the one question ─────────────────────────
-function Hero({ store, welcomed, handicap, done }: { store: Store; welcomed: boolean; handicap: ReturnType<typeof useClub>["handicap"]; done: RoundSummary[] }) {
+function Hero({ store, welcomed, handicap, done, photo }: { store: Store; welcomed: boolean; handicap: ReturnType<typeof useClub>["handicap"]; done: RoundSummary[]; photo: { src: string; alt: string; credit: string } | null }) {
   const goal = store.profile.goal;
   const avg18 = done.filter((d) => d.holes.length === 18).slice(0, 5);
   const recentAvg = avg18.length ? avg18.reduce((a, d) => a + d.gross, 0) / avg18.length : null;
   const cardsSoFar = 3 - handicap.roundsToFirst;
 
   return (
-    <section aria-labelledby="hero-title" className="tex-locker on-green border-b border-gold/40">
+    <section aria-labelledby="hero-title" className="tex-locker on-green relative isolate overflow-hidden">
+      {photo && (
+        <>
+          <Image src={photo.src} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
+          {/* A Masters-green wash, deepest behind the text, so every word keeps its contrast over the photo */}
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_72_50/0.94)_0%,rgb(0_88_61/0.86)_45%,rgb(0_103_71/0.55)_100%)] max-md:bg-[linear-gradient(180deg,rgb(0_72_50/0.9)_0%,rgb(0_88_61/0.92)_100%)]" />
+          <p className="absolute bottom-2 right-3 text-[0.7rem] text-white/80">Photo: {photo.credit}</p>
+        </>
+      )}
       <div className="mx-auto grid max-w-ledger gap-10 px-4 pb-12 pt-10 sm:px-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-center md:pb-16 md:pt-14 lg:px-8">
         <div className="min-w-0">
           <p className="caps text-label text-gold">The Clubhouse</p>

@@ -1,3 +1,10 @@
+> **Re-skinned 2026-10-19 at the user's direction: "use the Masters website fonts and colors, no off-white background."**
+> The structure, components, and rules below still hold; the palette and type now follow masters.com (measured):
+> white `#FFFFFF` pages and `#F2F2F2` panels, Masters green `#006747` (hover `#00563B`), Masters yellow `#FCE300`
+> (on green only), leaderboard red `#BA0C2F` for under par, text `#25282A` / `#53565A`. Type: Newsreader (for Tiempos
+> Headline), Libre Franklin (for Benton Sans), and Oswald (the same leaderboard numerals masters.com uses). No paper
+> grain or linen textures. Token names are unchanged; `src/components/tokens.ts` has the current values.
+
 # Clubhouse style guide: The Members' Ledger
 
 Final. Drawn from the mood board (`/mood-board`) and built as the component library shown at

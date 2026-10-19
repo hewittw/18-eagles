@@ -19,11 +19,12 @@ export type HoleIllustrationProps = {
 
 // Yardage-book inks: flat fills used only inside this drawing (not UI tokens; nothing here is text on them
 // except ink and slate, which hold ≥ 7:1 on every fill).
+// A course-guide palette in the Masters manner: bright, clean greens on a light rough, white sand, clear water.
 const INK = {
-  rough: "#DCDDC6", roughMark: "#8E9A7C", cut: "#C3CDAE", fairway: "#A9BD9C", fairwayEdge: "#2B5E46",
-  fringe: "#93AE8B", green: "#7FA07A", greenEdge: "#143A2C", sand: "#EADFC2", sandDot: "#9B8B66", sandEdge: "#7E6E4A",
-  water: "#B9C7CB", waterLine: "#22485A", tree: "#6F8A6A", treeEdge: "#143A2C", ink: "#1C1B17", pencil: "#5A544A",
-  paper: "#F5F0E4", red: "#A3272A", slate: "#22485A", tee: "#A9BD9C",
+  rough: "#B9D58A", roughMark: "#9CC06C", cut: "#97C46A", fairway: "#6FB04E", fairwayEdge: "#3E8A3A",
+  fringe: "#5FA548", green: "#4E9A3E", greenEdge: "#006747", sand: "#FBF6E6", sandDot: "#D9CFAE", sandEdge: "#B8AC88",
+  water: "#7FB9DA", waterLine: "#2C6E91", tree: "#2F6B3A", treeEdge: "#0E3D22", ink: "#25282A", pencil: "#53565A",
+  paper: "#FFFFFF", red: "#BA0C2F", slate: "#006747", tee: "#6FB04E",
 };
 
 type P = [number, number];

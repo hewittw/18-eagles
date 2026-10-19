@@ -29,7 +29,7 @@ export default function Flows() {
         {diagrams.map((d, i) => (
           <section key={d.title} aria-labelledby={`flow-${i}`} className="mt-16">
             <h2 id={`flow-${i}`} className="border-t border-rule-strong pt-6 font-display text-3xl text-ink">{d.title.replace(/^\d+ · /, "")}</h2>
-            <div className="mt-6 overflow-x-auto rounded-md border border-rule bg-[#fbfaf7] p-4 md:p-8">
+            <div className="mt-6 overflow-x-auto rounded-md border border-rule bg-[#ffffff] p-4 md:p-8">
               <Image src={d.src} alt={`Flow diagram: ${d.title}. The same steps are listed in the Mermaid source below.`} width={sizes[i][0]} height={sizes[i][1]} className="mx-auto h-auto w-full" style={{ maxWidth: sizes[i][0] * 1.1 }} unoptimized />
             </div>
             <details className="mt-3">
