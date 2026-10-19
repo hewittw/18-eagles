@@ -61,7 +61,7 @@ function Artifact({
 }) {
   const n = String(no).padStart(2, "0");
   return (
-    <figure className={`m-0 self-start ${SPAN[span]}`}>
+    <figure className={`m-0 min-w-0 self-start ${SPAN[span]}`}>
       <div>{children}</div>
       <figcaption className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 border-t border-(--mb-ink) pt-3">
         <span className="f-cond text-[1.6rem] font-semibold leading-none text-(--mb-pencil) num" aria-hidden="true">{n}</span>
@@ -83,7 +83,7 @@ function Artifact({
             <p className="mt-2 text-[0.8rem] text-(--mb-pencil)">
               {credit.by} · {credit.license} ·{" "}
               <a className="link" href={credit.href}>
-                source
+                Wikimedia Commons<span className="sr-only">: source for {title}</span>
               </a>
             </p>
           )}

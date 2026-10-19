@@ -53,7 +53,7 @@ export function ScorecardSpecimen() {
         <p className="f-display text-2xl sm:text-3xl">The Old Course</p>
         <p className="caps text-[0.75rem] text-(--mb-pencil)">Black tees · 6,721 yds · Rating 73.1 · Slope 132</p>
       </div>
-      <div className="overflow-x-auto" role="region" aria-label="Scorecard specimen, scrolls sideways on small screens" tabIndex={0}>
+      <div className="relative overflow-x-auto" role="region" aria-label="Scorecard specimen, scrolls sideways on small screens" tabIndex={0}>
         <table className="mt-1 w-full min-w-[640px] border-collapse">
           <caption className="sr-only">
             Scorecard specimen: the front nine at the Old Course, St Andrews, with traditional score marks. Out in 35, one under par.
@@ -160,7 +160,7 @@ export function LeaderboardTiles() {
         <p className="text-center text-(--mb-ink) f-cond text-[clamp(1.6rem,4vw,3rem)] font-bold uppercase tracking-[0.28em] leading-none pb-2 sm:pb-3 border-b-2 border-(--mb-ink)">
           Your Last Rounds
         </p>
-        <div className="overflow-x-auto" role="region" aria-label="Leaderboard tiles, scrolls sideways on small screens" tabIndex={0}>
+        <div className="relative overflow-x-auto" role="region" aria-label="Leaderboard tiles, scrolls sideways on small screens" tabIndex={0}>
           <table className="mt-2 w-full min-w-[560px] border-separate border-spacing-[3px]">
             <caption className="sr-only">
               Leaderboard specimen: running score to par after each hole for the golfer&apos;s last three rounds.
@@ -302,7 +302,8 @@ export function PaletteBoard() {
           <span className="caps text-[0.75rem] text-(--mb-red)">Never</span>
           <span>
             <span className="block f-display text-[1.35rem] leading-tight text-(--mb-ink)">
-              <span className="px-1" style={{ color: palette.brass.hex }}>Brass</span> on paper
+              <span className="mr-2 inline-block h-4 w-8 align-middle" style={{ background: palette.brass.hex }} aria-hidden="true" />
+              Brass text on paper
             </span>
             <span className="block text-[0.8rem] leading-snug text-(--mb-pencil)">
               {contrast(palette.brass.hex, palette.paper.hex).toFixed(2)}:1 fails, so brass-colored text on paper is set in Old Brass.
@@ -310,7 +311,7 @@ export function PaletteBoard() {
           </span>
         </li>
       </ul>
-      <div className="mt-6 overflow-x-auto" role="region" aria-label="Measured contrast pairs" tabIndex={0}>
+      <div className="relative mt-6 overflow-x-auto" role="region" aria-label="Measured contrast pairs" tabIndex={0}>
         <table className="w-full min-w-[620px] border-collapse text-left text-[0.9rem]">
           <caption className="text-left caps text-[0.75rem] text-(--mb-pencil) pb-2">
             Every pair the app intends to use, measured by palette.ts (WCAG 2.x)
@@ -448,13 +449,13 @@ export function YardageDrawing() {
           <path d="M238 140 c -8 -10 -10 -18 -14 -30" fill="none" stroke={palette.slate.hex} strokeWidth="1" />
         </g>
         {/* title block */}
-        <rect x="12" y="12" width="104" height="58" fill={palette.paper.hex} stroke={palette.ink.hex} />
+        <rect x="12" y="12" width="112" height="62" fill={palette.paper.hex} stroke={palette.ink.hex} />
         <text x="22" y="40" className="f-display" fontSize="24" fill={palette.ink.hex}>No. 5</text>
-        <text x="22" y="60" className="f-cond" fontSize="13" fontWeight="600" letterSpacing="1.6" fill={palette.pencil.hex}>PAR 4 · 428</text>
+        <text x="22" y="60" className="f-cond" fontSize="15" fontWeight="600" letterSpacing="1.4" fill={palette.pencil.hex}>PAR 4 · 428</text>
         {/* north arrow */}
         <g transform="translate(330 640)">
           <path d="M0 -16 L 6 6 L 0 2 L -6 6 Z" fill={palette.ink.hex} />
-          <text x="-4" y="22" className="f-cond" fontSize="12" fontWeight="600" fill={palette.ink.hex}>N</text>
+          <text x="-5" y="24" className="f-cond" fontSize="15" fontWeight="600" fill={palette.ink.hex}>N</text>
         </g>
       </svg>
     </figure>
@@ -538,7 +539,7 @@ export function Monogram({ size = 260, decorative = false }: { size?: number; de
 
 export function PaperSwatch() {
   return (
-    <div className="relative aspect-[4/5] border border-(--mb-hair) tex-paper">
+    <div className="relative aspect-[4/3] md:aspect-[4/5] border border-(--mb-hair) tex-paper">
       <div className="absolute inset-4 border border-dashed border-(--mb-pencil)/60" aria-hidden="true" />
       <div className="absolute bottom-0 right-0 h-16 w-16 bg-(--mb-linen)" style={{ clipPath: "polygon(100% 0, 0 100%, 100% 100%)" }} aria-hidden="true" />
       <p className="absolute left-6 top-6 caps text-[0.75rem] text-(--mb-old-brass)">Scorecard Paper</p>
@@ -549,7 +550,7 @@ export function PaperSwatch() {
 
 export function LinenSwatch() {
   return (
-    <div className="relative aspect-[4/5] tex-linen border border-(--mb-hair)">
+    <div className="relative aspect-[4/3] md:aspect-[4/5] tex-linen border border-(--mb-hair)">
       <div className="absolute inset-x-6 bottom-6 bg-(--mb-locker) px-3 py-2 text-center on-dark outline outline-1 outline-dashed outline-(--mb-brass) -outline-offset-4">
         <p className="caps text-[0.7rem] text-(--mb-brass)">Woven label</p>
         <p className="f-text italic text-[0.95rem] text-(--mb-paper)">kept since the first round</p>
@@ -580,33 +581,36 @@ function guilloche(w: number, h: number, inset: number, waves: number, amp: numb
   }
   return "M" + pts.join(" L");
 }
-const G = Array.from({ length: 7 }, (_, i) => guilloche(600, 380, 22, 96, 7, (i * Math.PI) / 7));
+const G = Array.from({ length: 7 }, (_, i) => guilloche(420, 540, 20, 84, 7, (i * Math.PI) / 7));
 
 export function RoundCertificate() {
   return (
     <div className="tex-paper border border-(--mb-hair) p-2">
-      <svg viewBox="0 0 600 380" className="h-auto w-full" role="img" aria-labelledby="cert-t">
+      <svg viewBox="0 0 420 540" className="mx-auto h-auto w-full max-w-[460px]" role="img" aria-labelledby="cert-t">
         <title id="cert-t">
           Engraved round certificate: Round No. 042, the Old Course, St Andrews, Black tees, 79, 12 October 2026, attested by the golfer.
         </title>
-        <rect x="6" y="6" width="588" height="368" fill="none" stroke={palette.locker.hex} strokeWidth="1.2" />
+        <rect x="5" y="5" width="410" height="530" fill="none" stroke={palette.locker.hex} strokeWidth="1.2" />
         {G.map((d, i) => <path key={i} d={d} fill="none" stroke={palette.fairway.hex} strokeWidth=".45" opacity=".85" />)}
-        <rect x="40" y="40" width="520" height="300" fill={palette.paper.hex} stroke={palette.locker.hex} strokeWidth=".8" />
-        <rect x="46" y="46" width="508" height="288" fill="none" stroke={palette.locker.hex} strokeWidth=".4" />
+        <rect x="38" y="38" width="344" height="464" fill={palette.paper.hex} stroke={palette.locker.hex} strokeWidth=".8" />
+        <rect x="44" y="44" width="332" height="452" fill="none" stroke={palette.locker.hex} strokeWidth=".4" />
         <g fill={palette.ink.hex} textAnchor="middle">
-          <text x="300" y="86" className="f-cond" fontSize="13" fontWeight="600" letterSpacing="4" fill={palette.oldBrass.hex}>NO. 042 · ENTERED IN THE LEDGER</text>
-          <text x="300" y="138" className="f-display" fontSize="40">The Old Course</text>
-          <text x="300" y="166" className="f-text" fontStyle="italic" fontSize="16" fill={palette.pencil.hex}>St Andrews · from the Black tees · 12 October 2026</text>
-          <text x="300" y="246" className="f-cond" fontSize="74" fontWeight="600">79</text>
-          <text x="300" y="272" className="f-cond" fontSize="13" fontWeight="600" letterSpacing="3" fill={palette.pencil.hex}>OUT 35 · IN 44 · DIFFERENTIAL 5.1</text>
+          <text x="210" y="92" className="f-cond" fontSize="18" fontWeight="600" letterSpacing="3.5" fill={palette.oldBrass.hex}>NO. 042</text>
+          <text x="210" y="114" className="f-cond" fontSize="17" fontWeight="600" letterSpacing="2.6" fill={palette.pencil.hex}>ENTERED IN THE LEDGER</text>
+          <text x="210" y="168" className="f-display" fontSize="40">The Old Course</text>
+          <text x="210" y="198" className="f-text" fontStyle="italic" fontSize="18" fill={palette.pencil.hex}>St Andrews · Black tees</text>
+          <text x="210" y="222" className="f-text" fontStyle="italic" fontSize="18" fill={palette.pencil.hex}>12 October 2026</text>
+          <text x="210" y="318" className="f-cond" fontSize="96" fontWeight="600">79</text>
+          <text x="210" y="350" className="f-cond" fontSize="18" fontWeight="600" letterSpacing="2.4" fill={palette.pencil.hex}>OUT 35 · IN 44</text>
+          <text x="210" y="376" className="f-cond" fontSize="18" fontWeight="600" letterSpacing="2.4" fill={palette.pencil.hex}>DIFFERENTIAL 5.1</text>
         </g>
-        <line x1="380" y1="310" x2="520" y2="310" stroke={palette.ink.hex} strokeWidth=".8" />
-        <text x="450" y="304" textAnchor="middle" className="f-text" fontStyle="italic" fontSize="18" fill={palette.slate.hex}>the Member</text>
-        <text x="450" y="324" textAnchor="middle" className="f-cond" fontSize="11" fontWeight="600" letterSpacing="2.5" fill={palette.pencil.hex}>ATTEST</text>
-        <g transform="translate(110 296)">
-          <circle r="22" fill="none" stroke={palette.red.hex} strokeWidth="1.2" />
-          <circle r="18" fill="none" stroke={palette.red.hex} strokeWidth=".6" strokeDasharray="1 2" />
-          <text y="5" textAnchor="middle" className="f-display" fontSize="16" fill={palette.red.hex}>−1</text>
+        <line x1="200" y1="452" x2="350" y2="452" stroke={palette.ink.hex} strokeWidth=".8" />
+        <text x="275" y="444" textAnchor="middle" className="f-text" fontStyle="italic" fontSize="21" fill={palette.slate.hex}>the Member</text>
+        <text x="275" y="478" textAnchor="middle" className="f-cond" fontSize="17" fontWeight="600" letterSpacing="2.4" fill={palette.pencil.hex}>ATTEST</text>
+        <g transform="translate(110 446)">
+          <circle r="30" fill="none" stroke={palette.red.hex} strokeWidth="1.2" />
+          <circle r="25" fill="none" stroke={palette.red.hex} strokeWidth=".6" strokeDasharray="1 2" />
+          <text y="8" textAnchor="middle" className="f-display" fontSize="24" fill={palette.red.hex}>−1</text>
         </g>
       </svg>
     </div>
