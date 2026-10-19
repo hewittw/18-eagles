@@ -74,3 +74,14 @@ Append as decisions happen, newest at the bottom.
 - **The user chose web photos** ("just get images off Google"). The agent flagged that they're copyrighted and the
   site is public. These are used for a class project with a visible credit to the owner and marked "All rights
   reserved" in the data and credits, so they're easy to swap. Every other course stays freely licensed.
+
+## 2026-10-19 · Mood board: "The Members' Ledger"
+- **Ceremonial · Tailored · Sunlit.** 29 artifacts (15 collected, public-domain or CC, plus 5 credited study crops of
+  rsfgolfclub.com and masters.com; 14 made in code). Palette: Scorecard Paper, Linen, Tile White, Ink, Pencil, Locker
+  Green, Fairway, Brass, Old Brass, Under-Par Red, Covenant Slate. Type: Libre Caslon Display/Text, Barlow,
+  Barlow Condensed (tabular numerals).
+- **Rules learned:** brass on paper is only 2.32:1, so brass text on paper uses Old Brass and brass stays on green.
+  A brass focus ring on a Fairway button is 2.84:1, so focus rings sit offset on the surface around the button.
+- **Rejected:** copying any club mark (no Masters, Augusta, or RSF crests). The board evokes the tradition
+  instead: hand-hung leaderboard tiles, circle/square card marks, an engraved certificate, brass locker plates.
+- Launched the design-system agent right away (the user is reviewing the board in parallel and can redirect).

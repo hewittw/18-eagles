@@ -13,8 +13,8 @@ export const TOOL_HREF = "/clubhouse";
 
 export const parts: Part[] = [
   { n: "01", title: "Research", href: "/research", status: "in progress", note: "How GHIN, 18Birdies, and Arccos welcome a new golfer, and what we take from each." },
-  { n: "02", title: "Mood board", href: "/mood-board", status: "in progress", note: "Clubhouse and locker room: the Rancho Santa Fe feel remixed with old-school Masters tradition." },
-  { n: "03", title: "Design system", href: "/design-system", status: "next", note: "Every component in every state, built from the mood board, with contrast measured." },
+  { n: "02", title: "Mood board", href: "/mood-board", status: "done", note: "The Members' Ledger: ceremonial, tailored, sunlit. 29 artifacts remixing the Rancho Santa Fe feel and old-school Masters ceremony." },
+  { n: "03", title: "Design system", href: "/design-system", status: "in progress", note: "Every component in every state, built from the mood board, with contrast measured." },
   { n: "04", title: "Flows", href: "/flows", status: "in progress", note: "The first visit, playing a round, and coming back, as a diagram (also in the README)." },
   { n: "05", title: "18 Eagles", href: TOOL_HREF, status: "next", note: "The tool itself: handicap, courses, the hole-by-hole card, and breakdowns. The submitted link." },
 ];
