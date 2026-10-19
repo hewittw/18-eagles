@@ -17,7 +17,7 @@ export function Wordmark({ size = "sm", tone = "paper", markOnly, className }: W
   const lg = size === "lg";
   return (
     <span className={cx("inline-flex items-center", lg ? "gap-4" : "gap-2.5", className)}>
-      <Roundel size={lg ? 76 : 36} ring={lg} />
+      <Roundel size={lg ? 96 : 36} ring={lg} />
       {!markOnly && (
         <span className="flex flex-col leading-none">
           <span className={cx("font-display tracking-[0.01em]", lg ? "text-[2.6rem] sm:text-[3.2rem]" : "text-[1.45rem]", tone === "green" ? "text-on-green" : "text-ink")}>
@@ -36,17 +36,22 @@ export function Roundel({ size = 36, ring = false }: { size?: number; ring?: boo
   return (
     <svg viewBox="0 0 100 100" width={size} height={size} className="shrink-0" aria-hidden="true">
       <defs>
-        <path id="wm-ring" d="M50 50 m -37 0 a 37 37 0 1 1 74 0 a 37 37 0 1 1 -74 0" />
+        <path id="wm-ring" d="M50 50 m -36.5 0 a 36.5 36.5 0 1 1 73 0 a 36.5 36.5 0 1 1 -73 0" />
       </defs>
       <circle cx="50" cy="50" r="49" fill="var(--color-green-3)" />
       <circle cx="50" cy="50" r="45.5" fill="none" stroke="var(--color-gold)" strokeWidth="1.6" />
       <circle cx="50" cy="50" r={ring ? 31 : 40} fill="none" stroke="var(--color-gold)" strokeWidth={ring ? 3 : 3.6} strokeDasharray={ring ? "0.9 2.6" : "1.1 3"} strokeLinecap="round" />
       {ring && (
-        <text className="font-numeral" fontSize="9.5" fontWeight="600" letterSpacing="1.6" fill="var(--color-gold)">
+        <text className="font-numeral" fontSize="11" fontWeight="600" letterSpacing="1.2" fill="var(--color-gold)">
           <textPath href="#wm-ring" startOffset="0" textLength="226" lengthAdjust="spacing">EIGHTEEN EAGLES · THE MEMBERS&apos; LEDGER · </textPath>
         </text>
       )}
-      <text x="50" y={ring ? 40 : 37} textAnchor="middle" className="font-numeral" fontSize={ring ? 9 : 12} fontWeight="600" letterSpacing="1.5" fill="var(--color-gold)">18</text>
+      {ring ? (
+        <text x="50" y="41" textAnchor="middle" className="font-numeral" fontSize="11" fontWeight="600" letterSpacing="1.5" fill="var(--color-gold)">18</text>
+      ) : (
+        // at small sizes the "18" is drawn as two strokes rather than text (it would set under 10px)
+        <path d="M41 26 L43.5 24 V36 M50 24.5 a3 3 0 1 0 0.01 0 M50 30.5 a3.4 3.2 0 1 0 0.01 0" fill="none" stroke="var(--color-gold)" strokeWidth="1.6" />
+      )}
       <text x="50" y={ring ? 71 : 76} textAnchor="middle" className="font-display" fontSize={ring ? 36 : 44} fill="var(--color-on-green)">E</text>
       {/* pennant on the E's spine */}
       <line x1={ring ? 64 : 67} y1={ring ? 46 : 44} x2={ring ? 64 : 67} y2={ring ? 31 : 26} stroke="var(--color-gold)" strokeWidth="1.3" />

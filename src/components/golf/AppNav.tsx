@@ -74,13 +74,13 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
                 href={n.href}
                 aria-current={on ? "page" : undefined}
                 className={cx(
-                  "caps relative flex min-h-tile items-center gap-2 px-3.5 text-[0.85rem] tracking-[0.16em] transition-colors duration-150 lg:px-4",
+                  "caps relative flex min-h-tile items-center gap-2 px-2.5 text-[0.85rem] tracking-[0.14em] transition-colors duration-150 lg:px-4 lg:tracking-[0.16em]",
                   on ? "text-gold" : "text-paper-3 is-hover:text-on-green",
                 )}
               >
-                <NavIcon k={n.key} className="size-5" />
+                <NavIcon k={n.key} className="hidden size-5 lg:block" />
                 <span>{n.label}</span>
-                <span aria-hidden="true" className={cx("absolute inset-x-3.5 bottom-2 h-px transition-all lg:inset-x-4", on ? "bg-gold" : "bg-transparent")} />
+                <span aria-hidden="true" className={cx("absolute inset-x-2.5 bottom-2 h-px transition-all lg:inset-x-4", on ? "bg-gold" : "bg-transparent")} />
               </Link>
             </li>
           );

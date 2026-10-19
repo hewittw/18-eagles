@@ -311,7 +311,20 @@ function plan(hole: Hole, seed: string) {
     arcs.length ? `Dotted arcs mark ${arcs.map((a) => a.yd).join(", ")} yards to the centre of the green.` : "",
   ].filter(Boolean).join(" ");
 
-  return { W, H, par, line, fairways, k, green, fringe, gc, pin, bunkers, water, trees, teeBoxes, arcs, desc, dir, at };
+  // Round everything that reaches the markup, so the server and the browser print identical numbers
+  // (trig can differ in the last bit between engines, which would break hydration).
+  const q = (n: number) => Math.round(n * 10) / 10;
+  const qp = (pt: P): P => [q(pt[0]), q(pt[1])];
+  return {
+    W, H, par, line, k, desc, dir, at,
+    fairways: fairways.map((f) => f.map(qp)),
+    green: green.map(qp), fringe: fringe.map(qp), gc: qp(gc), pin: qp(pin),
+    bunkers: bunkers.map((b) => ({ ...b, pts: b.pts.map(qp), c: qp(b.c), on: b.on ? qp(b.on) : undefined })),
+    water: water ? { ...water, y: water.y != null ? q(water.y) : undefined, c: water.c ? qp(water.c) : undefined } : null,
+    trees: trees.map(([x, y, rr]) => [q(x), q(y), q(rr)] as [number, number, number]),
+    teeBoxes: teeBoxes.map((t) => ({ ...t, p: qp(t.p), rot: q(t.rot) })),
+    arcs: arcs.map((a) => ({ ...a, label: qp(a.label) })),
+  };
 }
 
 /**
@@ -402,34 +415,34 @@ export function HoleIllustration({ hole, seed = "18-eagles", className, orientat
             const [x, y] = toScreen(a.label);
             return (
               <g key={a.yd}>
-                <rect x={x - 14} y={y - 9} width={28} height={17} fill={INK.paper} stroke={INK.ink} strokeWidth={0.6} />
-                <text x={x} y={y + 4.5} textAnchor="middle" fontSize={13.5}>{a.yd}</text>
+                <rect x={x - 16} y={y - 10} width={32} height={19} fill={INK.paper} stroke={INK.ink} strokeWidth={0.6} />
+                <text x={x} y={y + 5} textAnchor="middle" fontSize={15}>{a.yd}</text>
               </g>
             );
           })}
           {p.bunkers.filter((b) => b.carry && b.on).map((b, i) => {
             const [x, y] = toScreen(b.c);
             const [ox, oy] = toScreen(b.on!);
-            if (land) return <text key={i} x={x} y={y < oy ? y - 16 : y + 26} textAnchor="middle" fontSize={14}>{b.carry}</text>;
+            if (land) return <text key={i} x={x} y={y < oy ? y - 16 : y + 26} textAnchor="middle" fontSize={15}>{b.carry}</text>;
             const right = x > ox;
-            return <text key={i} x={x + (right ? 18 : -18)} y={y + 5} textAnchor={right ? "start" : "end"} fontSize={14}>{b.carry}</text>;
+            return <text key={i} x={x + (right ? 18 : -18)} y={y + 5} textAnchor={right ? "start" : "end"} fontSize={15}>{b.carry}</text>;
           })}
           {p.water?.kind === "creek" && p.water.y != null && (
             land
-              ? <text x={p.H - p.water.y + 16} y={30} fill={INK.slate} fontSize={14}>carry {p.water.carry}</text>
-              : <text x={14} y={p.water.y + 34} fill={INK.slate} fontSize={14}>carry {p.water.carry}</text>
+              ? <text x={p.H - p.water.y + 16} y={30} fill={INK.slate} fontSize={15}>carry {p.water.carry}</text>
+              : <text x={14} y={p.water.y + 34} fill={INK.slate} fontSize={15}>carry {p.water.carry}</text>
           )}
         </g>
       )}
       {full && (
         <g>
-          <rect x={12} y={12} width={hole.name ? 150 : 104} height={hole.name ? 78 : 60} fill={INK.paper} stroke={INK.ink} />
-          <text x={22} y={42} className="font-display" fontSize={25} fill={INK.ink}>No. {hole.n}</text>
-          <text x={22} y={62} className="font-numeral" fontSize={14} fontWeight={600} letterSpacing={1.4} fill={INK.pencil}>PAR {hole.par} · {hole.yards}</text>
-          {hole.name && <text x={22} y={81} className="font-serif" fontStyle="italic" fontSize={14} fill={INK.slate}>{hole.name.length > 18 ? hole.name.slice(0, 17) + "…" : hole.name}</text>}
+          <rect x={12} y={12} width={hole.name ? 156 : 112} height={hole.name ? 80 : 62} fill={INK.paper} stroke={INK.ink} />
+          <text x={22} y={42} className="font-display" fontSize={26} fill={INK.ink}>No. {hole.n}</text>
+          <text x={22} y={62} className="font-numeral" fontSize={15} fontWeight={600} letterSpacing={1.4} fill={INK.pencil}>PAR {hole.par} · {hole.yards}</text>
+          {hole.name && <text x={22} y={81} className="font-serif" fontStyle="italic" fontSize={15} fill={INK.slate}>{hole.name.length > 18 ? hole.name.slice(0, 17) + "…" : hole.name}</text>}
           <g transform={`translate(${vbW - 26} ${vbH - 40})`}>
             <path d="M0 -16 L6 6 L0 2 L-6 6Z" fill={INK.ink} />
-            <text x={0} y={24} textAnchor="middle" className="font-numeral" fontSize={14} fontWeight={600} fill={INK.ink}>N</text>
+            <text x={0} y={24} textAnchor="middle" className="font-numeral" fontSize={15} fontWeight={600} fill={INK.ink}>N</text>
           </g>
           {note && (
             <text x={vbW - 18} y={hole.name ? 36 : 34} textAnchor="end" className="font-serif" fontStyle="italic" fontSize={16} fill={INK.slate}>

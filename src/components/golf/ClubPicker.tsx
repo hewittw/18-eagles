@@ -68,14 +68,14 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
   };
 
   return (
-    <div className="min-w-0">
+    <div className="@container min-w-0">
       <div className="grid gap-3">
         {GROUPS.map((g) => {
           const inGroup = clubs.filter((c) => c.kind === g.kind);
           if (!inGroup.length) return null;
           return (
-            <div key={g.kind} role="group" aria-label={g.label} className="grid min-w-0 grid-cols-[4.5rem_1fr] items-start gap-2 max-[359px]:grid-cols-1">
-              <p aria-hidden="true" className="caps pt-2 text-[0.72rem] text-ink-2">{g.label}</p>
+            <div key={g.kind} role="group" aria-label={g.label} className="grid min-w-0 grid-cols-1 items-start gap-1.5 @sm:grid-cols-[4.5rem_1fr] @sm:gap-2">
+              <p aria-hidden="true" className="caps text-[0.72rem] text-ink-2 @sm:pt-2">{g.label}</p>
               <div className="grid grid-cols-[repeat(auto-fill,minmax(4.25rem,1fr))] gap-1.5">
                 {inGroup.map((c) => {
                   const isLast = last === c.id;
@@ -109,12 +109,12 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
         })}
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-rule pt-3">
+      <div className="mt-4 grid items-center gap-x-3 gap-y-2 border-t border-rule pt-3 @md:grid-cols-[auto_minmax(0,1fr)_auto]">
         <p className="caps shrink-0 text-[0.72rem] text-ink-2">
           {shots.length} {shots.length === 1 ? "shot" : "shots"}
         </p>
         {shots.length ? (
-          <ol aria-label="Shots on this hole, in order" className="flex min-w-0 flex-1 flex-wrap items-center gap-y-1 font-numeral text-[1.2rem] font-semibold">
+          <ol aria-label="Shots on this hole, in order" className="flex min-w-0 flex-wrap items-center gap-y-1 font-numeral text-[1.2rem] font-semibold">
             {shots.map((s, i) => (
               <li key={i} className="flex items-center">
                 {i > 0 && <span aria-hidden="true" className="px-1.5 text-ink-2">→</span>}
@@ -126,7 +126,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
             ))}
           </ol>
         ) : (
-          <p className="min-w-0 flex-1 font-serif italic text-ink-2">
+          <p className="min-w-0 font-serif italic text-ink-2">
             {cleared ? "Shots cleared." : "No shots yet. Tap the club you hit."}
           </p>
         )}

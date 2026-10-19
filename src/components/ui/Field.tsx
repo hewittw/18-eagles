@@ -93,7 +93,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(functi
 });
 
 export const DateInput = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & ForceProp>(function DateInput({ className, ...p }, ref) {
-  return <input ref={ref} type="date" className={cx(control, "min-h-12 font-numeral text-[1.1rem] tabular-nums", className)} {...p} />;
+  return <input ref={ref} type="date" className={cx(control, "min-h-12 font-numeral text-[1.1rem] tabular-nums focus:outline-2 focus:outline-offset-2 focus:outline-focus", className)} {...p} />;
 });
 
 export type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & ForceProp & {

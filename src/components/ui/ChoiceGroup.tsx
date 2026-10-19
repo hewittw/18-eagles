@@ -52,7 +52,7 @@ export function ChoiceGroup<T extends string>({ legend, options, value, onChange
               key={o.value}
               className={cx(
                 "choice group/choice relative flex cursor-pointer select-none items-center gap-2.5 rounded-xs border bg-paper-2 text-ink shadow-tile transition-[background-color,border-color,transform] duration-150",
-                "border-rule-strong is-hover:border-ink is-hover:bg-paper-3 is-pressed:translate-y-px",
+                "border-rule-strong is-hover:border-ink is-hover:bg-paper-3 is-pressed:translate-y-px is-pressed:border-ink is-pressed:bg-paper-3 is-pressed:shadow-none",
                 "has-checked:border-green-3 has-checked:bg-green-3 has-checked:text-on-green has-checked:shadow-none",
                 "has-disabled:cursor-not-allowed has-disabled:border-dashed has-disabled:bg-transparent has-disabled:text-ink-2 has-disabled:shadow-none has-disabled:translate-y-0",
                 error && !value && "border-error",

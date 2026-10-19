@@ -55,12 +55,12 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
   const tabStop = value != null && nums.includes(value) ? value : par;
 
   return (
-    <div className="min-w-0">
+    <div className="@container min-w-0">
       <div
         role="radiogroup"
         aria-label={label}
         aria-disabled={disabled || undefined}
-        className="grid grid-cols-3 gap-1.5 min-[400px]:grid-cols-6"
+        className="grid grid-cols-3 gap-1.5 @[21rem]:grid-cols-6"
       >
         {nums.map((n, i) => {
           const checked = value === n;
@@ -89,7 +89,7 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
               <span aria-hidden="true" className={cx("font-numeral text-[2.4rem] font-semibold leading-none tabular-nums", !checked && d < 0 && "text-under")}>
                 {n}
               </span>
-              <span aria-hidden="true" className={cx("caps text-[0.7rem] leading-none", checked ? "text-gold" : "text-ink-2")}>
+              <span aria-hidden="true" className={cx("caps text-[0.68rem] leading-none tracking-[0.06em]", checked ? "text-gold" : "text-ink-2")}>
                 {scoreShort(n, par)}
               </span>
               {checked && <span aria-hidden="true" className="absolute inset-x-2 top-1 h-0.5 bg-gold" />}

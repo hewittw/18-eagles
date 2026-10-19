@@ -26,7 +26,7 @@ export function DistributionBar({ types, holes }: { types: Record<ScoreType, num
           <div key={t} style={{ width: `${pct(t)}%`, background: typeFill[t], opacity: typeOpacity[t] }} className="h-full border-r border-paper last:border-r-0" />
         ))}
       </div>
-      <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4" aria-hidden>
+      <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm @lg:grid-cols-4" aria-hidden>
         {SCORE_TYPES.filter((t) => t !== "albatross" || types[t] > 0).map((t) => (
           <li key={t} className="flex items-center gap-2 text-ink">
             <span className="h-3 w-3 shrink-0 rounded-[2px]" style={{ background: typeFill[t], opacity: typeOpacity[t] }} />
@@ -108,7 +108,7 @@ export function HoleHeat({ rows, courseName }: { rows: { hole: Hole; avgToPar: n
       summary={played.length ? `Your toughest holes here: ${hardest.map((r) => `${r.hole.n}${r.hole.name ? ` (${r.hole.name})` : ""} ${fmtToPar(r.avgToPar)}`).join(", ")}.` : "Play this course to see each hole."}
       table={{ columns: ["Hole", "Par", "Times played", "Average to par", "Best"], rows: rows.map((r) => [r.hole.name ? `${r.hole.n} · ${r.hole.name}` : r.hole.n, r.hole.par, r.n, r.n ? fmtToPar(r.avgToPar) : "—", r.n ? r.best : "—"]) }}
     >
-      <ol className="grid grid-cols-6 gap-1.5 sm:grid-cols-9" aria-hidden>
+      <ol className="grid grid-cols-6 gap-1.5 @xl:grid-cols-9" aria-hidden>
         {rows.map((r) => (
           <li key={r.hole.n} className="flex aspect-square flex-col items-center justify-center rounded-sm text-center" style={{ background: r.n ? tint(r.avgToPar) : "transparent", color: r.n ? textOn(r.avgToPar) : "var(--color-ink-2)", outline: r.n ? undefined : "1px dashed var(--color-rule-strong)" }}>
             <span className="text-[11px] leading-none opacity-80">{r.hole.n}</span>

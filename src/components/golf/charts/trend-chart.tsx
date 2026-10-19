@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChartFrame, fmtDate, fmtToPar } from "./chart-frame";
 
 export type TrendPoint = { id: string; date: string; value: number; label: string; href?: string };
@@ -19,7 +19,17 @@ export function TrendChart({
   onSelect?: (id: string) => void;
 }) {
   const [active, setActive] = useState<number | null>(null);
-  const W = 720, H = 280, L = 44, R = 16, T = 16, B = 36;
+  // The SVG is drawn at the container's real width, so axis text stays 13px on a phone and on a wide screen.
+  const box = useRef<HTMLDivElement>(null);
+  const [W, setW] = useState(720);
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setW(Math.max(260, Math.round(e.contentRect.width))));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const H = Math.round(Math.min(320, Math.max(220, W * 0.42))), L = 40, R = 12, T = 18, B = 30;
   const fmt = (v: number) => (unit === "toPar" ? fmtToPar(v) : unit === "index" ? v.toFixed(1) : String(Math.round(v)));
   const vals = points.map((p) => p.value).concat(goal ? [goal.value] : []);
   let lo = Math.min(...vals), hi = Math.max(...vals);
@@ -32,7 +42,7 @@ export function TrendChart({
     const w = points.slice(Math.max(0, i - rolling + 1), i + 1);
     return w.reduce((a, p) => a + p.value, 0) / w.length;
   });
-  const ticks = niceTicks(lo, hi, 4);
+  const ticks = points.length ? niceTicks(lo, hi, 4) : [];
   const first = points[0], last = points[points.length - 1];
   const summary = !points.length
     ? "No rounds match these filters yet."
@@ -46,18 +56,18 @@ export function TrendChart({
       summary={summary}
       table={{ columns: ["Date", "Course", unit === "toPar" ? "To par" : unit === "index" ? "Index" : "Score", `${rolling}-round avg`], rows: points.map((p, i) => [fmtDate(p.date, { month: "short", day: "numeric", year: "numeric" }), p.label, fmt(p.value), fmt(roll[i])]) }}
     >
-      <div className="relative">
+      <div ref={box} className="relative">
         <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full overflow-visible" role="group" aria-label={`${title} chart`}>
           {ticks.map((t) => (
             <g key={t}>
               <line x1={L} x2={W - R} y1={y(t)} y2={y(t)} stroke="var(--color-rule)" strokeWidth={1} />
-              <text x={L - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-ink-2 font-numeral text-[12px] tabular-nums">{fmt(t)}</text>
+              <text x={L - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-ink-2 font-numeral text-[13px] tabular-nums">{fmt(t)}</text>
             </g>
           ))}
           {goal && (
             <g>
               <line x1={L} x2={W - R} y1={y(goal.value)} y2={y(goal.value)} stroke="var(--color-gold-ink)" strokeWidth={1.5} strokeDasharray="6 5" />
-              <text x={W - R} y={y(goal.value) - 6} textAnchor="end" className="fill-ink-2 text-[12px]">{goal.label}</text>
+              <text x={W - R} y={y(goal.value) - 6} textAnchor="end" className="fill-ink-2 text-[13px]">{goal.label}</text>
             </g>
           )}
           {points.length > 1 && (
@@ -87,8 +97,8 @@ export function TrendChart({
           ))}
           {points.length > 0 && (
             <>
-              <text x={x(0)} y={H - 10} textAnchor={points.length > 1 ? "start" : "middle"} className="fill-ink-2 text-[12px]">{fmtDate(first.date)}</text>
-              {points.length > 1 && <text x={x(points.length - 1)} y={H - 10} textAnchor="end" className="fill-ink-2 text-[12px]">{fmtDate(last.date)}</text>}
+              <text x={x(0)} y={H - 10} textAnchor={points.length > 1 ? "start" : "middle"} className="fill-ink-2 text-[13px]">{fmtDate(first.date)}</text>
+              {points.length > 1 && <text x={x(points.length - 1)} y={H - 10} textAnchor="end" className="fill-ink-2 text-[13px]">{fmtDate(last.date)}</text>}
             </>
           )}
         </svg>

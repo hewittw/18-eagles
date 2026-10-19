@@ -9,7 +9,7 @@ export function ChartFrame({ title, summary, table, children, level = 3 }: { tit
   const id = useId();
   const H = level === 2 ? "h2" : "h3";
   return (
-    <figure aria-labelledby={`${id}-t`} className="min-w-0">
+    <figure aria-labelledby={`${id}-t`} className="@container min-w-0">
       <div className="flex items-baseline justify-between gap-4">
         <H id={`${id}-t`} className="font-serif text-[1.25rem] font-bold leading-tight text-ink">{title}</H>
         <button
@@ -17,7 +17,7 @@ export function ChartFrame({ title, summary, table, children, level = 3 }: { tit
           aria-expanded={asTable}
           aria-controls={`${id}-d`}
           onClick={() => setAsTable((v) => !v)}
-          className="shrink-0 rounded-sm text-sm text-ink-2 underline decoration-rule-strong underline-offset-4 hover:text-ink hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+          className="inline-flex min-h-tap shrink-0 items-center rounded-sm text-sm text-ink-2 underline decoration-rule-strong underline-offset-4 hover:text-ink hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
         >
           {asTable ? "Show chart" : "Show as table"}
         </button>

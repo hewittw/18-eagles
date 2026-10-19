@@ -139,6 +139,9 @@
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
+  /* Chrome's date picker button sits inside the input's shadow DOM; give it the same ring. */
+  ::-webkit-calendar-picker-indicator { cursor: pointer; padding: 4px; }
+  ::-webkit-calendar-picker-indicator:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; }
   ::selection { background: color-mix(in srgb, var(--color-gold) 45%, transparent); }
 }
 
