@@ -53,3 +53,24 @@ Append as decisions happen, newest at the bottom.
 - **Our first visit, from this:** no account, no setup. The hero asks one question and shows the 0/3 handicap
   tracker. A home course is preselected, and "Tee off at hole 1" is one tap. The bag comes pre-filled. The
   numbers are honest after a single round.
+
+## 2026-10-19 · Hole screen and returning (second round of questions)
+- **Hole entry:** score tiles plus optional clubs (the user picked the recommendation). One tap records the score.
+  If clubs are logged shot by shot, the score counts itself, and a mismatch is reconciled with a question.
+- **Hole extras:** all four: putts (can't exceed the score), fairway (par 4s and 5s only, from the 18Birdies
+  complaint), penalties + notes, and a yardage-book hole illustration.
+- **Goal question:** yes, inline in the hero (Break 100 / 90 / 80 / scratch).
+- **Coming back:** all four: handicap movement with the next score to drop off, beat your last card at this
+  course, resume + last round's note, and quiet "season honors" (no streak pressure, per the lecture on
+  healthy habits).
+- **Flows:** written in `flows.md` and shown in the README. The first combined Mermaid render was a tangle,
+  so it's split into three diagrams, rendered to static SVG at dev time (`scripts/render-mermaid.mjs`).
+- **Design system = the real component library.** `docs/components.md` fixes the component names and props, so
+  the design system and the pages can be built in parallel and `/design-system` shows the exact components the app uses.
+
+## 2026-10-19 · Home-course photos
+- No freely licensed photos exist of Rancho Santa Fe GC or Fairbanks Ranch CC. The agent offered a drawn
+  illustration, the user's own photos, or captioned scenery of the area.
+- **The user chose web photos** ("just get images off Google"). The agent flagged that they're copyrighted and the
+  site is public. These are used for a class project with a visible credit to the owner and marked "All rights
+  reserved" in the data and credits, so they're easy to swap. Every other course stays freely licensed.
