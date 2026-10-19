@@ -215,6 +215,7 @@ function StatsBody() {
               points={points}
               unit={metric}
               goal={goalLine}
+              rolling={metric === "index" ? 0 : 5}
               onSelect={open}
             />
             {trendNote && <p className="-mt-2 text-[0.95rem] text-ink-2">{trendNote}</p>}

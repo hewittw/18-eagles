@@ -15,7 +15,7 @@ export function sections(md: string): { title: string; intro: string; sections: 
   const lines = md.split("\n");
   const title = (lines.find((l) => l.startsWith("# ")) ?? "").slice(2).trim();
   const out: Section[] = [];
-  let intro: string[] = [];
+  const intro: string[] = [];
   let cur: Section | null = null;
   for (const l of lines) {
     if (l.startsWith("# ")) continue;

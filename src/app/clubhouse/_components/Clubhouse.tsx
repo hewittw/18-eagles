@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { BigNumber, HoleIllustration, toParText } from "@/components/golf";
 import { fmtDate } from "@/components/golf/charts";
-import { Button, ButtonLink, Callout, Card, ChoiceGroup, Field, NumberInput, SectionHeading } from "@/components/ui";
+import { Button, ButtonLink, Card, ChoiceGroup, Field, NumberInput, SectionHeading } from "@/components/ui";
 import { defaultHome, holesFor } from "@/lib/courses";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
@@ -31,17 +31,18 @@ export function Clubhouse() {
     [store.rounds, store.customCourses],
   );
 
-  // Honors not yet celebrated, frozen at first render so they stay on screen while we mark them seen.
-  const fresh = useRef<ReturnType<typeof honorsOf> | null>(null);
+  // Honors not yet celebrated stay on screen for this visit; they're marked seen when the golfer leaves the page.
   const allHonors = useMemo(() => honorsOf(store.rounds, store.customCourses, handicap.history), [store.rounds, store.customCourses, handicap.history]);
-  if (ready && fresh.current == null) fresh.current = allHonors.filter((h) => !store.honorsSeen.includes(h.id));
+  const freshHonors = allHonors.filter((h) => !store.honorsSeen.includes(h.id));
+  const freshIds = freshHonors.map((h) => h.id).join(",");
   useEffect(() => {
     if (!ready) return;
-    const ids = allHonors.map((h) => h.id).filter((id) => !store.honorsSeen.includes(id));
-    if (ids.length) update((s) => ({ ...s, honorsSeen: [...s.honorsSeen, ...ids] }));
     update((s) => ({ ...s, lastVisit: Date.now() }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
+  useEffect(() => {
+    if (!ready || !freshIds) return;
+    return () => update((s) => ({ ...s, honorsSeen: [...new Set([...s.honorsSeen, ...freshIds.split(",")])] }));
+  }, [ready, freshIds]);
 
   if (!ready) return <Placeholder />;
 
@@ -113,19 +114,19 @@ export function Clubhouse() {
           <CoursePlate course={teeCourse} />
         </section>
 
-        {fresh.current && fresh.current.length > 0 && (
+        {freshHonors.length > 0 && (
           <section aria-labelledby="honors">
             <SectionHeading id="honors" eyebrow="New since your last visit" title="Honors" />
             <ul className="mt-6 flex flex-wrap gap-3">
-              {fresh.current.slice(0, 4).map((h) => (
+              {freshHonors.slice(0, 4).map((h) => (
                 <li key={h.id} className="brass-plate hang rounded-xs px-5 py-3">
                   <p className="font-display text-xl leading-tight">{h.title}</p>
                   <p className="caps mt-1 text-[0.72rem]">{h.detail} · {fmtDate(h.date)}</p>
                 </li>
               ))}
             </ul>
-            {fresh.current.length > 4 && (
-              <p className="mt-4"><Link href="/clubhouse/locker" className="link">All {fresh.current.length} new honors in your Locker</Link></p>
+            {freshHonors.length > 4 && (
+              <p className="mt-4"><Link href="/clubhouse/locker" className="link">All {freshHonors.length} new honors in your Locker</Link></p>
             )}
           </section>
         )}

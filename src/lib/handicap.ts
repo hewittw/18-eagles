@@ -32,7 +32,7 @@ export type HandicapState = {
   nextToDropCounts: boolean;
 };
 
-const TABLE: Record<number, [count: number, adj: number]> = {
+export const WHS_TABLE: Record<number, [count: number, adj: number]> = {
   3: [1, -2], 4: [1, -1], 5: [1, 0], 6: [2, -1], 7: [2, 0], 8: [2, 0], 9: [3, 0], 10: [3, 0], 11: [3, 0],
   12: [4, 0], 13: [4, 0], 14: [4, 0], 15: [5, 0], 16: [5, 0], 17: [6, 0], 18: [6, 0], 19: [7, 0], 20: [8, 0],
 };
@@ -74,7 +74,7 @@ function scoreRound(r: Round, course: Course, indexBefore: number | null) {
 
 function indexFrom(diffs: Differential[]): { index: number; counting: Differential[] } | null {
   const recent = diffs.slice(-20);
-  const rule = TABLE[Math.min(recent.length, 20)];
+  const rule = WHS_TABLE[Math.min(recent.length, 20)];
   if (!rule) return null;
   const best = [...recent].sort((a, b) => a.value - b.value).slice(0, rule[0]);
   const avg = best.reduce((s, d) => s + d.value, 0) / best.length;

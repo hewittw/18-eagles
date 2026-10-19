@@ -31,6 +31,8 @@ export function useDraft<T>(key: string, initial: T): [T, (next: T | ((p: T) => 
     try {
       const raw = window.localStorage.getItem(full);
       if (raw) {
+        // Restoring a saved draft after mount (localStorage isn't readable during the server render).
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setValue({ ...initial, ...JSON.parse(raw) });
         setRestored(true);
       }

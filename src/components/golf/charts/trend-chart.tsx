@@ -38,6 +38,7 @@ export function TrendChart({
   lo -= pad; hi += pad;
   const x = (i: number) => (points.length <= 1 ? L + (W - L - R) / 2 : L + (i * (W - L - R)) / (points.length - 1));
   const y = (v: number) => T + ((v - lo) / (hi - lo)) * (H - T - B); // lower score = higher on the chart
+  const avgOn = rolling > 1;
   const roll = points.map((_, i) => {
     const w = points.slice(Math.max(0, i - rolling + 1), i + 1);
     return w.reduce((a, p) => a + p.value, 0) / w.length;
@@ -48,13 +49,13 @@ export function TrendChart({
     ? "No rounds match these filters yet."
     : points.length === 1
       ? `One round: ${fmt(first.value)} on ${fmtDate(first.date)}. The trend line starts with your second round.`
-      : `${points.length} rounds from ${fmtDate(first.date)} to ${fmtDate(last.date)}. Latest ${fmt(last.value)}; ${rolling}-round average ${fmt(roll[roll.length - 1])}; best ${fmt(Math.min(...points.map((p) => p.value)))}.`;
+      : `${points.length} rounds from ${fmtDate(first.date)} to ${fmtDate(last.date)}. Latest ${fmt(last.value)}${avgOn ? `; ${rolling}-round average ${fmt(roll[roll.length - 1])}` : ""}; best ${fmt(Math.min(...points.map((p) => p.value)))}.`;
 
   return (
     <ChartFrame
       title={title}
       summary={summary}
-      table={{ columns: ["Date", "Course", unit === "toPar" ? "To par" : unit === "index" ? "Index" : "Score", `${rolling}-round avg`], rows: points.map((p, i) => [fmtDate(p.date, { month: "short", day: "numeric", year: "numeric" }), p.label, fmt(p.value), fmt(roll[i])]) }}
+      table={{ columns: ["Date", "Course", unit === "toPar" ? "To par" : unit === "index" ? "Index" : "Score", ...(avgOn ? [`${rolling}-round avg`] : [])], rows: points.map((p, i) => [fmtDate(p.date, { month: "short", day: "numeric", year: "numeric" }), p.label, fmt(p.value), ...(avgOn ? [fmt(roll[i])] : [])]) }}
     >
       <div ref={box} className="relative">
         <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full overflow-visible" role="group" aria-label={`${title} chart`}>
@@ -72,8 +73,8 @@ export function TrendChart({
           )}
           {points.length > 1 && (
             <>
-              <polyline fill="none" stroke="var(--color-rule-strong)" strokeWidth={1.5} points={points.map((p, i) => `${x(i)},${y(p.value)}`).join(" ")} />
-              <polyline fill="none" stroke="var(--color-green)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" points={roll.map((v, i) => `${x(i)},${y(v)}`).join(" ")} />
+              <polyline fill="none" stroke={avgOn ? "var(--color-rule-strong)" : "var(--color-green)"} strokeWidth={avgOn ? 1.5 : 3} strokeLinejoin="round" points={points.map((p, i) => `${x(i)},${y(p.value)}`).join(" ")} />
+              {avgOn && <polyline fill="none" stroke="var(--color-green)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" points={roll.map((v, i) => `${x(i)},${y(v)}`).join(" ")} />}
             </>
           )}
           {points.map((p, i) => (
@@ -115,7 +116,7 @@ export function TrendChart({
       </div>
       {points.length > 1 && (
         <p className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2" aria-hidden>
-          <span className="inline-flex items-center gap-2"><span className="h-[3px] w-5 rounded bg-green" /> {rolling}-round average</span>
+          {avgOn && <span className="inline-flex items-center gap-2"><span className="h-[3px] w-5 rounded bg-green" /> {rolling}-round average</span>}
           <span className="inline-flex items-center gap-2"><span className="h-px w-5 bg-rule-strong" /> each round</span>
           {goal && <span className="inline-flex items-center gap-2"><span className="w-5 border-t-2 border-dashed border-gold-ink" /> {goal.label}</span>}
         </p>

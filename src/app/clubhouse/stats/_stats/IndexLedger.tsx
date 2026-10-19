@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { WHS_TABLE } from "@/lib/handicap";
 import { fmtDate } from "@/components/golf";
 import { Callout, SectionHeading } from "@/components/ui";
 import { formatIndex, keyOf, type HandicapState } from "@/lib/handicap";
 
 // How many differentials count, by record length (World Handicap System table). Mirrors lib/handicap.ts.
-const COUNTS: Record<number, number> = { 3: 1, 4: 1, 5: 1, 6: 2, 7: 2, 8: 2, 9: 3, 10: 3, 11: 3, 12: 4, 13: 4, 14: 4, 15: 5, 16: 5, 17: 6, 18: 6, 19: 7, 20: 8 };
+// How many differentials count, from the same WHS table the index uses.
+const COUNTS: Record<number, number> = Object.fromEntries(Object.entries(WHS_TABLE).map(([n, [count]]) => [n, count]));
 const ADJUSTED = new Set([3, 4, 6]);
 
 function Star() {
