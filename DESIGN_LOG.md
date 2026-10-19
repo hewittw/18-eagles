@@ -109,3 +109,9 @@ Append as decisions happen, newest at the bottom.
 - **Bugs caught by checking:** primary buttons rendered as outlines (the default variant is secondary); a duplicated
   score label; the tab title didn't name the hole; and lint found a ref read during render (new honors), now marked
   seen in an effect cleanup. The first prod check showed 404s that turned out to be the deploy still propagating.
+
+## 2026-10-19 · The user pushed back on the look
+- "It still looks super AI… use the masters website fonts and colors, no off-white Claude-looking background… professional
+  and actually Masters-like." The cream "Scorecard Paper" (#F5F0E4) plus Caslon read as the AI or Claude default. **Decision:**
+  re-skin the tokens toward masters.com: white surfaces, Masters green, Masters yellow, and the closest licensable fonts. The
+  components and flows stay as they are.
