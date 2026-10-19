@@ -1,7 +1,8 @@
-# Clubhouse style guide (draft): The Members' Ledger
+# Clubhouse style guide: The Members' Ledger
 
-Draft from the mood board (`/mood-board`). The design-system agent builds the tokens and components from
-this. References and what we took from each are in `docs/references.md`.
+Final. Drawn from the mood board (`/mood-board`) and built as the component library shown at
+`/design-system`. Tokens live in `src/app/globals.css` `@theme`; the same hexes and every measured pair are
+in `src/components/tokens.ts`. References and what we took from each are in `docs/references.md`.
 
 > A golf journal that feels like walking from the 18th green into a good clubhouse: card stock and pencil,
 > a white board of hand-hung numbers, brass on a green locker door, and low California sun on the fairway.
@@ -15,28 +16,47 @@ this. References and what we took from each are in `docs/references.md`.
 3. **Sunlit.** Southern California light on paper and grass: warm off-whites, soft greens, long shadows.
    Never dark-mode neon, never gloss.
 
-## Palette
+## Palette → tokens
 
-The source of truth is `src/app/mood-board/palette.ts`. Move it into `@theme` when the design system exists.
+Use the Tailwind classes (`bg-paper`, `text-ink-2`, `border-rule-strong`, `text-gold-ink`…). Never a raw hex in
+a page. `src/components/tokens.ts` is the source; `node --no-warnings src/app/design-system/measure-contrast.mjs`
+prints every pair and fails if a pair drops under its bar or globals.css drifts from tokens.ts.
 
-| Token | Name | Hex | Role |
+| Token | Name | Hex | Use it for |
 |---|---|---|---|
-| `paper` | Scorecard Paper | `#F5F0E4` | Page background, the card stock everything sits on |
-| `linen` | Linen | `#E8E0CC` | Raised panels, table stripes, selected-row wash, the par row |
-| `tile` | Tile White | `#FBFAF6` | Leaderboard tiles, score cells, club buttons at rest |
-| `ink` | Ink | `#1C1B17` | Body text, numerals, rules, focus ring on light |
-| `pencil` | Pencil | `#5A544A` | Secondary text, captions, metadata, hairlines |
-| `locker` | Locker Green | `#143A2C` | Dark surfaces: nav, the home hero, locker panels, "Out/In" cells |
-| `fairway` | Fairway | `#2B5E46` | Primary buttons, chart marks, selected states |
-| `brass` | Brass | `#BE9A55` | **On Locker Green only.** Ornament, small caps, rules, focus ring on dark |
-| `old-brass` | Old Brass | `#7A5B20` | Brass-toned text and icons on paper |
-| `red` | Under-Par Red | `#A3272A` | Scores under par, as on the hand-operated board. Never decoration |
-| `slate` | Covenant Slate | `#22485A` | Links, hole notes (italic), and the cool second accent (a nod to RSF's dusk teal-navy) |
+| `paper` | Scorecard Paper | `#F5F0E4` | The page (root default, with the fibre grain) |
+| `paper-2` | Tile White | `#FBFAF6` | Raised: cards, inputs, score and club tiles |
+| `paper-3` | Linen | `#E8E0CC` | Sunken: table stripes, the par row, hover wash, bar tracks |
+| `ink` | Ink | `#1C1B17` | Body text, numerals; also `focus` on paper |
+| `ink-2` | Pencil | `#5A544A` | Muted text, ≥ 4.5:1 on all three papers. Never on green |
+| `rule` | Hairline | ink at 22% | Dividers only. Never text, never a control edge |
+| `rule-strong` | Graphite | `#7D7566` | Control borders, chart axes (≥ 3:1 on all three papers). Never a fill under text |
+| `green` | Fairway | `#2B5E46` | The one primary action, chart marks; also `over` and `success` |
+| `green-2` | Clubhouse Green | `#1F4A37` | Hover / pressed for Fairway |
+| `green-3` | Locker Green | `#143A2C` | Deep surfaces: the bar, hero bands, Out/In cells, selected tiles |
+| `on-green` | Scorecard Paper | `#F5F0E4` | Text on `green`, `green-2`, `green-3`, `under` |
+| `gold` | Brass | `#BE9A55` | **On Locker Green only**: caps, honors, rules, the focus ring on green |
+| `gold-ink` | Old Brass | `#7A5B20` | Brass-toned text on paper: eyebrows, numerals, chart goal lines |
+| `under` | Under-Par Red | `#A3272A` | Under-par scores, always with the minus sign. Never decoration, never on green |
+| `over` | Fairway | `#2B5E46` | Over-par numbers (the board's tradition) |
+| `link` | Covenant Slate | `#22485A` | Links and the golfer's notes in Caslon italic |
+| `focus` | Ink | `#1C1B17` | The ring. `.on-green` swaps it to `gold` automatically |
+| `error` | Rust | `#8A3B12` | Field errors, always with the icon and words. Kept apart from under-par red |
+| `success` | Fairway | `#2B5E46` | Saved / done, with a tick and words |
 
-Hairline: `ink` at 22% (`color-mix(in srgb, #1C1B17 22%, transparent)`), for dividers only, never text.
+Surfaces in `@layer components`: `.tex-paper`, `.tex-linen`, `.tex-locker` (Locker Green + grain, paper text),
+`.on-green` (sets brass focus rings and paper text for anything inside), `.brass-plate`, `.tile`, `.caps`,
+`.rule-double`, `.link`, `.hang`, `.scroll-x`. Route CSS stays in `@layer components`: unlayered CSS beats utilities.
 
-### Measured contrast (every pair we intend to use)
-Measured with `node --no-warnings src/app/mood-board/measure-contrast.mjs` (WCAG 2.x relative luminance).
+Other tokens: `font-display` / `font-serif` / `font-sans` / `font-numeral` (tabular, lining); `text-hero`,
+`text-display-1`, `text-display-2`, `text-title`, `text-lede`, `text-label`; `spacing-tap` (44px, `min-h-tap`) and
+`spacing-tile` (56px, `min-h-tile`); `max-w-ledger` (80rem), `max-w-measure` (40rem); radii `rounded-xs`/`sm` 1px,
+`md`/`lg` 2px; `shadow-tile`, `shadow-lift`, `shadow-plate`; `ease-hang`, `ease-press`, `animate-hang`,
+`animate-fade`, `animate-toast`.
+
+### Measured contrast (mood board record)
+The mood board's measurements, kept for the record. The live, complete list of pairs the components use is
+rendered on `/design-system` and printed by `src/app/design-system/measure-contrast.mjs` (WCAG 2.x).
 Body text must be ≥ 4.5:1. Large text, UI boundaries, and focus rings must be ≥ 3:1.
 
 | Foreground | Background | Use | Ratio | Needs |
@@ -62,21 +82,21 @@ Body text must be ≥ 4.5:1. Large text, UI boundaries, and focus rings must be 
 | Brass `#BE9A55` | Locker Green `#143A2C` | Focus ring (2px Brass, 2px offset) on dark; brass rules | 4.75:1 | 3:1 |
 | `#2A1F0A` | Brass plate gradient `#A9843F`–`#D9BD80` | Engraved nameplate text | 4.67–8.89:1 | 4.5:1 |
 
-**Forbidden pairs (measured):** Brass on paper is 2.32:1 (use Old Brass). A brass ring on a Fairway button is
+**Forbidden pairs (measured):** Brass on paper is 2.32:1 (use `gold-ink`). Pencil on Locker Green is 1.68:1 (use
+`paper-3`). Red on Locker Green is 1.72:1 (selected score tiles set the number in paper). A brass ring on a Fairway button is
 2.84:1, so focus rings sit *offset on the surrounding surface*, never on the button fill. Never set red text
 on Locker Green.
 
 ## Type
-All four families come from `next/font/google` (self-hosted at build, SIL OFL). On the mood board they are
-scoped to the route in `src/app/mood-board/layout.tsx`. The design system should load them once in a shared
-layout for the tool.
+All four families come from `next/font/google` (self-hosted at build, SIL OFL), loaded once in
+`src/app/layout.tsx` and exposed as `font-display`, `font-serif`, `font-sans`, and `font-numeral`.
 
 | Role | Family | Weights | Use |
 |---|---|---|---|
-| Display | **Libre Caslon Display** | 400 | Page titles, course names, the handicap figure, big moments. 28px and up only. Never bold, never tight-tracked |
-| Text | **Libre Caslon Text** | 400, 400 italic, 700 | Course blurbs and round summaries (roman). **Italic is the golfer's voice**: hole notes, round notes, pencil scores on the card |
-| UI | **Barlow** | 400, 500, 600 | Interface text: labels, buttons, filters, table text, help |
-| Numerals & labels | **Barlow Condensed** | 500, 600, 700 | Every number in a tile, table, chart axis, or score. Small-caps labels: uppercase, tracked 0.16em, 600. Always `tabular-nums lining-nums` |
+| Display (`font-display`) | **Libre Caslon Display** | 400 | Page titles, course names, the handicap figure, big moments. 28px and up only. Never bold, never tight-tracked |
+| Text (`font-serif`) | **Libre Caslon Text** | 400, 400 italic, 700 | Course blurbs and round summaries (roman). **Italic is the golfer's voice**: hole notes, round notes, pencil scores on the card |
+| UI (`font-sans`) | **Barlow** | 400, 500, 600 | Interface text: labels, buttons, filters, table text, help |
+| Numerals & labels (`font-numeral`, `.caps`) | **Barlow Condensed** | 500, 600, 700 | Every number in a tile, table, chart axis, or score. Small-caps labels: uppercase, tracked 0.16em, 600. Always `tabular-nums lining-nums` |
 
 ### Scale (rem at 16px; fluid sizes use `clamp`)
 | Step | Size | Family | Example |
@@ -131,10 +151,24 @@ The floor is 12px for any text and 16px for body. SVG text must render at 10px o
 - Press: buttons move 1px down (`translate-y-px`) and fill with Fairway, over 150ms.
 - Number changes (handicap, totals) cross-fade, with no counting-up slot-machine effects.
 - Finishing a round is a calm 300ms crossfade to the certificate: the "bridge".
-- `prefers-reduced-motion: reduce` turns off hang and every transition.
+- `prefers-reduced-motion: reduce` turns off hang and every transition (globals.css).
+
+## Focus, targets, states (the component rules)
+- Focus ring: 2px solid `focus`, offset 2px, so it sits on the surface around a control, never on its fill. On
+  green surfaces (`.on-green`) it is brass. Never remove an outline without this replacement.
+- Targets: every control ≥ 44px (`min-h-tap`); score tiles and club buttons ≥ 56px (`min-h-tile`).
+- Every control has rest, hover, focus-visible, pressed (1px down, fill), selected (Locker Green + a brass mark,
+  so not by hue alone), and disabled (dashed border, no fill). `/design-system` forces each with
+  `data-force="hover|pressed|focus"` and the `is-hover:` / `is-pressed:` variants.
+- Single choice = native radios (`ChoiceGroup`) or a radiogroup with arrow keys (`ScoreTiles`); toggles =
+  `aria-pressed` (`ToggleChip`); score and shot changes are announced in a polite live region.
+- Undo over confirm: `useToast()` with an Undo action (≥ 8s, paused on hover/focus). `ConfirmDialog` only for
+  erasing everything.
 
 ## Dos and don'ts
 **Do**
+- Build pages only from `@/components/ui` and `@/components/golf`. If a page needs a new look, add it to the
+  library (and to `/design-system`), not to the page.
 - Lead every screen with one big, exact number or one great photograph, then let it breathe.
 - Put the golfer's own words (notes) in Caslon italic. It's the human voice of the app.
 - Keep red for under par only. Keep brass on green only.
