@@ -50,6 +50,7 @@ export function TeeOff({ course, rememberedTee, tone = "paper", label }: { cours
       )}
       <div>
         <Button
+          variant="primary"
           size="lg"
           tone={tone}
           block
