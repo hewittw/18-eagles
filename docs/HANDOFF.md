@@ -22,18 +22,12 @@ milestone. Then read `AGENTS.md` (always loaded), `docs/assignment.md`, `docs/br
   (PushNotification) whenever something is ready to review.
 
 ## Status (update this block at every milestone)
-_Last updated: 2026-10-19, ~6pm Chicago. The usage limit hit (resets 6:20pm); all background agents stopped._
+_Last updated: 2026-10-19, ~6:15pm Chicago. Background agents stopped at the usage limit (resets 6:20pm); the main session continued._
 
-**TOP PRIORITY: the user's latest request (verbatim):** "redesign how it looks - it still looks super ai - i want you to use
-the masters website fonts and colors - no off white claude looking background specifically. this looks very claude website
-like - i need it to look professional and actually masters like."
-→ Re-skin the design tokens in `src/app/globals.css` (`@theme`) + `src/components/tokens.ts` + fonts in `src/app/layout.tsx`:
-pure white backgrounds (no cream/paper `#F5F0E4`, drop the paper-grain/linen textures), Masters green as the brand color,
-Masters yellow as the accent, and fonts as close to masters.com as licensing allows (Google Fonts equivalents; masters.com's
-own fonts are proprietary). Check masters.com's real computed colors/fonts (`scripts/capture-references.mjs` + its extract;
-masters.com blocks headless Chromium, so run headed). Because every page uses tokens, most of the re-skin is the token file;
-then sweep `.tex-*` classes, `brass-plate`, and any hardcoded hexes (`grep -rn "#[0-9a-fA-F]\{6\}" src`). Re-run
-`src/app/design-system/measure-contrast.mjs` (update its pairs), screenshot every page at 390 and 1440, then deploy.
+**Masters re-skin: DONE and deployed** (commit "restyle: re-skin to masters.com…"). White pages, Masters green
+#006747, yellow #FCE300, red #BA0C2F; Newsreader / Libre Franklin / Oswald; photo hero on the Clubhouse. Waiting on the
+user's reaction. If they want more, the levers are `src/app/globals.css` @theme, `src/components/tokens.ts` (then
+`measure-contrast.mjs`), and the hero in `src/app/clubhouse/_components/Clubhouse.tsx`.
 
 Done (all committed and pushed; deployed at https://18-eagles.vercel.app):
 - Hub `/`, `/research`, `/flows`, `/mood-board`, `/design-system`; data layer in `src/lib/`; 28 valid courses.
