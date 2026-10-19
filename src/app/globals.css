@@ -151,6 +151,15 @@
     --color-focus: var(--color-gold);
     color: var(--color-on-green);
   }
+  /* A paper surface inside a green band (the welcome card on the home): rings drawn on that paper go back to ink,
+     since brass on Tile White is 2.4:1. Set on the children so the surface's own ring (on green) stays brass. */
+  .on-green .bg-paper > :not(.on-green),
+  .on-green .bg-paper-2 > :not(.on-green),
+  .on-green .bg-paper-3 > :not(.on-green),
+  .on-green .tex-paper > :not(.on-green),
+  .on-green .tex-linen > :not(.on-green) {
+    --color-focus: var(--color-ink);
+  }
   .tex-paper {
     background-color: var(--color-paper);
     background-image: var(--paper-grain);
