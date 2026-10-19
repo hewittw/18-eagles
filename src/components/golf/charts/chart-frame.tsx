@@ -11,7 +11,7 @@ export function ChartFrame({ title, summary, table, children, level = 3 }: { tit
   return (
     <figure aria-labelledby={`${id}-t`} className="min-w-0">
       <div className="flex items-baseline justify-between gap-4">
-        <H id={`${id}-t`} className="font-display text-xl leading-tight text-ink">{title}</H>
+        <H id={`${id}-t`} className="font-serif text-[1.25rem] font-bold leading-tight text-ink">{title}</H>
         <button
           type="button"
           aria-expanded={asTable}

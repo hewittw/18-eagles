@@ -100,7 +100,8 @@ export function HoleHeat({ rows, courseName }: { rows: { hole: Hole; avgToPar: n
   const played = rows.filter((r) => r.n > 0);
   const hardest = [...played].sort((a, b) => b.avgToPar - a.avgToPar).slice(0, 3);
   const tint = (v: number) => (v <= -0.5 ? "var(--color-under)" : v < 0.25 ? "var(--color-paper-3)" : v < 0.75 ? "color-mix(in oklab, var(--color-green) 30%, var(--color-paper))" : v < 1.5 ? "color-mix(in oklab, var(--color-green) 60%, var(--color-paper))" : "var(--color-green-3)");
-  const textOn = (v: number) => (v <= -0.5 || v >= 0.75 ? "var(--color-on-green)" : "var(--color-ink)");
+  // Paper text only on the two dark tints (red, Locker Green); ink on the mid tints, where paper would fall under 4.5:1.
+  const textOn = (v: number) => (v <= -0.5 || v >= 1.5 ? "var(--color-on-green)" : "var(--color-ink)");
   return (
     <ChartFrame
       title={`Hole by hole at ${courseName}`}

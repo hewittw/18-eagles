@@ -56,7 +56,7 @@ export function TrendChart({
           ))}
           {goal && (
             <g>
-              <line x1={L} x2={W - R} y1={y(goal.value)} y2={y(goal.value)} stroke="var(--color-gold)" strokeWidth={1.5} strokeDasharray="6 5" />
+              <line x1={L} x2={W - R} y1={y(goal.value)} y2={y(goal.value)} stroke="var(--color-gold-ink)" strokeWidth={1.5} strokeDasharray="6 5" />
               <text x={W - R} y={y(goal.value) - 6} textAnchor="end" className="fill-ink-2 text-[12px]">{goal.label}</text>
             </g>
           )}
@@ -107,7 +107,7 @@ export function TrendChart({
         <p className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2" aria-hidden>
           <span className="inline-flex items-center gap-2"><span className="h-[3px] w-5 rounded bg-green" /> {rolling}-round average</span>
           <span className="inline-flex items-center gap-2"><span className="h-px w-5 bg-rule-strong" /> each round</span>
-          {goal && <span className="inline-flex items-center gap-2"><span className="w-5 border-t-2 border-dashed border-gold" /> {goal.label}</span>}
+          {goal && <span className="inline-flex items-center gap-2"><span className="w-5 border-t-2 border-dashed border-gold-ink" /> {goal.label}</span>}
         </p>
       )}
     </ChartFrame>
