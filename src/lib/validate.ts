@@ -68,7 +68,7 @@ export function validateCourse(d: CourseDraft, takenNames: string[]): Errors<Cou
   if (!d.teeName.trim()) e.teeName = "Name the tees you play, like “White” or “Blue”.";
   const r = Number(d.rating);
   if (!d.rating.trim()) e.rating = "Enter the course rating from the scorecard, like 71.3.";
-  else if (!Number.isFinite(r) || r < par - 12 || r > par + 10) e.rating = `For a par ${par} course the rating is usually ${par - 6}–${par + 6}. Check the scorecard.`;
+  else if (!Number.isFinite(r) || r < par - 10 || r > par + 8) e.rating = `For a par ${par} course the rating is between ${par - 10} and ${par + 8}. Check the number on the scorecard.`;
   const s = Number(d.slope);
   if (!d.slope.trim()) e.slope = "Enter the slope from the scorecard, like 128.";
   else if (!Number.isInteger(s) || s < 55 || s > 155) e.slope = "Slope is a whole number from 55 to 155. 113 is average.";
