@@ -117,13 +117,16 @@ export function Clubhouse() {
           <section aria-labelledby="honors">
             <SectionHeading id="honors" eyebrow="New since your last visit" title="Honors" />
             <ul className="mt-6 flex flex-wrap gap-3">
-              {fresh.current.map((h) => (
+              {fresh.current.slice(0, 4).map((h) => (
                 <li key={h.id} className="brass-plate hang rounded-xs px-5 py-3">
                   <p className="font-display text-xl leading-tight">{h.title}</p>
                   <p className="caps mt-1 text-[0.72rem]">{h.detail} · {fmtDate(h.date)}</p>
                 </li>
               ))}
             </ul>
+            {fresh.current.length > 4 && (
+              <p className="mt-4"><Link href="/clubhouse/locker" className="link">All {fresh.current.length} new honors in your Locker</Link></p>
+            )}
           </section>
         )}
 

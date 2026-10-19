@@ -30,7 +30,7 @@ export function sampleSeason(custom: Course[] = []): Store {
     const entries: Record<number, HoleEntry> = {};
     for (const h of holesFor(course, "18")) {
       const x = r();
-      const over = x < 0.06 ? -1 : x < 0.36 * (1 / skill) - 0.02 ? 0 : x < 0.8 ? 1 : x < 0.95 ? 2 : 3;
+      const over = x < 0.04 ? -1 : x < 0.27 / skill - 0.04 ? 0 : x < 0.7 ? 1 : x < 0.92 ? 2 : 3;
       const strokes = Math.max(2, h.par + over);
       const putts = Math.min(strokes - 1, r() < 0.12 ? 1 : r() < 0.8 ? 2 : 3);
       const toGreen = strokes - putts;
