@@ -1,0 +1,69 @@
+{
+  "slug": "st-andrews-old",
+  "name": "The Old Course, St Andrews",
+  "shortName": "Old Course",
+  "city": "St Andrews",
+  "region": "Fife",
+  "country": "Scotland",
+  "access": "public",
+  "established": 1552,
+  "architect": "Evolved naturally; shaped by Daw Anderson and Old Tom Morris",
+  "tags": ["links", "bucket-list", "major-host"],
+  "blurb": "Public links on common land beside St Andrews Bay, played for six centuries. It has hosted The Open 30 times, most recently in 2022, and is known for its seven double greens, Hell Bunker, and the Road Hole.",
+  "signatureHole": 17,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 376, "hcp": 10, "name": "Burn" },
+    { "n": 2, "par": 4, "yards": 411, "hcp": 6, "name": "Dyke" },
+    { "n": 3, "par": 4, "yards": 370, "hcp": 16, "name": "Cartgate (Out)" },
+    { "n": 4, "par": 4, "yards": 419, "hcp": 8, "name": "Ginger Beer" },
+    { "n": 5, "par": 5, "yards": 514, "hcp": 2, "name": "Hole O'Cross (Out)" },
+    { "n": 6, "par": 4, "yards": 374, "hcp": 12, "name": "Heathery (Out)" },
+    { "n": 7, "par": 4, "yards": 359, "hcp": 4, "name": "High (Out)" },
+    { "n": 8, "par": 3, "yards": 166, "hcp": 14, "name": "Short" },
+    { "n": 9, "par": 4, "yards": 347, "hcp": 18, "name": "End" },
+    { "n": 10, "par": 4, "yards": 340, "hcp": 15, "name": "Bobby Jones" },
+    { "n": 11, "par": 3, "yards": 174, "hcp": 7, "name": "High (In)" },
+    { "n": 12, "par": 4, "yards": 316, "hcp": 3, "name": "Heathery (In)" },
+    { "n": 13, "par": 4, "yards": 418, "hcp": 11, "name": "Hole O'Cross (In)" },
+    { "n": 14, "par": 5, "yards": 530, "hcp": 1, "name": "Long" },
+    { "n": 15, "par": 4, "yards": 414, "hcp": 9, "name": "Cartgate (In)" },
+    { "n": 16, "par": 4, "yards": 381, "hcp": 13, "name": "Corner of the Dyke" },
+    { "n": 17, "par": 4, "yards": 455, "hcp": 5, "name": "Road" },
+    { "n": 18, "par": 4, "yards": 357, "hcp": 17, "name": "Tom Morris" }
+  ],
+  "tees": [
+    { "name": "Black", "color": "#1a1a1a", "par": 72, "yards": 6721, "rating": 73.1, "slope": 132, "source": "published" },
+    { "name": "Blue", "color": "#1f4e9c", "par": 72, "yards": 6387, "rating": 71.4, "slope": 129, "source": "published" },
+    { "name": "Green", "color": "#2e7d32", "par": 72, "yards": 6032, "rating": 69.9, "slope": 125, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/st-andrews-old/hero.jpg",
+    "alt": "The 18th tee sign on the Old Course looking up the Tom Morris fairway to the Swilcan Bridge, the R&A clubhouse and Hamilton Grand, with Open grandstands at left",
+    "credit": "Iain Cameron",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_18th_(Tom_Morris)_Hole_on_the_Old_Course_(St_Andrews).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/st-andrews-old/g1.jpg",
+      "alt": "The 17th (Road) green on the Old Course with the Road Hole bunker and the stone wall behind the green",
+      "credit": "Scott Cormie",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:St.Andrews_Old_Course,_17th_Hole,_Road_-_geograph.org.uk_-_5515227.jpg"
+    },
+    {
+      "src": "/courses/st-andrews-old/g2.jpg",
+      "alt": "Rolling fairway and hidden bunker on the 12th hole, Heathery (In), on the Old Course",
+      "credit": "Scott Cormie",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:St.Andrews_Old_Course,_12th_Hole,_Heathery_in_(geograph_5515174).jpg"
+    }
+  ],
+  "dataNotes": "Tee totals, men's course ratings and slopes are from the Scottish Golf WHS certificate (effective 27 Oct 2020) published by St Andrews Links: Black 6,721 (73.1/132), Blue 6,387 (71.4/129), Green 6,032 (69.9/125). Hole yards, pars, men's stroke indexes and names are from the 2020 club scorecard as transcribed on Wikipedia; per-hole tee yards sum exactly to the certificate totals. The 7,305-yard Open Championship tees carry no published WHS rating, so they are not listed. Blue tee on 18 (361) is listed longer than Black (357) on that scorecard; kept as published.",
+  "sources": [
+    "https://assets-eu-01.kc-usercontent.com/faf6531c-2af4-0128-bed9-496b32f5822b/088ed2bb-b0ff-4827-b2f9-b37d3737a46a/Slope-Rating-Certificate-(Old-Course).pdf",
+    "https://www.standrews.com/SALT9/media/Documents/Old-Course-Scorecard-2020.jpg",
+    "https://en.wikipedia.org/wiki/Old_Course_at_St_Andrews",
+    "https://www.theopen.com/latest/official-course-card-yardage-st-andrews-150th-open"
+  ]
+}

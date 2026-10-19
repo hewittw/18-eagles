@@ -1,0 +1,69 @@
+{
+  "slug": "royal-troon",
+  "name": "Royal Troon Golf Club, Old Course",
+  "shortName": "Royal Troon",
+  "city": "Troon",
+  "region": "Ayrshire",
+  "country": "Scotland",
+  "access": "private",
+  "established": 1878,
+  "architect": "George Strath and Willie Fernie; James Braid (1923)",
+  "tags": ["links", "bucket-list", "major-host"],
+  "blurb": "Out-and-back links on the Firth of Clyde that has hosted The Open ten times for men, most recently in 2024. Home to the Postage Stamp, the shortest hole in Open golf, and the Railway 11th.",
+  "signatureHole": 8,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 370, "hcp": 16, "name": "Seal" },
+    { "n": 2, "par": 4, "yards": 391, "hcp": 8, "name": "Black Rock" },
+    { "n": 3, "par": 4, "yards": 379, "hcp": 12, "name": "Gyaws" },
+    { "n": 4, "par": 5, "yards": 555, "hcp": 4, "name": "Dunure" },
+    { "n": 5, "par": 3, "yards": 210, "hcp": 14, "name": "Greenan" },
+    { "n": 6, "par": 5, "yards": 601, "hcp": 2, "name": "Turnberry" },
+    { "n": 7, "par": 4, "yards": 405, "hcp": 10, "name": "Tel-El-Kebir" },
+    { "n": 8, "par": 3, "yards": 123, "hcp": 18, "name": "Postage Stamp" },
+    { "n": 9, "par": 4, "yards": 422, "hcp": 6, "name": "The Monk" },
+    { "n": 10, "par": 4, "yards": 452, "hcp": 9, "name": "Sandhills" },
+    { "n": 11, "par": 4, "yards": 483, "hcp": 1, "name": "The Railway" },
+    { "n": 12, "par": 4, "yards": 429, "hcp": 5, "name": "The Fox" },
+    { "n": 13, "par": 4, "yards": 473, "hcp": 11, "name": "Burmah" },
+    { "n": 14, "par": 3, "yards": 178, "hcp": 15, "name": "Alton" },
+    { "n": 15, "par": 4, "yards": 502, "hcp": 3, "name": "Crosbie" },
+    { "n": 16, "par": 5, "yards": 553, "hcp": 7, "name": "Well" },
+    { "n": 17, "par": 3, "yards": 218, "hcp": 13, "name": "Rabbit" },
+    { "n": 18, "par": 4, "yards": 464, "hcp": 17, "name": "Craigend" }
+  ],
+  "tees": [
+    { "name": "Blue", "color": "#1f4e9c", "par": 71, "yards": 7208, "rating": 76.0, "slope": 145, "source": "published" },
+    { "name": "White", "color": "#f5f5f0", "par": 71, "yards": 6632, "rating": 73.4, "slope": 140, "source": "published" },
+    { "name": "Yellow", "color": "#f2c230", "par": 71, "yards": 6170, "rating": 71.5, "slope": 136, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/royal-troon/hero.jpg",
+    "alt": "Royal Troon links looking south, with pot bunkers guarding a green, gorse in flower, the clubhouse buildings at left and the Firth of Clyde at right",
+    "credit": "dave souza",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Royal_Troon,_looking_south_with_Clyde_on_right.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/royal-troon/g1.jpg",
+      "alt": "Golfers on a green at Royal Troon seen over flowering gorse, with the links and the Firth of Clyde stretching to the hills beyond",
+      "credit": "Billy McCrorie",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Royal_Troon_Golf_Courses_-_geograph.org.uk_-_3829859.jpg"
+    },
+    {
+      "src": "/courses/royal-troon/g2.jpg",
+      "alt": "The red sandstone Royal Troon clubhouse lit at daybreak behind a white rail fence and bare trees",
+      "credit": "Alan Reid",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Daybreak_at_Royal_Troon_Golf_Club_-_geograph.org.uk_-_7028729.jpg"
+    }
+  ],
+  "dataNotes": "Hole names are from the club's Old Course page. Hole yards (Blue, White and Yellow), pars and men's stroke indexes are from the GolfPass scorecard; each tee's holes sum to its listed total. Ratings and slopes are the 2019 men's WHS figures listed by BlueGolf (Blue 76.0/145, White 73.4/140, Yellow 71.5/136); I could not open the club's own certificate or the BlueGolf page directly, so these may have been revised since the 2024 Open. The 2024 Open was played at 7,385 yards from championship tees, which aren't listed. The first gallery photo is captioned only 'Royal Troon Golf Courses', so it may show the Portland course.",
+  "sources": [
+    "https://www.royaltroon.co.uk/the-courses/old-course/",
+    "https://www.golfpass.com/travel-advisor/courses/17557-royal-troon-golf-club-the-old-course",
+    "https://course.bluegolf.com/bluegolf/course/course/royaltroon/detailedscorecard.htm",
+    "https://en.wikipedia.org/wiki/Royal_Troon_Golf_Club"
+  ]
+}

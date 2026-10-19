@@ -1,0 +1,62 @@
+{
+  "slug": "muirfield",
+  "name": "Muirfield (The Honourable Company of Edinburgh Golfers)",
+  "shortName": "Muirfield",
+  "city": "Gullane",
+  "region": "East Lothian",
+  "country": "Scotland",
+  "access": "private",
+  "established": 1891,
+  "architect": "Old Tom Morris; Harry Colt (1925), Tom Simpson, Martin Hawtree",
+  "tags": ["links", "bucket-list", "major-host"],
+  "blurb": "Home of the Honourable Company of Edinburgh Golfers, formed in 1744. The front nine circles clockwise around the back nine. It has hosted The Open 16 times, most recently in 2013, plus the 2022 Women's Open.",
+  "signatureHole": 18,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 446, "hcp": 5 },
+    { "n": 2, "par": 4, "yards": 365, "hcp": 17 },
+    { "n": 3, "par": 4, "yards": 377, "hcp": 11 },
+    { "n": 4, "par": 3, "yards": 182, "hcp": 13 },
+    { "n": 5, "par": 5, "yards": 510, "hcp": 7 },
+    { "n": 6, "par": 4, "yards": 440, "hcp": 3 },
+    { "n": 7, "par": 3, "yards": 147, "hcp": 15 },
+    { "n": 8, "par": 4, "yards": 443, "hcp": 1 },
+    { "n": 9, "par": 5, "yards": 505, "hcp": 9 },
+    { "n": 10, "par": 4, "yards": 470, "hcp": 4 },
+    { "n": 11, "par": 4, "yards": 354, "hcp": 18 },
+    { "n": 12, "par": 4, "yards": 380, "hcp": 16 },
+    { "n": 13, "par": 3, "yards": 156, "hcp": 14 },
+    { "n": 14, "par": 4, "yards": 449, "hcp": 2 },
+    { "n": 15, "par": 4, "yards": 394, "hcp": 8 },
+    { "n": 16, "par": 3, "yards": 186, "hcp": 12 },
+    { "n": 17, "par": 5, "yards": 506, "hcp": 10 },
+    { "n": 18, "par": 4, "yards": 418, "hcp": 6 }
+  ],
+  "tees": [
+    { "name": "White (Medal)", "color": "#f5f5f0", "par": 71, "yards": 6728, "rating": 73.8, "slope": 142, "source": "published" },
+    { "name": "Blue", "color": "#1f4e9c", "par": 71, "yards": 5983, "rating": 70.4, "slope": 132, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/muirfield/hero.jpg",
+    "alt": "The 18th green at Muirfield during the 2013 Open, with grandstands at left and the Honourable Company clubhouse behind the green",
+    "credit": "alljengi",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:18th_Hole_at_Muirfield,_The_Open_2013_.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/muirfield/g1.jpg",
+      "alt": "Muirfield's links seen from Gullane Hill, with the Firth of Forth and an island on the horizon",
+      "credit": "Richard Webb",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Muirfield_golf_course_seen_from_Gullane_Hill_-geograph-5989355-by-Richard-Webb.jpg"
+    }
+  ],
+  "dataNotes": "Hole yards, pars and stroke indexes are from the club's own Strokesaver & Scorecard page. Ratings are from the club's Scottish Golf course handicap charts: Men's White 73.8/142, Boxes 72.5/139, Blue 70.4/132, all par 71. The charts don't give yardages. Golf Monthly puts 73.8/142 at 6,728 yards, so White is matched to the 6,728-yard medal column and Blue to the 5,983-yard column. The 'Boxes' tee is left out because no yardage is published for it, and so is the 7,245-yard championship card, which has no WHS rating. The stroke index used is the one printed beside the medal column; a second index printed beside the Blue column is taken to be the women's. Muirfield doesn't name its holes.",
+  "sources": [
+    "https://www.muirfield.org.uk/strokesaver",
+    "https://www.muirfield.org.uk/wp-content/uploads/2021/04/CourseHandicapTable.pdf",
+    "https://www.muirfield.org.uk/the-course/",
+    "https://www.golfmonthly.com/courses/top-100-courses/muirfield-course-review-60411",
+    "https://en.wikipedia.org/wiki/Muirfield"
+  ]
+}

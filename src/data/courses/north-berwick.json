@@ -1,0 +1,60 @@
+{
+  "slug": "north-berwick",
+  "name": "North Berwick Golf Club, West Links",
+  "shortName": "North Berwick",
+  "city": "North Berwick",
+  "region": "East Lothian",
+  "country": "Scotland",
+  "access": "private",
+  "established": 1832,
+  "tags": ["links", "bucket-list"],
+  "blurb": "Links on the Firth of Forth, where the club was founded in 1832. The sea is in play on six holes and stone walls cross fairways. Home of the original Redan, the 15th, copied by architects worldwide.",
+  "signatureHole": 15,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 342, "hcp": 9, "name": "Point Garry (Out)" },
+    { "n": 2, "par": 4, "yards": 433, "hcp": 11, "name": "Sea" },
+    { "n": 3, "par": 4, "yards": 459, "hcp": 1, "name": "Trap" },
+    { "n": 4, "par": 3, "yards": 177, "hcp": 15, "name": "Carlekemp" },
+    { "n": 5, "par": 4, "yards": 372, "hcp": 5, "name": "Bunkershill" },
+    { "n": 6, "par": 3, "yards": 161, "hcp": 17, "name": "Quarry" },
+    { "n": 7, "par": 4, "yards": 366, "hcp": 3, "name": "Eil Burn" },
+    { "n": 8, "par": 5, "yards": 509, "hcp": 13, "name": "Linkhouse" },
+    { "n": 9, "par": 5, "yards": 522, "hcp": 7, "name": "Mizzentop" },
+    { "n": 10, "par": 3, "yards": 172, "hcp": 18, "name": "Eastward Ho!" },
+    { "n": 11, "par": 5, "yards": 549, "hcp": 2, "name": "Bos'ns Locker" },
+    { "n": 12, "par": 4, "yards": 402, "hcp": 8, "name": "Bass" },
+    { "n": 13, "par": 4, "yards": 388, "hcp": 12, "name": "Pit" },
+    { "n": 14, "par": 4, "yards": 375, "hcp": 6, "name": "Perfection" },
+    { "n": 15, "par": 3, "yards": 189, "hcp": 14, "name": "Redan" },
+    { "n": 16, "par": 4, "yards": 378, "hcp": 4, "name": "Gate" },
+    { "n": 17, "par": 4, "yards": 426, "hcp": 10, "name": "Point Garry (In)" },
+    { "n": 18, "par": 4, "yards": 277, "hcp": 16, "name": "Home" }
+  ],
+  "tees": [
+    { "name": "White", "color": "#f5f5f0", "par": 71, "yards": 6497, "rating": 72.5, "slope": 130, "source": "published" },
+    { "name": "Blue", "color": "#1f4e9c", "par": 71, "yards": 6168, "rating": 71.0, "slope": 127, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/north-berwick/hero.jpg",
+    "alt": "The 'Welcome to North Berwick West Links' sign beside the 1st tee, with a stone wall in front and Craigleith island in the Firth of Forth behind",
+    "credit": "Robertaleotta2020",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:North_Berwick_West_Links.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/north-berwick/g1.jpg",
+      "alt": "The 18th green on North Berwick's West Links with its flag, the beach fence and the Firth of Forth beyond",
+      "credit": "Stuart Shepherd",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:West_Links_Golf_Course,_North_Berwick_(18th_Green)_-_geograph.org.uk_-_4596095.jpg"
+    }
+  ],
+  "dataNotes": "Hole names, yards for the first two tee rows, pars and stroke indexes are from the club's hole-by-hole pages (northberwickgolfclub.com/hole_1 to hole_18). Those rows don't name their tees; they're matched to White and Blue because their totals (6,497 and 6,168) match the Scottish Golf course-rating certificate exactly. Ratings are from that certificate: White 72.5/130, Blue 71.0/127, men's par 71. The Black tee (6,579, 72.9/131) is left out because no hole-by-hole yards are published for it. The men's Red tee (5,775) is rated as par 68, which this schema can't represent.",
+  "sources": [
+    "https://www.northberwickgolfclub.com/the_course",
+    "https://www.northberwickgolfclub.com/hole_1",
+    "https://howdidido.blob.core.windows.net/clubsitespublic/file_2b4092e7-cc0f-4482-a409-9c82f9e3c10c.pdf",
+    "https://en.wikipedia.org/wiki/North_Berwick_Golf_Club"
+  ]
+}

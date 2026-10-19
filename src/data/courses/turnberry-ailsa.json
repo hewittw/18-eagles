@@ -1,0 +1,63 @@
+{
+  "slug": "turnberry-ailsa",
+  "name": "Turnberry, Ailsa Course",
+  "shortName": "Turnberry Ailsa",
+  "city": "Turnberry",
+  "region": "Ayrshire",
+  "country": "Scotland",
+  "access": "resort",
+  "established": 1906,
+  "architect": "Willie Fernie; Mackenzie Ross (1951); Martin Ebert (2016)",
+  "tags": ["links", "bucket-list", "major-host"],
+  "blurb": "Resort links on the Firth of Clyde facing Ailsa Craig, with a run of holes past Turnberry lighthouse. It hosted four Opens, including the 1977 Watson–Nicklaus 'Duel in the Sun', and was redesigned by Martin Ebert in 2016.",
+  "signatureHole": 9,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 441, "hcp": 6, "name": "Ailsa Craig" },
+    { "n": 2, "par": 4, "yards": 425, "hcp": 10, "name": "Mak Siccar" },
+    { "n": 3, "par": 4, "yards": 496, "hcp": 4, "name": "Blaw Wearie" },
+    { "n": 4, "par": 3, "yards": 194, "hcp": 16, "name": "Woe-Be-Tide" },
+    { "n": 5, "par": 5, "yards": 531, "hcp": 8, "name": "Fin Me Oot" },
+    { "n": 6, "par": 3, "yards": 171, "hcp": 18, "name": "Tappie Toorie" },
+    { "n": 7, "par": 5, "yards": 575, "hcp": 12, "name": "Roon The Ben" },
+    { "n": 8, "par": 4, "yards": 476, "hcp": 2, "name": "Goat Fell" },
+    { "n": 9, "par": 3, "yards": 248, "hcp": 14, "name": "Bruce's Castle" },
+    { "n": 10, "par": 5, "yards": 565, "hcp": 9, "name": "Dinna Fouter" },
+    { "n": 11, "par": 3, "yards": 215, "hcp": 15, "name": "Maidens" },
+    { "n": 12, "par": 4, "yards": 468, "hcp": 3, "name": "Monument" },
+    { "n": 13, "par": 4, "yards": 409, "hcp": 13, "name": "Tickly Tap" },
+    { "n": 14, "par": 5, "yards": 568, "hcp": 11, "name": "Risk-An-Hope" },
+    { "n": 15, "par": 3, "yards": 234, "hcp": 17, "name": "Ca' Canny" },
+    { "n": 16, "par": 4, "yards": 479, "hcp": 1, "name": "Wee Burn" },
+    { "n": 17, "par": 4, "yards": 509, "hcp": 5, "name": "Lang Whang" },
+    { "n": 18, "par": 4, "yards": 485, "hcp": 7, "name": "Duel in the Sun" }
+  ],
+  "tees": [
+    { "name": "Black", "color": "#1a1a1a", "par": 71, "yards": 7489, "rating": 77.0, "slope": 139, "source": "estimated" },
+    { "name": "White", "color": "#f5f5f0", "par": 71, "yards": 6511, "rating": 72.0, "slope": 130, "source": "estimated" },
+    { "name": "Yellow", "color": "#f2c230", "par": 71, "yards": 6094, "rating": 70.0, "slope": 124, "source": "estimated" }
+  ],
+  "hero": {
+    "src": "/courses/turnberry-ailsa/hero.jpg",
+    "alt": "Aerial view at sunset of Turnberry lighthouse on its rocky point, with the Ailsa course's greens and bunkers running along the Firth of Clyde",
+    "credit": "Ian Dick",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turnberry_Lighthouse_(29972057257).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/turnberry-ailsa/g1.jpg",
+      "alt": "The 10th and 12th holes of the Ailsa course under grey skies, with the war memorial on its hill and Turnberry lighthouse by the sea",
+      "credit": "easylocum",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Turnberry_(Ailsa_course)_Holes_10_and_12.jpg"
+    }
+  ],
+  "dataNotes": "Hole names are from Turnberry Golf Club's Ailsa page (2016 layout). Black-tee hole yards, pars (par 71) and men's stroke indexes are from the Golfify scorecard; the pars and stroke indexes match GolfPass, and the hole yards sum to the 7,489 total given by GolfPass and BlueGolf. Hole yardages vary between sources (Wikipedia gives 7,448, GolfPass's own hole rows sum to 7,536), and the club's course-guide PDF is offline. Ratings are marked estimated: GolfPass lists Black 77.0/139, White 72.0/130 and Yellow 70.0/124, but these round numbers look like placeholders, BlueGolf shows 70.0/113 placeholders, and I found no Scottish Golf certificate for the post-2016 course. Treat them as approximate.",
+  "sources": [
+    "https://www.turnberrygolfclub.net/the-courses/ailsa-championship-course/",
+    "https://www.golfify.io/courses/turnberry-golf-club-ailsa",
+    "https://www.golfpass.com/travel-advisor/courses/17245-trump-turnberry-resort-ailsa-course/scorecard-and-layout",
+    "https://course.bluegolf.com/bluegolf/course/course/turnberryailsa/detailedscorecard.htm",
+    "https://en.wikipedia.org/wiki/Trump_Turnberry"
+  ]
+}

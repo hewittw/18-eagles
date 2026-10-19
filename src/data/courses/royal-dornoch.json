@@ -1,0 +1,69 @@
+{
+  "slug": "royal-dornoch",
+  "name": "Royal Dornoch Golf Club, Championship Course",
+  "shortName": "Royal Dornoch",
+  "city": "Dornoch",
+  "region": "Sutherland",
+  "country": "Scotland",
+  "access": "private",
+  "established": 1877,
+  "architect": "Old Tom Morris (1886 and 1889)",
+  "tags": ["links", "bucket-list"],
+  "blurb": "Remote Highland links on the north shore of the Dornoch Firth, with golf recorded there in 1616. Known for plateau greens shaped largely by Old Tom Morris. Donald Ross grew up in Dornoch and was its first professional.",
+  "signatureHole": 14,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 331, "hcp": 15, "name": "First" },
+    { "n": 2, "par": 3, "yards": 177, "hcp": 5, "name": "Ord" },
+    { "n": 3, "par": 4, "yards": 413, "hcp": 11, "name": "Earl's Cross" },
+    { "n": 4, "par": 4, "yards": 422, "hcp": 3, "name": "Achinchanter" },
+    { "n": 5, "par": 4, "yards": 353, "hcp": 13, "name": "Hilton" },
+    { "n": 6, "par": 3, "yards": 161, "hcp": 9, "name": "Whinny Brae" },
+    { "n": 7, "par": 4, "yards": 479, "hcp": 1, "name": "Pier" },
+    { "n": 8, "par": 4, "yards": 457, "hcp": 7, "name": "Dunrobin" },
+    { "n": 9, "par": 5, "yards": 529, "hcp": 17, "name": "Craigliath" },
+    { "n": 10, "par": 3, "yards": 146, "hcp": 10, "name": "Fuaran" },
+    { "n": 11, "par": 4, "yards": 446, "hcp": 4, "name": "A'chlach" },
+    { "n": 12, "par": 5, "yards": 535, "hcp": 18, "name": "Sutherland" },
+    { "n": 13, "par": 3, "yards": 171, "hcp": 12, "name": "Bents" },
+    { "n": 14, "par": 4, "yards": 445, "hcp": 2, "name": "Foxy" },
+    { "n": 15, "par": 4, "yards": 322, "hcp": 16, "name": "Stulaig" },
+    { "n": 16, "par": 4, "yards": 401, "hcp": 8, "name": "High Hole" },
+    { "n": 17, "par": 4, "yards": 405, "hcp": 14, "name": "Valley" },
+    { "n": 18, "par": 4, "yards": 456, "hcp": 6, "name": "Glenmorangie" }
+  ],
+  "tees": [
+    { "name": "Green", "color": "#2e7d4f", "par": 70, "yards": 6649, "rating": 72.8, "slope": 137, "source": "published" },
+    { "name": "Orange", "color": "#e8862a", "par": 70, "yards": 6299, "rating": 71.3, "slope": 131, "source": "published" },
+    { "name": "Grey", "color": "#9e9e9e", "par": 70, "yards": 5920, "rating": 69.5, "slope": 127, "source": "published" },
+    { "name": "Blue", "color": "#1f5fa8", "par": 70, "yards": 5296, "rating": 66.3, "slope": 114, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/royal-dornoch/hero.jpg",
+    "alt": "Two deep revetted bunkers on a Royal Dornoch fairway, with dunes and the Dornoch Firth beyond",
+    "credit": "Julian Paren",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fairway_and_bunkers_of_the_Royal_Dornoch_Golf_Links_-_geograph.org.uk_-_8272250.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/royal-dornoch/g1.jpg",
+      "alt": "The Royal Dornoch clubhouse with its clock tower, the flagpoles and club sign by the first tee, and Highland hills in the distance",
+      "credit": "Craig Wallace",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Royal_Dornoch_Golf_Club_-_geograph.org.uk_-_7273513.jpg"
+    },
+    {
+      "src": "/courses/royal-dornoch/g2.jpg",
+      "alt": "A raised green with a red flag at Royal Dornoch, backed by gorse and the Sutherland hills",
+      "credit": "David Dixon",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Royal_Dornoch_Golf_Club,_Dornoch_Links_-_geograph.org.uk_-_8078986.jpg"
+    }
+  ],
+  "dataNotes": "Everything is from the official Royal Dornoch scorecard image on the club's Championship Course page: hole names, yards for the Green, Orange, Grey and Blue tees, men's par 70, men's stroke indexes, and men's WHS course and slope ratings printed on the card. The same page's hole-by-hole guide lists slightly longer back-tee yardages (6,799 total), which aren't rated, so the rated Green tee comes first.",
+  "sources": [
+    "https://royaldornoch.com/championship-course-2/",
+    "https://royaldornoch.com/wp-content/uploads/2024/03/Screenshot-2025-03-14-at-10.47.36.png",
+    "https://en.wikipedia.org/wiki/Royal_Dornoch_Golf_Club"
+  ]
+}

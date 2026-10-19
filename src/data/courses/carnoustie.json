@@ -1,0 +1,60 @@
+{
+  "slug": "carnoustie",
+  "name": "Carnoustie Golf Links, Championship Course",
+  "shortName": "Carnoustie",
+  "city": "Carnoustie",
+  "region": "Angus",
+  "country": "Scotland",
+  "access": "public",
+  "established": 1842,
+  "architect": "Allan Robertson and Old Tom Morris; James Braid (1926)",
+  "tags": ["links", "bucket-list", "major-host"],
+  "blurb": "Municipal links on the Angus coast, crossed repeatedly by the Barry Burn. It has hosted The Open eight times, including Ben Hogan's 1953 win and Jean van de Velde's collapse at the 18th in 1999.",
+  "signatureHole": 6,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 401, "hcp": 10, "name": "Cup" },
+    { "n": 2, "par": 4, "yards": 435, "hcp": 4, "name": "Gulley" },
+    { "n": 3, "par": 4, "yards": 345, "hcp": 14, "name": "Jockie's Burn" },
+    { "n": 4, "par": 4, "yards": 375, "hcp": 16, "name": "Hillocks" },
+    { "n": 5, "par": 4, "yards": 387, "hcp": 12, "name": "Brae" },
+    { "n": 6, "par": 5, "yards": 520, "hcp": 2, "name": "Hogan's Alley" },
+    { "n": 7, "par": 4, "yards": 394, "hcp": 8, "name": "Plantation" },
+    { "n": 8, "par": 3, "yards": 167, "hcp": 18, "name": "Short" },
+    { "n": 9, "par": 4, "yards": 416, "hcp": 6, "name": "Railway" },
+    { "n": 10, "par": 4, "yards": 446, "hcp": 3, "name": "South America" },
+    { "n": 11, "par": 4, "yards": 362, "hcp": 15, "name": "John Philp" },
+    { "n": 12, "par": 5, "yards": 479, "hcp": 9, "name": "Southward Ho" },
+    { "n": 13, "par": 3, "yards": 161, "hcp": 17, "name": "Whins" },
+    { "n": 14, "par": 5, "yards": 476, "hcp": 1, "name": "Spectacles" },
+    { "n": 15, "par": 4, "yards": 459, "hcp": 7, "name": "Lucky Slap" },
+    { "n": 16, "par": 3, "yards": 245, "hcp": 13, "name": "Barry Burn" },
+    { "n": 17, "par": 4, "yards": 433, "hcp": 5, "name": "Island" },
+    { "n": 18, "par": 4, "yards": 444, "hcp": 11, "name": "Home" }
+  ],
+  "tees": [
+    { "name": "White", "color": "#f5f5f0", "par": 72, "yards": 6945, "rating": 75.2, "slope": 139, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/carnoustie/hero.jpg",
+    "alt": "Elevated view over the 18th green of the Carnoustie Championship Course, with the Barry Burn crossing the links and the Carnoustie Golf Hotel at right",
+    "credit": "Jim Smillie",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:18th_Green_Championship_Course-Carnoustie-geograph-4747170-by-Jim-Smillie.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/carnoustie/g1.jpg",
+      "alt": "View from the tee down the 6th hole, Hogan's Alley, at Carnoustie, with fairway bunkers and the out-of-bounds fence at left",
+      "credit": "Scott Cormie",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carnoustie_Championship_Course,_6th_Hole,_Hogan%27s_Alley_-_geograph.org.uk_-_6813696.jpg"
+    }
+  ],
+  "dataNotes": "Hole yards (White), pars, men's stroke indexes, hole names, and the White tee rating 75.2 / slope 139 (par 72) are from the official Carnoustie Golf Links scorecard (2020 and 2022 editions agree) and the club's WHS course handicap chart (March 2024). Only the White tee is listed: the other men's tees are rated as par 70 (holes 12 and 14 play as par 4s), which this one-par-per-hole schema can't represent. Their published figures: Yellow 6,589 yds 73.6/135, Green 6,139 yds 71.5/130, Black 5,610 yds 69.1/126, all par 70.",
+  "sources": [
+    "https://www.carnoustiegolflinks.com/wp-content/uploads/2025/02/carnoustie_championship_2022_scorecard_coverless-copy.pdf",
+    "https://www.carnoustiegolflinks.com/wp-content/uploads/2020/05/carnoustie_championship_2020_scorecard.pdf",
+    "https://www.carnoustiegolflinks.com/wp-content/uploads/2024/03/240325_Championship-Slope-Rating.pdf",
+    "https://en.wikipedia.org/wiki/Carnoustie_Golf_Links"
+  ]
+}

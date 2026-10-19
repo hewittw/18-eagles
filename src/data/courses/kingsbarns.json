@@ -1,0 +1,64 @@
+{
+  "slug": "kingsbarns",
+  "name": "Kingsbarns Golf Links",
+  "shortName": "Kingsbarns",
+  "city": "Kingsbarns",
+  "region": "Fife",
+  "country": "Scotland",
+  "access": "public",
+  "established": 2000,
+  "architect": "Kyle Phillips",
+  "tags": ["links", "bucket-list"],
+  "blurb": "Modern links built on North Sea farmland near St Andrews, designed by Kyle Phillips and opened in 2000. It co-hosts the Alfred Dunhill Links Championship and hosted the 2017 Women's British Open.",
+  "signatureHole": 15,
+  "holes": [
+    { "n": 1, "par": 4, "yards": 418, "hcp": 13, "name": "North" },
+    { "n": 2, "par": 3, "yards": 200, "hcp": 9, "name": "Firth" },
+    { "n": 3, "par": 5, "yards": 518, "hcp": 15, "name": "Brae" },
+    { "n": 4, "par": 4, "yards": 425, "hcp": 3, "name": "Castle" },
+    { "n": 5, "par": 4, "yards": 426, "hcp": 7, "name": "Tassie" },
+    { "n": 6, "par": 4, "yards": 338, "hcp": 11, "name": "Auld Links" },
+    { "n": 7, "par": 4, "yards": 461, "hcp": 1, "name": "Lang Wynd" },
+    { "n": 8, "par": 3, "yards": 168, "hcp": 17, "name": "Wee Dunt" },
+    { "n": 9, "par": 5, "yards": 558, "hcp": 5, "name": "Kirk" },
+    { "n": 10, "par": 4, "yards": 394, "hcp": 14, "name": "Cambo" },
+    { "n": 11, "par": 4, "yards": 481, "hcp": 10, "name": "Woods" },
+    { "n": 12, "par": 5, "yards": 606, "hcp": 2, "name": "Orrdeal" },
+    { "n": 13, "par": 3, "yards": 150, "hcp": 12, "name": "Cliffs" },
+    { "n": 14, "par": 4, "yards": 384, "hcp": 18, "name": "Haiks" },
+    { "n": 15, "par": 3, "yards": 212, "hcp": 6, "name": "Rocky Ness" },
+    { "n": 16, "par": 5, "yards": 569, "hcp": 16, "name": "Burnside" },
+    { "n": 17, "par": 4, "yards": 474, "hcp": 8, "name": "Harbour" },
+    { "n": 18, "par": 4, "yards": 444, "hcp": 4, "name": "Cundie Brig" }
+  ],
+  "tees": [
+    { "name": "Black", "color": "#1a1a1a", "par": 72, "yards": 7226, "rating": 75.6, "slope": 141, "source": "published" },
+    { "name": "White", "color": "#f5f5f0", "par": 72, "yards": 6853, "rating": 73.6, "slope": 138, "source": "published" },
+    { "name": "Green", "color": "#3a9b47", "par": 72, "yards": 6408, "rating": 71.3, "slope": 133, "source": "published" },
+    { "name": "Blue", "color": "#1f63b5", "par": 72, "yards": 6057, "rating": 70.0, "slope": 128, "source": "published" }
+  ],
+  "hero": {
+    "src": "/courses/kingsbarns/hero.jpg",
+    "alt": "The 2nd green at Kingsbarns, Firth, during the Alfred Dunhill Links Championship, with spectators, revetted bunkers and the North Sea behind",
+    "credit": "Scott Cormie",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kingsbarns_Golf_Links,_2nd_Hole,_Firth_-_geograph.org.uk_-_8163383.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/kingsbarns/g1.jpg",
+      "alt": "The 18th green at Kingsbarns, Cundie Brig, raised above the burn with its stone bridge, and spectators on the dunes behind",
+      "credit": "Scott Cormie",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kingsbarns_Golf_Links,_18th_Hole,_Cundie_Brig_-_geograph.org.uk_-_8163455.jpg"
+    }
+  ],
+  "dataNotes": "Hole yards (Black, White, Green, Blue), pars and men's stroke indexes are from the official scorecard image on kingsbarns.com, and hole names are from the club's hole-by-hole course guide. Men's ratings and slopes (Black 75.6/141, White 73.6/138, Green 71.3/133, Blue 70.0/128, all par 72) are from the club's Eagle Golf course-ratings page, which kingsbarns.com links to. The Red tee (5,231 yds) is women's and isn't listed.",
+  "sources": [
+    "https://www.kingsbarns.com/scorecard",
+    "https://images.squarespace-cdn.com/content/v1/6710e3464bdab217a2de96d7/1f2618f1-def2-4177-80b5-b12074f0b10a/Kingsbarns_Scorecard.png",
+    "https://www.kingsbarns.com/course-guide",
+    "https://eagleplus.uk.com/k/kingsbarns/kingsbarns-course-ratings-men/",
+    "https://en.wikipedia.org/wiki/Kingsbarns"
+  ]
+}
