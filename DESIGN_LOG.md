@@ -85,3 +85,27 @@ Append as decisions happen, newest at the bottom.
 - **Rejected:** copying any club mark (no Masters, Augusta, or RSF crests). The board evokes the tradition
   instead: hand-hung leaderboard tiles, circle/square card marks, an engraved certificate, brass locker plates.
 - Launched the design-system agent right away (the user is reviewing the board in parallel and can redirect).
+
+## 2026-10-19 · Design system = the component library
+- The Opus design-system agent built tokens (`@theme`), fonts (Libre Caslon Display/Text, Barlow, Barlow Condensed),
+  and every contract component in `src/components/ui` + `src/components/golf`. `/design-system` renders them in every
+  state, with live demos and forced hover/pressed/focus (`data-force`).
+- **Contrast:** 33 pairs measured by script, all passing. Forbidden pairs are documented and never used (brass on paper
+  2.32:1, under-par red on Locker Green 1.72:1). Errors use rust, kept apart from under-par red, so an error never
+  reads as a score.
+- **Squared corners** (1–3px) and no soft SaaS shadows: a tile's bottom lip and brass plates instead.
+- Its chart fixes: the goal line moved from brass to Old Brass (brass fails on paper), and heat-map text stays ink on mid tints.
+
+## 2026-10-19 · Pages: built in parallel against the contract
+- **Main session:** the core flow. The Clubhouse (first visit and coming back), the Tee off panel, the hole screen,
+  and the finished card with "the story of the round."
+- **Builder 1:** Courses (search + filters, your record per course, no dead-end "no match"), the course page,
+  the **add-a-course form**, and the Locker (bag, index/goal, honors, export/import, sample season, erase).
+- **Builder 2:** Stats (filters kept between visits, the trend with a metric switch, mix/par types/putting/front-back/
+  clubs/hole heat, and "How your index is made" with counting differentials), Cards, and the **log-a-round form**.
+- **Hole screen decisions:** logging clubs on an unscored hole counts the score and putts itself. A mismatch asks
+  "Use 5 as my score / Keep 4" instead of silently overwriting. Finishing with unscored holes offers to score them,
+  finish as the front nine, or save for later, so an incomplete card never posts.
+- **Bugs caught by checking:** primary buttons rendered as outlines (the default variant is secondary); a duplicated
+  score label; the tab title didn't name the hole; and lint found a ref read during render (new honors), now marked
+  seen in an effect cleanup. The first prod check showed 404s that turned out to be the deploy still propagating.
