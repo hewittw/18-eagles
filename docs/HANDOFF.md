@@ -22,32 +22,29 @@ milestone. Then read `AGENTS.md` (always loaded), `docs/assignment.md`, `docs/br
   (PushNotification) whenever something is ready to review.
 
 ## Status (update this block at every milestone)
-_Last updated: 2026-10-19, evening._
+_Last updated: 2026-10-19, late evening._
 
-Done:
-- Setup, hub `/`, `/research` (3 onboarding studies), `/flows` (3 Mermaid diagrams, also in README), `/mood-board`
-  ("The Members' Ledger"), live on Vercel.
-- Data layer in `src/lib/`: `store.ts` (localStorage, `useStore`), `handicap.ts` (simplified WHS), `stats.ts`,
-  `round-actions.ts`, `validate.ts`, `sample.ts` (demo season), `hooks.ts` (`useClub`, `useDraft`), `courses.ts`.
-- Course library: about 30 real courses in `src/data/courses/*.json` (validated), photos in `public/courses/`.
-- Design system tokens, fonts, and components in `src/components/ui` and `src/components/golf` (contract in
-  `docs/components.md`). Charts in `src/components/golf/charts`.
-- Tool frame: `src/app/clubhouse/layout.tsx` (AppShell + ToastProvider), `_components/Placeholder.tsx` (`Placeholder`, `Page`).
+Done (committed):
+- Hub `/`, `/research`, `/flows`, `/mood-board`; data layer in `src/lib/`; about 30 courses; design tokens and components.
+- Tool core flow (main session): `src/app/clubhouse/page.tsx` + `_components/Clubhouse.tsx` (first visit: the index question
+  in the hero, then Tee off; coming back: index + change line, resume, "Beat it", note, honors, recent cards),
+  `_components/TeeOff.tsx`, `rounds/[id]/[hole]/HoleScreen.tsx` (the hole screen; checked end to end in Playwright),
+  and `rounds/[id]/RoundCard.tsx` (the finished card + story of the round).
+- Test helpers (not committed, in the session scratchpad): Playwright flow scripts. To seed the sample season for screenshots,
+  create a scratch client page that writes `sampleSeason()` to localStorage key `18eagles:v1`. Never commit `src/app/zz-*`.
 
-In progress / next (in order):
-1. `/design-system` showcase page (design-system agent).
-2. Tool pages under `src/app/clubhouse/` (see the routes table in `flows.md`):
-   - Core flow (main session): `page.tsx` (Clubhouse: first visit + coming back), `_components/TeeOff.tsx`,
-     `rounds/[id]/[hole]` (the hole screen), `rounds/[id]` (the finished card + story of the round).
-   - Builder 1: `courses`, `courses/[slug]`, `courses/new` (form), `locker`.
-   - Builder 2: `stats`, `rounds` (Cards), `rounds/new` (log-a-round form).
-3. Verify everything at 11 sizes plus a keyboard pass plus an a11y audit (`docs/accessibility.md`) using a separate verifier agent.
-4. Deploy, then the **first-run check**: an agent uses the live URL as a brand-new golfer ("play 3 holes at your
-   home course, then come back later"), and its usability feedback plus our fixes go in `README.md`.
-5. Update the hub statuses (`src/lib/progress.ts`), `docs/credits.md`, `DESIGN_LOG.md`, and `docs/talking-points.md`
-   (the 5 "be ready to explain" questions in `docs/assignment.md`).
+Running when last updated (background agents, each owning its folders):
+- Design-system agent: the `/design-system` showcase page.
+- Builder 1: `clubhouse/courses`, `courses/[slug]`, `courses/new` (form), `locker`.
+- Builder 2: `clubhouse/stats`, `rounds` (Cards list), `rounds/new` (log-a-round form).
+- West-coast course data agent (Pebble, Riviera, Torrey, RSF, Fairbanks, Jackson Park…).
+If a new session finds these pages missing or half-built, check `git log` and `git status`, then finish them per
+`docs/builder-brief.md`.
 
-Open notes:
-- Cache Components is on: no `new Date()`/`Math.random()` in server renders; dynamic params go inside `<Suspense>`.
-- Home course photos (Rancho Santa Fe, Fairbanks Ranch) are web photos the user asked for: credited, "All rights reserved".
-- Carnoustie, Pinehurst, and Oakmont keep only member-par tees (the schema has one par per hole).
+Next (in order):
+1. When the builders land: `node scripts/gen-course-index.mjs`, `node scripts/gen-credits.mjs`, then commit the West data.
+2. A verifier agent: 11 sizes (`scripts/matrix.mjs`), a keyboard pass, and an a11y audit against `docs/accessibility.md` on every
+   tool route; fix what it finds.
+3. Deploy (see above), then the **first-run check** on the live URL. Put the feedback and our fixes in `README.md`.
+4. Hub statuses (`src/lib/progress.ts`), `DESIGN_LOG.md` entries, and `docs/talking-points.md` (the 5 "be ready to explain" answers).
+5. Push-notify the user for review.
