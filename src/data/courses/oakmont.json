@@ -1,0 +1,171 @@
+{
+  "slug": "oakmont",
+  "name": "Oakmont Country Club",
+  "shortName": "Oakmont",
+  "city": "Oakmont",
+  "region": "Pennsylvania",
+  "country": "USA",
+  "access": "private",
+  "established": 1903,
+  "architect": "Henry C. Fownes",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "Henry Fownes's 1903 course outside Pittsburgh, known for fast, sloping greens, deep bunkers including the Church Pews between the 3rd and 4th, and few trees. It has hosted a record ten U.S. Opens, most recently in 2025.",
+  "signatureHole": 3,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 445,
+      "hcp": 5
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 335,
+      "hcp": 9
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 415,
+      "hcp": 1
+    },
+    {
+      "n": 4,
+      "par": 5,
+      "yards": 535,
+      "hcp": 13
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 370,
+      "hcp": 7
+    },
+    {
+      "n": 6,
+      "par": 3,
+      "yards": 180,
+      "hcp": 15
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 390,
+      "hcp": 3
+    },
+    {
+      "n": 8,
+      "par": 3,
+      "yards": 225,
+      "hcp": 11
+    },
+    {
+      "n": 9,
+      "par": 5,
+      "yards": 460,
+      "hcp": 17
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 445,
+      "hcp": 6
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 355,
+      "hcp": 14
+    },
+    {
+      "n": 12,
+      "par": 5,
+      "yards": 590,
+      "hcp": 8
+    },
+    {
+      "n": 13,
+      "par": 3,
+      "yards": 155,
+      "hcp": 18
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 360,
+      "hcp": 12
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 460,
+      "hcp": 2
+    },
+    {
+      "n": 16,
+      "par": 3,
+      "yards": 210,
+      "hcp": 16
+    },
+    {
+      "n": 17,
+      "par": 4,
+      "yards": 295,
+      "hcp": 10
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 450,
+      "hcp": 4
+    }
+  ],
+  "tees": [
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 71,
+      "yards": 6675,
+      "rating": 74.2,
+      "slope": 136,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 71,
+      "yards": 6215,
+      "rating": 72.2,
+      "slope": 131,
+      "source": "published"
+    },
+    {
+      "name": "Brown",
+      "color": "#7a5536",
+      "par": 71,
+      "yards": 5705,
+      "rating": 69.8,
+      "slope": 129,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/oakmont/hero.jpg",
+    "alt": "Oakmont's green-and-white Tudor Revival clubhouse with an American flag, seen across a fairway and autumn trees in November",
+    "credit": "Lee Paxton",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:OakmontCountryClub.jpg"
+  },
+  "gallery": [],
+  "dataNotes": "Pars, yardages, stroke indexes and men's ratings are from BlueGolf's Oakmont scorecard. The member tees listed here play to par 71 with the 9th as a par 5. The Championship (7,427 yds, 77.6/143) and Green (7,130 yds, 76.3/140) tees play the 9th as a par 4 for par 70; the schema allows one par per hole, so they are left out. Only one freely licensed photo of Oakmont was found on Wikimedia Commons. It is 600 px wide, so the hero is low resolution, and there is no gallery. No other source with hole-by-hole ratings was available to cross-check.",
+  "sources": [
+    "https://course.bluegolf.com/bluegolf/course/course/oakmontcc1/detailedscorecard.htm",
+    "https://www.golflink.com/golf-courses/pa/oakmont/oakmont-country-club",
+    "https://en.wikipedia.org/wiki/Oakmont_Country_Club",
+    "https://commons.wikimedia.org/wiki/File:OakmontCountryClub.jpg"
+  ]
+}

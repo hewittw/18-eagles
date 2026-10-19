@@ -1,0 +1,199 @@
+{
+  "slug": "harbour-town",
+  "name": "Harbour Town Golf Links",
+  "shortName": "Harbour Town",
+  "city": "Hilton Head Island",
+  "region": "South Carolina",
+  "country": "USA",
+  "access": "resort",
+  "established": 1969,
+  "architect": "Pete Dye with Jack Nicklaus",
+  "tags": [
+    "coastal",
+    "bucket-list"
+  ],
+  "blurb": "Pete Dye's 1969 design, with Jack Nicklaus consulting, at Sea Pines Resort: small greens, tight oak- and pine-lined fairways, and an 18th along Calibogue Sound toward the striped Harbour Town lighthouse. Home of the RBC Heritage since 1969.",
+  "signatureHole": 18,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 414,
+      "hcp": 6
+    },
+    {
+      "n": 2,
+      "par": 5,
+      "yards": 544,
+      "hcp": 18
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 465,
+      "hcp": 4
+    },
+    {
+      "n": 4,
+      "par": 3,
+      "yards": 194,
+      "hcp": 12
+    },
+    {
+      "n": 5,
+      "par": 5,
+      "yards": 561,
+      "hcp": 14
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 419,
+      "hcp": 8
+    },
+    {
+      "n": 7,
+      "par": 3,
+      "yards": 216,
+      "hcp": 16
+    },
+    {
+      "n": 8,
+      "par": 4,
+      "yards": 467,
+      "hcp": 2
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 326,
+      "hcp": 10
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 435,
+      "hcp": 7
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 432,
+      "hcp": 3
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 426,
+      "hcp": 5
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 372,
+      "hcp": 11
+    },
+    {
+      "n": 14,
+      "par": 3,
+      "yards": 188,
+      "hcp": 15
+    },
+    {
+      "n": 15,
+      "par": 5,
+      "yards": 584,
+      "hcp": 9
+    },
+    {
+      "n": 16,
+      "par": 4,
+      "yards": 420,
+      "hcp": 17
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 198,
+      "hcp": 13
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 470,
+      "hcp": 1
+    }
+  ],
+  "tees": [
+    {
+      "name": "Heritage",
+      "color": "#1a1a1a",
+      "par": 71,
+      "yards": 7131,
+      "rating": 75.5,
+      "slope": 146,
+      "source": "published"
+    },
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 71,
+      "yards": 6642,
+      "rating": 73.2,
+      "slope": 143,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 71,
+      "yards": 6103,
+      "rating": 70.7,
+      "slope": 134,
+      "source": "published"
+    },
+    {
+      "name": "Gold",
+      "color": "#c9a43a",
+      "par": 71,
+      "yards": 5478,
+      "rating": 68.1,
+      "slope": 117,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/harbour-town/hero.jpg",
+    "alt": "A Harbour Town green framed by a sod-walled bunker, with a palmetto, salt marsh and the open water of Calibogue Sound behind",
+    "credit": "Dan Perry (danperry.com)",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Harbour_Town_Golf,_Hilton_Head_-_5111146241.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/harbour-town/g1.jpg",
+      "alt": "View from a Harbour Town tee under live oaks and palmettos to a small green behind a wooden bulkhead",
+      "credit": "Dan Perry (danperry.com)",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Harbour_Town_Golf,_Hilton_Head_-_5111137869.jpg"
+    },
+    {
+      "src": "/courses/harbour-town/g2.jpg",
+      "alt": "A long, shallow greenside bunker in front of a Harbour Town green, ringed by tall pines and moss-hung oaks",
+      "credit": "Dan Perry (danperry.com)",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Harbour_Town_Golf_Links,_Hilton_Head_-_5111737496.jpg"
+    }
+  ],
+  "dataNotes": "Pars, yardages, stroke indexes and men's ratings are from BlueGolf's current Sea Pines Resort Harbour Town scorecard (Heritage, Blue, White and Gold tees), which GolfPass's hole yardages match. An older resort scorecard (2022 PDF) uses different tee names (Heritage 7,110 at 75.6/148, Dye 6,640 at 73.3/144, Sea Pines 6,248 at 71.4/136) and a different stroke-index order (8th = 1); GolfPass mixes the new yardages with that old order. The newer BlueGolf card is used. Not a major venue, so no major-host tag. No freely licensed photo of the 18th hole and lighthouse was found; the photos are other holes from a 2010 visit and are not identified by hole number.",
+  "sources": [
+    "https://course.bluegolf.com/bluegolf/course/course/seapinesresortht/detailedscorecard.htm",
+    "https://course.bluegolf.com/bluegolf/course/course/spharbourtown/detailedscorecard.htm",
+    "https://hhigolfvacations.com/wp-content/uploads/2022/09/Harbour-Town-Score-Card.pdf",
+    "https://www.golfpass.com/travel-advisor/courses/15967-harbour-town-golf-links-at-sea-pines-resort/scorecard-and-layout",
+    "https://en.wikipedia.org/wiki/Harbour_Town_Golf_Links",
+    "https://commons.wikimedia.org/wiki/File:Harbour_Town_Golf,_Hilton_Head_-_5111146241.jpg",
+    "https://commons.wikimedia.org/wiki/File:Harbour_Town_Golf,_Hilton_Head_-_5111137869.jpg",
+    "https://commons.wikimedia.org/wiki/File:Harbour_Town_Golf_Links,_Hilton_Head_-_5111737496.jpg"
+  ]
+}

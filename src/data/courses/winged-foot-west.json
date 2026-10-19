@@ -1,0 +1,189 @@
+{
+  "slug": "winged-foot-west",
+  "name": "Winged Foot Golf Club, West Course",
+  "shortName": "Winged Foot West",
+  "city": "Mamaroneck",
+  "region": "New York",
+  "country": "USA",
+  "access": "private",
+  "established": 1923,
+  "architect": "A.W. Tillinghast",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "A.W. Tillinghast's 1923 West Course in Westchester County, known for long par 4s and deep bunkers guarding narrow, pear-shaped greens. Hosted six U.S. Opens, from Bobby Jones's 1929 win to 2020, and the 1997 PGA Championship.",
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 451,
+      "hcp": 3
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 475,
+      "hcp": 9
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 243,
+      "hcp": 11
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 461,
+      "hcp": 7
+    },
+    {
+      "n": 5,
+      "par": 5,
+      "yards": 516,
+      "hcp": 5
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 321,
+      "hcp": 13
+    },
+    {
+      "n": 7,
+      "par": 3,
+      "yards": 167,
+      "hcp": 17
+    },
+    {
+      "n": 8,
+      "par": 4,
+      "yards": 493,
+      "hcp": 1
+    },
+    {
+      "n": 9,
+      "par": 5,
+      "yards": 572,
+      "hcp": 15
+    },
+    {
+      "n": 10,
+      "par": 3,
+      "yards": 194,
+      "hcp": 14
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 384,
+      "hcp": 12
+    },
+    {
+      "n": 12,
+      "par": 5,
+      "yards": 633,
+      "hcp": 6
+    },
+    {
+      "n": 13,
+      "par": 3,
+      "yards": 219,
+      "hcp": 16
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 452,
+      "hcp": 10
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 426,
+      "hcp": 4
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 490,
+      "hcp": 18
+    },
+    {
+      "n": 17,
+      "par": 4,
+      "yards": 469,
+      "hcp": 2
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 460,
+      "hcp": 8
+    }
+  ],
+  "tees": [
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 72,
+      "yards": 7426,
+      "rating": 76.4,
+      "slope": 140,
+      "source": "published"
+    },
+    {
+      "name": "Black",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 6937,
+      "rating": 74.3,
+      "slope": 134,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 72,
+      "yards": 6522,
+      "rating": 72.2,
+      "slope": 132,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#3d7a4a",
+      "par": 72,
+      "yards": 6019,
+      "rating": 69.8,
+      "slope": 130,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/winged-foot-west/hero.jpg",
+    "alt": "A deep greenside bunker and rolling fairways under large shade trees at Winged Foot on a clear summer evening, flagstick to the right",
+    "credit": "juan gomez (jgomez20), via Unsplash",
+    "license": "CC0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mamaroneck_golf_club_(Unsplash).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/winged-foot-west/g1.jpg",
+      "alt": "The stone gate tower at Winged Foot's main entrance, with a tree-lined drive leading into the club",
+      "credit": "Anthony22 (English Wikipedia)",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Winged_Foot_Golf_Club_main_entrance.jpg"
+    }
+  ],
+  "dataNotes": "Pars, yardages and stroke indexes are from BlueGolf's West Course scorecard and match GolfPass hole for hole. Men's ratings are BlueGolf's (Blue 76.4/140, Black 74.3/134, White 72.2/132, Green 69.8/130); GolfPass lists older figures (Blue 75.7/141, Black 73.8/137). The member card plays to par 72 with the 5th and 16th as par 5s; the U.S. Open setup plays to par 70. The hero photo is labelled only Winged Foot Golf Club, so it may show the East Course; it was cropped from a portrait original to a landscape frame.",
+  "sources": [
+    "https://course.bluegolf.com/bluegolf/course/course/wingedfootw/detailedscorecard.htm",
+    "https://www.golfpass.com/travel-advisor/courses/14988-west-at-winged-foot-golf-club/scorecard-and-layout",
+    "https://www.top100golfcourses.com/golf-course/winged-foot-west",
+    "https://en.wikipedia.org/wiki/Winged_Foot_Golf_Club",
+    "https://commons.wikimedia.org/wiki/File:Mamaroneck_golf_club_(Unsplash).jpg",
+    "https://commons.wikimedia.org/wiki/File:Winged_Foot_Golf_Club_main_entrance.jpg"
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "slug": "pinehurst-no-2",
+  "name": "Pinehurst No. 2",
+  "shortName": "Pinehurst No. 2",
+  "city": "Pinehurst",
+  "region": "North Carolina",
+  "country": "USA",
+  "access": "resort",
+  "established": 1907,
+  "architect": "Donald Ross (restored by Coore & Crenshaw, 2011)",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "Donald Ross's 1907 design in the North Carolina Sandhills, known for crowned, turtleback greens and sandy native waste areas restored by Coore & Crenshaw in 2011. Hosted the U.S. Open in 1999, 2005, 2014 and 2024.",
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 393,
+      "hcp": 11
+    },
+    {
+      "n": 2,
+      "par": 4,
+      "yards": 439,
+      "hcp": 3
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 350,
+      "hcp": 9
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 474,
+      "hcp": 1
+    },
+    {
+      "n": 5,
+      "par": 5,
+      "yards": 508,
+      "hcp": 15
+    },
+    {
+      "n": 6,
+      "par": 3,
+      "yards": 203,
+      "hcp": 5
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 393,
+      "hcp": 7
+    },
+    {
+      "n": 8,
+      "par": 5,
+      "yards": 469,
+      "hcp": 17
+    },
+    {
+      "n": 9,
+      "par": 3,
+      "yards": 174,
+      "hcp": 13
+    },
+    {
+      "n": 10,
+      "par": 5,
+      "yards": 580,
+      "hcp": 18
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 455,
+      "hcp": 8
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 419,
+      "hcp": 10
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 375,
+      "hcp": 6
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 433,
+      "hcp": 2
+    },
+    {
+      "n": 15,
+      "par": 3,
+      "yards": 183,
+      "hcp": 12
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 513,
+      "hcp": 16
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 185,
+      "hcp": 14
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 415,
+      "hcp": 4
+    }
+  ],
+  "tees": [
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 72,
+      "yards": 6961,
+      "rating": 75.4,
+      "slope": 143,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 72,
+      "yards": 6307,
+      "rating": 72.0,
+      "slope": 139,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#3d7a4a",
+      "par": 72,
+      "yards": 5771,
+      "rating": 69.1,
+      "slope": 135,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/pinehurst-no-2/hero.jpg",
+    "alt": "Mid-century color postcard of the fourth hole on Pinehurst No. 2: golfers and onlookers on the tee, a fairway running between longleaf pines and sand",
+    "credit": "State Archives of North Carolina (Massengill Postcard Collection)",
+    "license": "No known copyright restrictions",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:4th,_Pinehurst_No_2_001_(22130096452).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/pinehurst-no-2/g1.jpg",
+      "alt": "Green-framed Pinehurst No. 2 sign quoting Donald Ross calling it the fairest test of championship golf he designed, with pines and turf behind",
+      "credit": "Zhans33",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pinehurst_No._2.JPG"
+    }
+  ],
+  "dataNotes": "Hole pars, yardages and stroke indexes are from Pinehurst's official 2026 No. 2 scorecard (PDF). The longest tee here is the par-72 Blue tee: the U.S. Open tee (7,588 yds) plays to par 70 with holes 8 and 16 as par 4s, and the schema allows only one par per hole, so it is left out. Ratings and slopes are the men's figures listed by BlueGolf, 18Birdies and AllGolfHoles (Blue 75.4/143, White 72.0/139, Green 69.1/135). GolfPass shows older, lower figures (Blue 73.7/133, White 70.7/126, Green 68.0/123); the more widely repeated set is used. BlueGolf rates these tees at 6,966 / 6,324 / 5,782 yds, a few yards off the 2026 card; the USGA database blocks automated access, so it was not checked directly. Few freely licensed modern photos of No. 2 exist on Wikimedia Commons, so the hero is a mid-century postcard of the 4th hole (the routing has been altered since).",
+  "sources": [
+    "https://www.pinehurst.com/golf/courses/no-2/",
+    "https://www.pinehurst.com/wp-content/uploads/2025/10/Scorecard_No2_yardage26-1.pdf",
+    "https://www.allgolfholes.com/courses/north-carolina/pinehurst-resort-2",
+    "https://18birdies.com/golf-courses/club/f7fbea30-c402-11e7-938b-0680a328ea36/pinehurst-no-2",
+    "https://course.bluegolf.com/bluegolf/course/course/pinehurst2/detailedscorecard.htm",
+    "https://www.golfpass.com/travel-advisor/courses/14999-pinehurst-resort-country-club-no-2/scorecard-and-layout",
+    "https://en.wikipedia.org/wiki/Pinehurst_Resort",
+    "https://commons.wikimedia.org/wiki/File:4th,_Pinehurst_No_2_001_(22130096452).jpg",
+    "https://commons.wikimedia.org/wiki/File:Pinehurst_No._2.JPG"
+  ]
+}

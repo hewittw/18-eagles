@@ -1,0 +1,217 @@
+{
+  "slug": "shinnecock-hills",
+  "name": "Shinnecock Hills Golf Club",
+  "shortName": "Shinnecock Hills",
+  "city": "Southampton",
+  "region": "New York",
+  "country": "USA",
+  "access": "private",
+  "established": 1891,
+  "architect": "William Flynn (1931); restored by Coore & Crenshaw",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "One of the five founding clubs of the USGA, on windswept sandy hills in Southampton, Long Island, with an 1892 Stanford White clubhouse. William Flynn's 1931 layout has hosted the U.S. Open in three centuries, most recently 2026.",
+  "signatureHole": 7,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 399,
+      "hcp": 15,
+      "name": "Westward Ho"
+    },
+    {
+      "n": 2,
+      "par": 3,
+      "yards": 220,
+      "hcp": 17,
+      "name": "Plateau"
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 469,
+      "hcp": 5,
+      "name": "Peconic"
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 409,
+      "hcp": 7,
+      "name": "Pump House"
+    },
+    {
+      "n": 5,
+      "par": 5,
+      "yards": 537,
+      "hcp": 11,
+      "name": "Montauk"
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 453,
+      "hcp": 1,
+      "name": "Pond"
+    },
+    {
+      "n": 7,
+      "par": 3,
+      "yards": 189,
+      "hcp": 13,
+      "name": "Redan"
+    },
+    {
+      "n": 8,
+      "par": 4,
+      "yards": 394,
+      "hcp": 9,
+      "name": "Lowlands"
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 435,
+      "hcp": 3,
+      "name": "Ben Nevis"
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 415,
+      "hcp": 2,
+      "name": "Eastward Ho"
+    },
+    {
+      "n": 11,
+      "par": 3,
+      "yards": 159,
+      "hcp": 16,
+      "name": "Hill Head"
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 469,
+      "hcp": 8,
+      "name": "Tuckahoe"
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 374,
+      "hcp": 12,
+      "name": "Roadside"
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 463,
+      "hcp": 4,
+      "name": "Thom's Elbow"
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 409,
+      "hcp": 6,
+      "name": "Sebonac"
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 540,
+      "hcp": 10,
+      "name": "Shinnecock"
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 180,
+      "hcp": 18,
+      "name": "Eden"
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 426,
+      "hcp": 14,
+      "name": "Home"
+    }
+  ],
+  "tees": [
+    {
+      "name": "Red",
+      "color": "#a8322d",
+      "par": 70,
+      "yards": 6940,
+      "rating": 74.7,
+      "slope": 145,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#3d7a4a",
+      "par": 70,
+      "yards": 6530,
+      "rating": 72.5,
+      "slope": 140,
+      "source": "published"
+    },
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 70,
+      "yards": 6141,
+      "rating": 70.8,
+      "slope": 135,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 70,
+      "yards": 5396,
+      "rating": 67.4,
+      "slope": 128,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/shinnecock-hills/hero.jpg",
+    "alt": "The shingled Shinnecock Hills clubhouse on its hilltop above fescue-edged fairways and bunkers, with spectators walking the course at the 2018 U.S. Open",
+    "credit": "Peetlesnumber1",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shinnecock_Hills_GC_03.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/shinnecock-hills/g1.jpg",
+      "alt": "Tall golden fescue in the foreground with a green, bunkers and the clubhouse on the ridge behind during 2018 U.S. Open practice",
+      "credit": "Peetlesnumber1",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shinnecock_Hills_GC_02.jpg"
+    },
+    {
+      "src": "/courses/shinnecock-hills/g2.jpg",
+      "alt": "The Shinnecock Hills clubhouse, a gray-shingled building with a long white-columned porch, seen across the gravel drive under a deep blue sky",
+      "credit": "Michael O'Connor",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shinnecock_Hills_Clubhouse_2021.jpg"
+    }
+  ],
+  "dataNotes": "Ratings and slopes for Red, Green and Blue come from the club's own course page; the White men's rating (67.4/128) is from BlueGolf (the club page's 72.8 for White is the women's rating). Hole pars, Red-tee yardages and stroke indexes are from GolfPass and match BlueGolf. Hole names are from the 2026 U.S. Open scorecard (Yahoo Sports). The U.S. Open setup (7,440 yds, par 70) has no member rating and is not listed. GolfPass shows older, lower ratings (Red 74.4/140); the club figures are used. GolfPass's Green total of 6,430 contains a typo on the 5th hole; the club and BlueGolf give 6,530.",
+  "sources": [
+    "https://www.shinnecockhillsgolfclub.org/course",
+    "https://www.golfpass.com/courses/14993-shinnecock-hills-golf-club/scorecard-and-layout",
+    "https://course.bluegolf.com/bluegolf/course/course/shinnecockhillsgc/detailedscorecard.htm",
+    "https://sports.yahoo.com/articles/shinnecock-hills-scorecard-hole-names-110008990.html",
+    "https://en.wikipedia.org/wiki/Shinnecock_Hills_Golf_Club",
+    "https://commons.wikimedia.org/wiki/File:Shinnecock_Hills_GC_03.jpg",
+    "https://commons.wikimedia.org/wiki/File:Shinnecock_Hills_GC_02.jpg",
+    "https://commons.wikimedia.org/wiki/File:Shinnecock_Hills_Clubhouse_2021.jpg"
+  ]
+}

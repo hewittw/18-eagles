@@ -1,0 +1,197 @@
+{
+  "slug": "tpc-sawgrass",
+  "name": "TPC Sawgrass, THE PLAYERS Stadium Course",
+  "shortName": "TPC Sawgrass",
+  "city": "Ponte Vedra Beach",
+  "region": "Florida",
+  "country": "USA",
+  "access": "resort",
+  "established": 1980,
+  "architect": "Pete Dye",
+  "tags": [
+    "bucket-list"
+  ],
+  "blurb": "Pete Dye's 1980 Stadium Course, built for spectators with mounded viewing areas, and home of THE PLAYERS Championship since 1982. Best known for the island-green par-3 17th.",
+  "signatureHole": 17,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 424,
+      "hcp": 11
+    },
+    {
+      "n": 2,
+      "par": 5,
+      "yards": 555,
+      "hcp": 15
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 182,
+      "hcp": 17
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 387,
+      "hcp": 9
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 469,
+      "hcp": 3
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 413,
+      "hcp": 13
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 450,
+      "hcp": 1
+    },
+    {
+      "n": 8,
+      "par": 3,
+      "yards": 236,
+      "hcp": 7
+    },
+    {
+      "n": 9,
+      "par": 5,
+      "yards": 601,
+      "hcp": 5
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 419,
+      "hcp": 12
+    },
+    {
+      "n": 11,
+      "par": 5,
+      "yards": 573,
+      "hcp": 8
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 365,
+      "hcp": 16
+    },
+    {
+      "n": 13,
+      "par": 3,
+      "yards": 183,
+      "hcp": 18
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 485,
+      "hcp": 4
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 470,
+      "hcp": 6
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 537,
+      "hcp": 10
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 141,
+      "hcp": 14
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 462,
+      "hcp": 2
+    }
+  ],
+  "tees": [
+    {
+      "name": "THE PLAYERS",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 7352,
+      "rating": 76.8,
+      "slope": 155,
+      "source": "published"
+    },
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 72,
+      "yards": 6670,
+      "rating": 73.9,
+      "slope": 148,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 72,
+      "yards": 6086,
+      "rating": 70.8,
+      "slope": 138,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#3d7a4a",
+      "par": 72,
+      "yards": 5019,
+      "rating": 65.8,
+      "slope": 116,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/tpc-sawgrass/hero.jpg",
+    "alt": "The island green of the par-3 17th at TPC Sawgrass, ringed by railroad-tie bulkheads and reflected in the lake at dusk",
+    "credit": "Craig ONeal",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:TPC_Sawgrass_17.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/tpc-sawgrass/g1.jpg",
+      "alt": "Aerial view of the 17th island green on its narrow walkway, with the lake, a small tree island and the 16th hole beside it",
+      "credit": "St. Johns County Visitors & Conventions Bureau",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:TournamentPlayersClub_Sawgrass17thHole.jpg"
+    },
+    {
+      "src": "/courses/tpc-sawgrass/g2.jpg",
+      "alt": "The 18th hole bending left along the lake toward the Mediterranean-style clubhouse and white hospitality tents",
+      "credit": "Philip Larson from McLean, VA, US",
+      "license": "CC BY-SA 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:TPC_at_Sawgrass_(3423941155).jpg"
+    }
+  ],
+  "dataNotes": "Hole pars, yardages, stroke indexes, and men's ratings and slopes for all four tees are from TPC Sawgrass's official Stadium Course scorecard (PDF, 2025). The scorecard's handicap row is printed with uneven spacing; it was read in hole order (front nine odd, back nine even). Other sites list slightly different figures (Stymie 7,271 yds; GolfPass rating 76.4); the official card is used. Not a major venue, so it has no major-host tag.",
+  "sources": [
+    "https://tpc.com/sawgrass/wp-content/uploads/sites/51/2025/01/TPC_Sawgrass-Scorecard.pdf",
+    "https://stymie.golf/golf-courses/florida/st-johns-county/ponte-vedra-beach/tpc-sawgrass",
+    "https://www.golfpass.com/travel-advisor/courses/15881-tpc-sawgrass-the-players-stadium-course",
+    "https://en.wikipedia.org/wiki/TPC_Sawgrass",
+    "https://commons.wikimedia.org/wiki/File:TPC_Sawgrass_17.jpg",
+    "https://commons.wikimedia.org/wiki/File:TournamentPlayersClub_Sawgrass17thHole.jpg",
+    "https://commons.wikimedia.org/wiki/File:TPC_at_Sawgrass_(3423941155).jpg"
+  ]
+}

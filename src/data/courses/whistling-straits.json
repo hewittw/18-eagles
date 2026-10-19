@@ -1,0 +1,215 @@
+{
+  "slug": "whistling-straits",
+  "name": "Whistling Straits, Straits Course",
+  "shortName": "Whistling Straits",
+  "city": "Haven",
+  "region": "Wisconsin",
+  "country": "USA",
+  "access": "resort",
+  "established": 1998,
+  "architect": "Pete Dye",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "Pete Dye's 1998 links-style course built on a flat former airfield along two miles of Lake Michigan shoreline, with hundreds of bunkers in dune grass. Hosted the 2004, 2010 and 2015 PGA Championships and the 2021 Ryder Cup.",
+  "signatureHole": 17,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 493,
+      "hcp": 15,
+      "name": "Outward Bound"
+    },
+    {
+      "n": 2,
+      "par": 5,
+      "yards": 597,
+      "hcp": 7,
+      "name": "Cross Country"
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 188,
+      "hcp": 17,
+      "name": "O'Man"
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 494,
+      "hcp": 1,
+      "name": "Glory"
+    },
+    {
+      "n": 5,
+      "par": 5,
+      "yards": 603,
+      "hcp": 5,
+      "name": "Snake"
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 409,
+      "hcp": 13,
+      "name": "Gremlin's Ear"
+    },
+    {
+      "n": 7,
+      "par": 3,
+      "yards": 221,
+      "hcp": 9,
+      "name": "Shipwreck"
+    },
+    {
+      "n": 8,
+      "par": 4,
+      "yards": 506,
+      "hcp": 3,
+      "name": "On The Rocks"
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 442,
+      "hcp": 11,
+      "name": "Down And Dirty"
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 391,
+      "hcp": 12,
+      "name": "Voyageur"
+    },
+    {
+      "n": 11,
+      "par": 5,
+      "yards": 645,
+      "hcp": 6,
+      "name": "Sand Box"
+    },
+    {
+      "n": 12,
+      "par": 3,
+      "yards": 163,
+      "hcp": 18,
+      "name": "Pop Up"
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 402,
+      "hcp": 14,
+      "name": "Cliff Hanger"
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 396,
+      "hcp": 16,
+      "name": "Widow's Watch"
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 503,
+      "hcp": 4,
+      "name": "Grand Strand"
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 568,
+      "hcp": 10,
+      "name": "Endless Bite"
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 249,
+      "hcp": 8,
+      "name": "Pinched Nerve"
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 520,
+      "hcp": 2,
+      "name": "Dyeabolical"
+    }
+  ],
+  "tees": [
+    {
+      "name": "Black",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 7790,
+      "rating": 77.2,
+      "slope": 152,
+      "source": "published"
+    },
+    {
+      "name": "Blue",
+      "color": "#2f5d8a",
+      "par": 72,
+      "yards": 7142,
+      "rating": 74.2,
+      "slope": 145,
+      "source": "published"
+    },
+    {
+      "name": "Green",
+      "color": "#3d7a4a",
+      "par": 72,
+      "yards": 6663,
+      "rating": 71.9,
+      "slope": 141,
+      "source": "published"
+    },
+    {
+      "name": "White",
+      "color": "#f2f0e6",
+      "par": 72,
+      "yards": 6360,
+      "rating": 70.4,
+      "slope": 137,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/whistling-straits/hero.jpg",
+    "alt": "A green on the bluff edge at Whistling Straits, ringed by bunkers and dune grass, with Lake Michigan stretching to the horizon",
+    "credit": "Specialkboyle",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Whistling_Straits_golf_course,_far_shot.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/whistling-straits/g1.jpg",
+      "alt": "A par-5 fairway running along the grassy bluff above the Lake Michigan shoreline and beach",
+      "credit": "Baybay1901",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:WhistlingStraits-Shoreline-Par5.jpg"
+    },
+    {
+      "src": "/courses/whistling-straits/g2.jpg",
+      "alt": "Looking from the tee down the 11th fairway, Sand Box, past sandy waste areas and dunes toward the lake",
+      "credit": "KevinTR",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:WhistlingStraits11Fairway.JPG"
+    }
+  ],
+  "dataNotes": "Hole names, pars, yardages, stroke indexes and men's ratings for all tees are from the official Kohler Straits Course scorecard (PDF) and match BlueGolf exactly. The hero photo is not identified by hole number. The par-5 gallery photo is described only as a par 5 along Lake Michigan.",
+  "sources": [
+    "https://www.kohlerwisconsin.com/content/dam/kohler-destinations/pdf_resource/dk/golf/whistling-straits/scorecard-the-straits.pdf",
+    "https://course.bluegolf.com/bluegolf/course/course/whistlingstraitsstra/detailedscorecard.htm",
+    "https://en.wikipedia.org/wiki/Whistling_Straits",
+    "https://commons.wikimedia.org/wiki/File:Whistling_Straits_golf_course,_far_shot.jpg",
+    "https://commons.wikimedia.org/wiki/File:WhistlingStraits-Shoreline-Par5.jpg",
+    "https://commons.wikimedia.org/wiki/File:WhistlingStraits11Fairway.JPG"
+  ]
+}

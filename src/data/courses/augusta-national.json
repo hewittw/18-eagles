@@ -1,0 +1,200 @@
+{
+  "slug": "augusta-national",
+  "name": "Augusta National Golf Club",
+  "shortName": "Augusta National",
+  "city": "Augusta",
+  "region": "Georgia",
+  "country": "USA",
+  "access": "private",
+  "established": 1933,
+  "architect": "Alister MacKenzie and Bobby Jones",
+  "tags": [
+    "major-host",
+    "parkland",
+    "bucket-list"
+  ],
+  "blurb": "Home of the Masters since 1934. Designed by Alister MacKenzie and Bobby Jones on a former nursery, its holes are named for plants, and Amen Corner (11-13) crosses Rae's Creek.",
+  "signatureHole": 12,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 445,
+      "hcp": 9,
+      "name": "Tea Olive"
+    },
+    {
+      "n": 2,
+      "par": 5,
+      "yards": 585,
+      "hcp": 1,
+      "name": "Pink Dogwood"
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 350,
+      "hcp": 13,
+      "name": "Flowering Peach"
+    },
+    {
+      "n": 4,
+      "par": 3,
+      "yards": 240,
+      "hcp": 15,
+      "name": "Flowering Crab Apple"
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 495,
+      "hcp": 5,
+      "name": "Magnolia"
+    },
+    {
+      "n": 6,
+      "par": 3,
+      "yards": 180,
+      "hcp": 17,
+      "name": "Juniper"
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 450,
+      "hcp": 11,
+      "name": "Pampas"
+    },
+    {
+      "n": 8,
+      "par": 5,
+      "yards": 570,
+      "hcp": 3,
+      "name": "Yellow Jasmine"
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 460,
+      "hcp": 7,
+      "name": "Carolina Cherry"
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 495,
+      "hcp": 6,
+      "name": "Camellia"
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 520,
+      "hcp": 8,
+      "name": "White Dogwood"
+    },
+    {
+      "n": 12,
+      "par": 3,
+      "yards": 155,
+      "hcp": 16,
+      "name": "Golden Bell"
+    },
+    {
+      "n": 13,
+      "par": 5,
+      "yards": 545,
+      "hcp": 4,
+      "name": "Azalea"
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 440,
+      "hcp": 12,
+      "name": "Chinese Fir"
+    },
+    {
+      "n": 15,
+      "par": 5,
+      "yards": 550,
+      "hcp": 2,
+      "name": "Firethorn"
+    },
+    {
+      "n": 16,
+      "par": 3,
+      "yards": 170,
+      "hcp": 18,
+      "name": "Redbud"
+    },
+    {
+      "n": 17,
+      "par": 4,
+      "yards": 450,
+      "hcp": 14,
+      "name": "Nandina"
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 465,
+      "hcp": 10,
+      "name": "Holly"
+    }
+  ],
+  "tees": [
+    {
+      "name": "Masters",
+      "color": "#1f5c3a",
+      "par": 72,
+      "yards": 7565,
+      "rating": 78.1,
+      "slope": 137,
+      "source": "estimated"
+    },
+    {
+      "name": "Members",
+      "color": "#f2f0e6",
+      "par": 72,
+      "yards": 6365,
+      "rating": 72.6,
+      "slope": 133,
+      "source": "estimated"
+    }
+  ],
+  "hero": {
+    "src": "/courses/augusta-national/hero.jpg",
+    "alt": "Looking down the 10th fairway, Camellia, to the green and its large front bunker, framed by tall pines and Masters patrons",
+    "credit": "Mbrooks (Wikimedia Commons)",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Augusta_National_Golf_Club,_Hole_10_(Camellia)_-_cropped.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/augusta-national/g1.jpg",
+      "alt": "A golfer putting on the 12th green, Golden Bell, with Rae's Creek and the stone Hogan Bridge behind",
+      "credit": "Florian Fritsch, assisted by Mark Anderson",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:AGNC-12.jpg"
+    },
+    {
+      "src": "/courses/augusta-national/g2.jpg",
+      "alt": "The 18th green, Holly, with its yellow flag and the white leaders scoreboard during 2013 Masters practice rounds",
+      "credit": "Dan Perry from Atlanta, USA",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Eighteenth_hole,_Augusta_National_Golf_Club_(8688527211).jpg"
+    }
+  ],
+  "dataNotes": "Hole names, pars and Masters yardages follow the 2026 Masters course (7,565 yds; No. 17 Nandina lengthened from 440 to 450 for 2026). Stroke indexes and member-tee yardage (6,365) come from the club's member scorecard as reproduced by Golf Compendium. Augusta National has never had a USGA Course Rating, so both ratings are estimated. Masters tee: 78.1 / 137, the unofficial figure reportedly measured by USGA raters during Masters week (cited by Golf Compendium). Members tee: estimated by taking the length-only scratch rating (about 40.9 + yards/220, so roughly 69.8 for 6,365 yds) and adding the same difficulty premium the Masters-tee estimate carries over its length-only value (about +2.8 for fast, heavily contoured greens and elevation change), giving 72.6; slope 133 is set slightly below the Masters-tee 137. Treat both as approximations.",
+  "sources": [
+    "https://www.golfcompendium.com/2019/03/augusta-national-scorecard.html",
+    "https://www.pgatour.com/tournaments/2026/masters-tournament/R2026014/course-stats",
+    "https://www.pgatour.com/article/news/latest/2026/04/02/the-masters-2026-augusta-national-hole-by-hole-look-golf-course",
+    "https://www.masters.com/en_US/course/index.html",
+    "https://en.wikipedia.org/wiki/Augusta_National_Golf_Club",
+    "https://commons.wikimedia.org/wiki/File:Augusta_National_Golf_Club,_Hole_10_(Camellia)_-_cropped.jpg",
+    "https://commons.wikimedia.org/wiki/File:AGNC-12.jpg",
+    "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Eighteenth_hole,_Augusta_National_Golf_Club_(8688527211).jpg"
+  ]
+}

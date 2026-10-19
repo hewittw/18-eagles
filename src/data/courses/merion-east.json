@@ -1,0 +1,197 @@
+{
+  "slug": "merion-east",
+  "name": "Merion Golf Club, East Course",
+  "shortName": "Merion East",
+  "city": "Ardmore",
+  "region": "Pennsylvania",
+  "country": "USA",
+  "access": "private",
+  "established": 1912,
+  "architect": "Hugh Wilson",
+  "tags": [
+    "major-host",
+    "bucket-list"
+  ],
+  "blurb": "Hugh Wilson's 1912 East Course in Philadelphia's Main Line suburbs, short by modern standards and known for wicker baskets in place of flags. Hosted five U.S. Opens, including Ben Hogan's 1950 win, most recently 2013.",
+  "signatureHole": 18,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 358,
+      "hcp": 15
+    },
+    {
+      "n": 2,
+      "par": 5,
+      "yards": 589,
+      "hcp": 3
+    },
+    {
+      "n": 3,
+      "par": 3,
+      "yards": 250,
+      "hcp": 13
+    },
+    {
+      "n": 4,
+      "par": 5,
+      "yards": 622,
+      "hcp": 9
+    },
+    {
+      "n": 5,
+      "par": 4,
+      "yards": 501,
+      "hcp": 1
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 484,
+      "hcp": 5
+    },
+    {
+      "n": 7,
+      "par": 4,
+      "yards": 368,
+      "hcp": 11
+    },
+    {
+      "n": 8,
+      "par": 4,
+      "yards": 358,
+      "hcp": 17
+    },
+    {
+      "n": 9,
+      "par": 3,
+      "yards": 231,
+      "hcp": 7
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 306,
+      "hcp": 16
+    },
+    {
+      "n": 11,
+      "par": 4,
+      "yards": 358,
+      "hcp": 10
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 395,
+      "hcp": 14
+    },
+    {
+      "n": 13,
+      "par": 3,
+      "yards": 128,
+      "hcp": 18
+    },
+    {
+      "n": 14,
+      "par": 4,
+      "yards": 411,
+      "hcp": 2
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 415,
+      "hcp": 6
+    },
+    {
+      "n": 16,
+      "par": 4,
+      "yards": 429,
+      "hcp": 8
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 241,
+      "hcp": 12
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 502,
+      "hcp": 4
+    }
+  ],
+  "tees": [
+    {
+      "name": "Championship",
+      "color": "#1a1a1a",
+      "par": 70,
+      "yards": 6946,
+      "rating": 75.1,
+      "slope": 151,
+      "source": "published"
+    },
+    {
+      "name": "Back",
+      "color": "#2f5d8a",
+      "par": 70,
+      "yards": 6653,
+      "rating": 73.8,
+      "slope": 150,
+      "source": "published"
+    },
+    {
+      "name": "Middle",
+      "color": "#f2f0e6",
+      "par": 70,
+      "yards": 6103,
+      "rating": 71.4,
+      "slope": 145,
+      "source": "published"
+    },
+    {
+      "name": "Forward",
+      "color": "#3d7a4a",
+      "par": 70,
+      "yards": 5698,
+      "rating": 69.5,
+      "slope": 138,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/merion-east/hero.jpg",
+    "alt": "A spectator on a wooden footbridge over the stone-walled creek at Merion, reflected in the water, with bunkers and a green beyond during the 2022 Curtis Cup",
+    "credit": "Michael Stokes",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_Curtis_Cup_-_Bridge_(52139765260).jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/merion-east/g1.jpg",
+      "alt": "Bronze plaque set in the 18th fairway reading June 10, 1950, U.S. Open, fourth round, Ben Hogan, 1-iron",
+      "credit": "Bert Stewart",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:HoganMerion.jpg"
+    },
+    {
+      "src": "/courses/merion-east/g2.jpg",
+      "alt": "Crowds ringing the 5th green on Merion's East Course under an overcast sky during the 2022 Curtis Cup",
+      "credit": "Michael Stokes",
+      "license": "CC BY 2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2022_Curtis_Cup_-_5th_Green_(52139279501).jpg"
+    }
+  ],
+  "dataNotes": "Pars, Championship-tee yardages, stroke indexes and men's ratings are from BlueGolf's East Course scorecard; GolfPass shows the same hole yardages and stroke indexes. GolfPass's tee table carries older ratings (Back 73.4/146 at 6,590 yds, Middle 71.3/144); BlueGolf's figures, which match the scorecard totals, are used. Women's tees play the East to par 74; only men's par-70 ratings are listed.",
+  "sources": [
+    "https://course.bluegolf.com/bluegolf/course/course/merione/detailedscorecard.htm",
+    "https://www.golfpass.com/courses/15013-east-at-merion-golf-club/scorecard-and-layout",
+    "https://en.wikipedia.org/wiki/Merion_Golf_Club",
+    "https://commons.wikimedia.org/wiki/File:2022_Curtis_Cup_-_Bridge_(52139765260).jpg",
+    "https://commons.wikimedia.org/wiki/File:HoganMerion.jpg",
+    "https://commons.wikimedia.org/wiki/File:2022_Curtis_Cup_-_5th_Green_(52139279501).jpg"
+  ]
+}

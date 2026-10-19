@@ -1,0 +1,191 @@
+{
+  "slug": "kiawah-ocean",
+  "name": "Kiawah Island Golf Resort, The Ocean Course",
+  "shortName": "Kiawah Ocean",
+  "city": "Kiawah Island",
+  "region": "South Carolina",
+  "country": "USA",
+  "access": "resort",
+  "established": 1991,
+  "architect": "Pete Dye",
+  "tags": [
+    "major-host",
+    "coastal",
+    "bucket-list"
+  ],
+  "blurb": "Pete Dye's oceanfront course on the Atlantic, opened for the 1991 Ryder Cup and fully exposed to coastal wind, with ten holes along the beach. Hosted the 2012 and 2021 PGA Championships.",
+  "signatureHole": 17,
+  "holes": [
+    {
+      "n": 1,
+      "par": 4,
+      "yards": 400,
+      "hcp": 15
+    },
+    {
+      "n": 2,
+      "par": 5,
+      "yards": 560,
+      "hcp": 3
+    },
+    {
+      "n": 3,
+      "par": 4,
+      "yards": 384,
+      "hcp": 9
+    },
+    {
+      "n": 4,
+      "par": 4,
+      "yards": 476,
+      "hcp": 1
+    },
+    {
+      "n": 5,
+      "par": 3,
+      "yards": 212,
+      "hcp": 11
+    },
+    {
+      "n": 6,
+      "par": 4,
+      "yards": 486,
+      "hcp": 13
+    },
+    {
+      "n": 7,
+      "par": 5,
+      "yards": 565,
+      "hcp": 7
+    },
+    {
+      "n": 8,
+      "par": 3,
+      "yards": 198,
+      "hcp": 17
+    },
+    {
+      "n": 9,
+      "par": 4,
+      "yards": 496,
+      "hcp": 5
+    },
+    {
+      "n": 10,
+      "par": 4,
+      "yards": 439,
+      "hcp": 16
+    },
+    {
+      "n": 11,
+      "par": 5,
+      "yards": 587,
+      "hcp": 8
+    },
+    {
+      "n": 12,
+      "par": 4,
+      "yards": 472,
+      "hcp": 10
+    },
+    {
+      "n": 13,
+      "par": 4,
+      "yards": 484,
+      "hcp": 2
+    },
+    {
+      "n": 14,
+      "par": 3,
+      "yards": 235,
+      "hcp": 14
+    },
+    {
+      "n": 15,
+      "par": 4,
+      "yards": 442,
+      "hcp": 18
+    },
+    {
+      "n": 16,
+      "par": 5,
+      "yards": 604,
+      "hcp": 4
+    },
+    {
+      "n": 17,
+      "par": 3,
+      "yards": 223,
+      "hcp": 12
+    },
+    {
+      "n": 18,
+      "par": 4,
+      "yards": 509,
+      "hcp": 6
+    }
+  ],
+  "tees": [
+    {
+      "name": "Championship",
+      "color": "#1a1a1a",
+      "par": 72,
+      "yards": 7772,
+      "rating": 79.1,
+      "slope": 155,
+      "source": "published"
+    },
+    {
+      "name": "Black",
+      "color": "#3b3b3b",
+      "par": 72,
+      "yards": 7385,
+      "rating": 77.4,
+      "slope": 153,
+      "source": "published"
+    },
+    {
+      "name": "Gold",
+      "color": "#c9a43a",
+      "par": 72,
+      "yards": 6793,
+      "rating": 74.7,
+      "slope": 150,
+      "source": "published"
+    },
+    {
+      "name": "Silver",
+      "color": "#a9adb1",
+      "par": 72,
+      "yards": 6356,
+      "rating": 72.1,
+      "slope": 140,
+      "source": "published"
+    }
+  ],
+  "hero": {
+    "src": "/courses/kiawah-ocean/hero.jpg",
+    "alt": "Wide view from the clubhouse over the 18th green and dune grasses to the Atlantic Ocean under a hazy afternoon sun",
+    "credit": "N75746",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ocean_course_18th_green.jpg"
+  },
+  "gallery": [
+    {
+      "src": "/courses/kiawah-ocean/g1.jpg",
+      "alt": "Aerial view of the Ocean Course clubhouse between the beach and a tidal marsh, with fairways and greens running along the sand",
+      "credit": "Pammymags (photo by Tim Marose)",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kiawah_Island_South_Carolina_-_The_Ocean_Course.jpg"
+    }
+  ],
+  "dataNotes": "Pars, yardages, stroke indexes and men's ratings are from BlueGolf (Championship 7,772 / Black 7,385 / Gold 6,793 / Silver 6,356). A photographed 2020 resort scorecard on Wikimedia Commons shows older tee names and lengths (Championship 7,849 at 79.1/155, Tournament 7,356 at 76.8/153, Ocean 6,779 at 73.9/148, Dye 6,475 at 72.4/139) with the same pars and stroke indexes. The tees appear to have been renamed and re-measured since; check the current card at the course.",
+  "sources": [
+    "https://course.bluegolf.com/bluegolf/course/course/kiawahocean/detailedscorecard.htm",
+    "https://commons.wikimedia.org/wiki/File:Ocean_course_scorecard_2020.jpg",
+    "https://stymie.golf/golf-courses/south-carolina/charleston-county/kiawah-island/kiawah-island-golf-resort-the-ocean-course",
+    "https://en.wikipedia.org/wiki/Kiawah_Island_Golf_Resort",
+    "https://commons.wikimedia.org/wiki/File:Ocean_course_18th_green.jpg",
+    "https://commons.wikimedia.org/wiki/File:Kiawah_Island_South_Carolina_-_The_Ocean_Course.jpg"
+  ]
+}
