@@ -19,7 +19,9 @@ export function sampleSeason(custom: Course[] = []): Store {
   const plan: [slug: string, daysAgo: number][] = [
     ["torrey-pines-south", 120], ["rancho-santa-fe", 108], ["torrey-pines-north", 96], ["rancho-santa-fe", 84], ["fairbanks-ranch", 77],
     ["torrey-pines-south", 63], ["rancho-santa-fe", 56], ["pebble-beach", 45], ["jackson-park", 33], ["rancho-santa-fe", 26],
-    ["torrey-pines-south", 19], ["st-andrews-old", 12], ["rancho-santa-fe", 5],
+    ["torrey-pines-south", 19], ["st-andrews-old", 12],
+    // the latest card always lands in the current Monday–Sunday week, so the weekly trophies have something to show
+    ["rancho-santa-fe", (new Date().getDay() + 6) % 7],
   ];
   const rounds: Round[] = [];
   plan.forEach(([slug, ago], k) => {
@@ -43,9 +45,10 @@ export function sampleSeason(custom: Course[] = []): Store {
     const d = new Date();
     d.setDate(d.getDate() - ago);
     const date = todayISO(d);
+    const started = Math.min(d.getTime(), Date.now() - 5 * 3600e3); // never finished in the future
     rounds.push({
       id: `sample${k}`, courseSlug: slug, teeName: tee.name, date, holes: "18", mode: "live", status: "complete", entries, totalOnly: null,
-      lastHole: 18, note: NOTES[k % NOTES.length], createdAt: d.getTime(), finishedAt: d.getTime() + 4.5 * 3600e3,
+      lastHole: 18, note: NOTES[k % NOTES.length], createdAt: started, finishedAt: started + 4.5 * 3600e3,
     });
   });
   const s = emptyStore();

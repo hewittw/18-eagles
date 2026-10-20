@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { PageHeader } from "@/components/golf";
-import { Button, ButtonLink, Callout, ChoiceGroup, ConfirmDialog, Field, NumberInput, SectionHeading, Select, TextInput, ToggleChip, useToast } from "@/components/ui";
+import { ActionList, ActionRow, Button, ButtonLink, Callout, ChoiceGroup, ConfirmDialog, Field, NumberInput, SectionHeading, Select, TextInput, ToggleChip, useToast } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { sampleSeason } from "@/lib/sample";
@@ -12,6 +12,7 @@ import { exportJSON, importJSON, patchProfile, resetAll, todayISO, update } from
 import type { ClubKind, Goal } from "@/lib/types";
 import { parseIndex } from "@/lib/validate";
 import { Page, Placeholder } from "../_components/Placeholder";
+import { useTrophies } from "../_components/TrophyCase";
 
 const KINDS: { kind: ClubKind; label: string }[] = [
   { kind: "wood", label: "Woods" },
@@ -42,6 +43,7 @@ export function Locker() {
   const [indexError, setIndexError] = useState<string>();
   const [importError, setImportError] = useState<string>();
   const [dialog, setDialog] = useState<"sample" | "erase" | null>(null);
+  const trophies = useTrophies();
 
   if (!ready) return <Placeholder label="Opening your locker" />;
 
@@ -297,6 +299,10 @@ export function Locker() {
           )}
         </div>
       </section>
+
+      <ActionList className="mt-4" label="Trophies">
+        <ActionRow href="/clubhouse/trophies" icon="trophy" title="Trophy Room" detail={`${trophies.wonCount} of ${trophies.total} won · see this week's case`} />
+      </ActionList>
 
       {/* Your data */}
       <section aria-labelledby="data-h" className="mt-14">
