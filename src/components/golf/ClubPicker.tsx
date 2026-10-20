@@ -101,6 +101,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
                   const isLast = last === c.id;
                   const carry = carries?.[c.id];
                   return (
+                    // touch-manipulation: two quick taps on Pt are two putts, never a double-tap zoom
                     <button
                       key={c.id}
                       ref={c.id === firstId ? firstClubRef : undefined}
@@ -110,7 +111,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
                       // the name starts with the tile's visible text ("7i 160"), so voice control can say what it sees (WCAG 2.5.3)
                       aria-label={`${c.short}${carry ? ` ${carry}` : c.kind === "putter" ? " green" : ""}: ${c.name}${carry ? `, carries ${carry} yards` : c.kind === "putter" ? ", on the green" : ""}${isLast ? ", last club used" : ""}`}
                       className={cx(
-                        "group/c relative flex min-h-tile min-w-0 flex-col items-start justify-between rounded-md border border-rule bg-paper-2 px-2.5 py-2 text-left text-ink shadow-card",
+                        "group/c relative flex touch-manipulation min-h-tile min-w-0 flex-col items-start justify-between rounded-md border border-rule bg-paper-2 px-2.5 py-2 text-left text-ink shadow-card",
                         "transition-[background-color,border-color,transform,color] duration-150",
                         "is-hover:border-green/45 is-hover:bg-tint is-pressed:scale-[0.96] is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green",
                         "disabled:cursor-not-allowed disabled:scale-100 disabled:border-dashed disabled:bg-transparent disabled:text-ink-2 disabled:shadow-none",

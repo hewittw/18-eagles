@@ -30,6 +30,7 @@ export type HandicapState = {
   change: number | null; // the change from the previous differential's index
   nextToDrop: Differential | null; // the oldest of 20, which leaves the window on the next round
   nextToDropCounts: boolean;
+  pendingNine: string | null; // a 9-hole card waiting for the next 9-hole card to pair with
 };
 
 export const WHS_TABLE: Record<number, [count: number, adj: number]> = {
@@ -133,6 +134,7 @@ export function computeHandicap(rounds: Round[], custom: Course[], entered: numb
     change: history.length >= 2 ? r1(history[history.length - 1].index - history[history.length - 2].index) : null,
     nextToDrop,
     nextToDropCounts: nextToDrop ? counting.has(keyOf(nextToDrop)) : false,
+    pendingNine: pendingNine?.r.id ?? null,
   };
 }
 

@@ -5,7 +5,7 @@ import { PageHeader, TeeSwatch, toParSpoken, toParText } from "@/components/golf
 import { ButtonLink, Chevron, Icon, Tag, cx } from "@/components/ui";
 import { teeOf } from "@/lib/courses";
 import { keyOf } from "@/lib/handicap";
-import { useClub } from "@/lib/hooks";
+import { swallowStrayTap, useClub } from "@/lib/hooks";
 import { nextUnplayed } from "@/lib/round-actions";
 import { summarize, type RoundSummary } from "@/lib/stats";
 import { Page, Placeholder } from "../../_components/Placeholder";
@@ -106,7 +106,7 @@ function InProgress({ roundId, courseName, next, nine, holeCount, played }: { ro
           {played} of {of} holes scored{nine !== "18" && holeCount === 18 ? ` · ${NINE_SPOKEN[nine]}` : ""}
         </p>
       </div>
-      <ButtonLink href={`/clubhouse/rounds/${roundId}/${next}`} variant="primary" tone="green" size="lg" className="max-sm:w-full">
+      <ButtonLink href={`/clubhouse/rounds/${roundId}/${next}`} onClick={() => swallowStrayTap()} variant="primary" tone="green" size="lg" className="max-sm:w-full">
         Hole {position} of {of} · Resume
       </ButtonLink>
     </section>
@@ -122,6 +122,7 @@ function CardRow({ s, counts }: { s: RoundSummary; counts: boolean }) {
     <li>
       <Link
         href={`/clubhouse/rounds/${r.id}`}
+        onClick={() => swallowStrayTap()}
         className="group/row flex min-h-20 items-center gap-3.5 px-3.5 py-3 transition-colors duration-150 -outline-offset-2 is-hover:bg-paper-3 is-pressed:bg-tint sm:gap-4 sm:px-5"
       >
         <span className="grid w-12 shrink-0 place-items-center rounded-sm bg-paper-3 py-1.5 leading-none" aria-hidden="true">

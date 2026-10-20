@@ -1,11 +1,11 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { PageHeader, toParText } from "@/components/golf";
 import { Button, ChoiceGroup, DateInput, ErrorIcon, Field, NumberInput, Select, TextArea, useToast, cx } from "@/components/ui";
 import type { Course } from "@/lib/course-types";
 import { defaultHome, holesFor } from "@/lib/courses";
-import { useClub, useDraft } from "@/lib/hooks";
+import { swallowStrayTap, useClub, useDraft } from "@/lib/hooks";
 import { logPastRound } from "@/lib/round-actions";
 import { todayISO } from "@/lib/store";
 import type { Nine } from "@/lib/types";
@@ -43,6 +43,17 @@ function LogRoundForm() {
   const [override, setOverride] = useState<string | null>(query && find(query) ? query : null);
   const [tried, setTried] = useState(false);
   const [saving, setSaving] = useState(false);
+  // After a save the router keeps this page mounted (hidden). Keep the form as typed until it's gone (no flash of
+  // empty fields and errors), then start the next visit on a blank card instead of a stuck "Saving".
+  const saved = useRef(false);
+  useEffect(() => () => {
+    if (!saved.current) return;
+    saved.current = false;
+    clear();
+    setTried(false);
+    setSaving(false);
+    setOverride(null);
+  }, [clear]);
 
   const course: Course = (override && find(override)) || (d.course && find(d.course)) || defaultHome(store.profile.homeCourse, store.customCourses);
   const remembered = store.profile.lastTee[course.slug];
@@ -102,10 +113,13 @@ function LogRoundForm() {
       document.getElementById(errors[0][0])?.focus();
       return;
     }
+    if (saved.current) return; // already saved; the page is on its way out
     setSaving(true);
+    swallowStrayTap();
     const strokes = d.mode === "holes" ? Object.fromEntries(holes.map((h) => [h.n, Number(d.strokes[h.n])])) : null;
     const id = logPastRound({ course, teeName, date: d.date, nine, total: d.mode === "total" ? Number(d.total) : null, strokes, note: d.note.trim() });
-    clear();
+    saved.current = true;
+    clear({ keepShown: true });
     toast({ message: "Card saved" });
     router.push(`/clubhouse/rounds/${id}`);
   };

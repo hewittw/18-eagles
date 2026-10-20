@@ -15,11 +15,13 @@ export type StepperProps = {
   unit?: { one: string; many: string };
   /** Where the first + lands when the value is empty. Defaults to min. */
   start?: number;
+  /** An optional count: − at the minimum goes back to "not set" (so a stray + can be taken back). */
+  clearable?: boolean;
   disabled?: boolean;
 };
 
 /** − value + with real buttons (≥ 44px; 56px at lg), disabled at the limits, and a polite live value. */
-export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md", hint, unit, start, disabled }: StepperProps) {
+export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md", hint, unit, start, clearable, disabled }: StepperProps) {
   const id = useId();
   const [said, setSaid] = useState("");
   // A button disables itself at its limit; hand focus to the other one so keyboard focus is never dropped.
@@ -32,19 +34,26 @@ export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md"
     setSaid(`${label}: ${words(n)}`);
   };
   const dec = () => {
-    if (value == null || value <= min) return;
+    if (value == null) return;
+    if (value <= min) {
+      if (!clearable) return;
+      set(null);
+      incRef.current?.focus();
+      return;
+    }
     set(value - 1);
-    if (value - 1 <= min) incRef.current?.focus();
+    if (value - 1 <= min && !clearable) incRef.current?.focus();
   };
   const inc = () => {
     const n = value == null ? (start ?? min) : Math.min(max, value + 1);
     set(n);
     if (n >= max) decRef.current?.focus();
   };
-  const atMin = value == null || value <= min;
+  const atMin = value == null || (value <= min && !clearable);
+  const clears = clearable && value != null && value <= min;
   const atMax = value != null && value >= max;
   const b =
-    "grid shrink-0 place-items-center rounded-full border border-green/25 bg-tint font-numeral font-semibold leading-none text-green transition-[background-color,transform] duration-150 " +
+    "grid shrink-0 touch-manipulation place-items-center rounded-full border border-green/25 bg-tint font-numeral font-semibold leading-none text-green transition-[background-color,transform] duration-150 " +
     "is-hover:bg-tint-2 is-pressed:scale-95 is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green " +
     "disabled:cursor-not-allowed disabled:scale-100 disabled:border-rule disabled:bg-paper-3 disabled:text-ink-2";
   return (
@@ -52,7 +61,7 @@ export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md"
       <p id={`${id}-l`} className="text-[1rem] font-medium text-ink">{label}</p>
       {hint && <p id={`${id}-h`} className="text-[0.92rem] text-ink-2">{hint}</p>}
       <div role="group" aria-labelledby={`${id}-l`} aria-describedby={hint ? `${id}-h` : undefined} className="mt-2 inline-flex flex-wrap items-stretch gap-1.5">
-        <button ref={decRef} type="button" className={cx(b, btn)} onClick={dec} disabled={disabled || atMin} aria-label={`Fewer ${label.toLowerCase()}`}>
+        <button ref={decRef} type="button" className={cx(b, btn)} onClick={dec} disabled={disabled || atMin} aria-label={clears ? `Clear ${label.toLowerCase()}` : `Fewer ${label.toLowerCase()}`}>
           <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true"><path d="M2 8 H14" stroke="currentColor" strokeWidth="2" /></svg>
         </button>
         <span

@@ -22,7 +22,7 @@ export function useClub() {
  * Form state that survives leaving the page and coming back (saved to localStorage as you type),
  * so nothing a golfer typed is ever lost. `clear()` after a successful save.
  */
-export function useDraft<T>(key: string, initial: T): [T, (next: T | ((p: T) => T)) => void, () => void, boolean] {
+export function useDraft<T>(key: string, initial: T): [T, (next: T | ((p: T) => T)) => void, (opts?: { keepShown?: boolean }) => void, boolean] {
   const full = `18eagles:draft:${key}`;
   const [value, setValue] = useState<T>(initial);
   const [restored, setRestored] = useState(false);
@@ -50,11 +50,28 @@ export function useDraft<T>(key: string, initial: T): [T, (next: T | ((p: T) => 
     },
     [full],
   );
-  const clear = useCallback(() => {
+  // `keepShown`: forget the saved draft but leave the form as it is (while a successful save navigates away).
+  const clear = useCallback((opts?: { keepShown?: boolean }) => {
     try { window.localStorage.removeItem(full); } catch {}
+    if (opts?.keepShown === true) return;
     setValue(initial);
     setRestored(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [full]);
   return [value, set, clear, restored];
+}
+
+/**
+ * Call from a tap that navigates (Finish round, Delete, Save the card). A quick double tap's second tap would land on
+ * whatever the next page has in that spot (a card row, a tab), so clicks are ignored for a moment.
+ */
+export function swallowStrayTap(ms = 450) {
+  const until = performance.now() + ms;
+  const stop = (ev: Event) => {
+    if (performance.now() > until) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+  };
+  document.addEventListener("click", stop, true);
+  window.setTimeout(() => document.removeEventListener("click", stop, true), ms);
 }

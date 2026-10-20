@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ClubPicker, FairwayPicker, HoleIllustration, ScorecardTable, ScoreTiles, toParText } from "@/components/golf";
 import { ArrowIcon, Button, ButtonLink, Callout, ErrorIcon, Field, SkipTo, Stepper, TextArea, cx, useToast } from "@/components/ui";
 import { holesFor, yardsAt } from "@/lib/courses";
-import { useClub } from "@/lib/hooks";
+import { swallowStrayTap, useClub } from "@/lib/hooks";
 import { finishRound } from "@/lib/round-actions";
 import { emptyEntry, setEntry, update } from "@/lib/store";
 import type { HoleEntry } from "@/lib/types";
@@ -26,6 +26,18 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
   const toast = useToast();
   const [keep, setKeep] = useState(false); // "Keep 4" on the shots-vs-score question
   const [finishing, setFinishing] = useState(false);
+  // The shots-vs-score question goes away once answered: put focus back on the chosen score, not on <body>.
+  const scoreRef = useRef<HTMLDivElement>(null);
+  // A quick double tap on Next would land its second tap on the next hole's Next (same spot) and skip a hole.
+  // The bar ignores taps for a moment after a hole appears (this also runs when the router reshows a kept hole).
+  const shownAt = useRef(0);
+  useLayoutEffect(() => { shownAt.current = performance.now(); }, []);
+  const settle = (ev: { preventDefault(): void }) => {
+    if (performance.now() - shownAt.current > 500) return true;
+    ev.preventDefault();
+    return false;
+  };
+  const focusScore = () => requestAnimationFrame(() => scoreRef.current?.querySelector<HTMLElement>('[role="radio"][tabindex="0"]')?.focus());
 
   if (!ready) return <Placeholder label="Walking to the tee" />;
   const round = store.rounds.find((r) => r.id === id);
@@ -56,12 +68,19 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
 
   // Clubs can count the score: the first time shots are logged on an unscored hole, the score follows them,
   // and putts follow the putter taps until the golfer sets putts by hand.
+  // Clearing every shot clears a score (and putts) that were only counting them; Undo clear brings them back.
   const onShots = (shots: string[]) => {
     const p: Partial<HoleEntry> = { shots };
     const followed = e.strokes == null || e.strokes === e.shots.length + e.penalties;
-    if (followed && shots.length) p.strokes = shots.length + e.penalties;
-    if (e.putts == null || e.putts === count(e.shots, "pt")) p.putts = count(shots, "pt") || (e.putts == null ? null : 0);
+    if (followed) p.strokes = shots.length ? shots.length + e.penalties : null;
+    if (e.putts == null || e.putts === count(e.shots, "pt")) p.putts = !shots.length ? null : count(shots, "pt") || (e.putts == null ? null : 0);
     setKeep(false);
+    patch(p);
+  };
+  // A penalty is part of the score: while the score is counting the clubs, it counts the penalty too.
+  const onPenalties = (v: number) => {
+    const p: Partial<HoleEntry> = { penalties: v };
+    if (e.shots.length && e.strokes === e.shots.length + e.penalties) p.strokes = e.shots.length + v;
     patch(p);
   };
 
@@ -69,12 +88,15 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
   const frontDone = round.holes === "18" && c.holes.length === 18 && holes.slice(0, 9).every((h) => round.entries[h.n]?.strokes != null) && holes.slice(9).every((h) => round.entries[h.n]?.strokes == null);
 
   const finish = (asFront = false) => {
+    swallowStrayTap();
     if (asFront) update((s) => ({ ...s, rounds: s.rounds.map((r) => (r.id === round.id ? { ...r, holes: "front" } : r)) }));
     finishRound(round.id);
     toast({ message: `Card saved: ${gross} at ${c.shortName}` });
     router.push(`/clubhouse/rounds/${round.id}`);
   };
 
+  // Unique per hole: the router keeps the holes you just left mounted (hidden), and a shared id would find one of those.
+  const nextId = `hole-next-${n}`;
   const back = round.status === "complete" ? { href: `/clubhouse/rounds/${round.id}`, label: "Back to the card" } : { href: "/clubhouse", label: "Clubhouse" };
 
   return (
@@ -103,7 +125,12 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
                 <span className="text-[0.92rem] md:text-lg">{gross} strokes</span>
               </>
             ) : (
-              <span className="text-on-green">Hole {idx + 1} of {holes.length}</span>
+              // The same three lines as once scored, so the first tile tap doesn't push the tiles down.
+              <>
+                <span className="caps text-[0.66rem] text-gold md:text-[0.7rem]">Hole {idx + 1} of {holes.length}<span className="sr-only">, </span></span>
+                <span className="text-[1.6rem] font-semibold leading-none text-on-green md:text-[2rem]" aria-hidden="true">E</span>
+                <span className="text-[0.92rem] md:text-lg">No strokes yet</span>
+              </>
             )}
           </p>
           </div>
@@ -125,11 +152,11 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
           <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-7">
             <section aria-labelledby="score-h">
               <h2 id="score-h" className={caption}>Your score</h2>
-              <div className={group}>
+              <div ref={scoreRef} className={group}>
                 <ScoreTiles par={hole.par} value={e.strokes} label={`Score for hole ${n}`} holeLabel={`Hole ${n}`} onChange={(v) => { setKeep(false); patch({ strokes: v }); }} />
               </div>
               {/* The putts, clubs, note and the 18-hole card come before the bottom bar in Tab order: a way past them. */}
-              <div className="mt-2 empty:hidden"><SkipTo href="#hole-next">{next ? `Skip to Hole ${next.n}` : round.status === "complete" ? "Skip to Back to card" : "Skip to Finish round"}</SkipTo></div>
+              <div className="mt-2 empty:hidden"><SkipTo href={`#${nextId}`}>{next ? `Skip to Hole ${next.n}` : round.status === "complete" ? "Skip to Back to card" : "Skip to Finish round"}</SkipTo></div>
             </section>
 
             {/* Always mounted, so the question is announced when it appears */}
@@ -137,8 +164,8 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
             {mismatch && (
               <Callout title={`You logged ${e.shots.length} ${e.shots.length === 1 ? "shot" : "shots"}${e.penalties ? ` and ${e.penalties} penalty` : ""} but scored ${e.strokes}.`}
                 action={<div className="mt-3 flex flex-wrap gap-2">
-                  <Button size="sm" variant="secondary" onClick={() => patch({ strokes: shotsTotal })}>Use {shotsTotal} as my score</Button>
-                  <Button size="sm" variant="quiet" onClick={() => setKeep(true)}>Keep {e.strokes}</Button>
+                  <Button size="sm" variant="secondary" onClick={() => { patch({ strokes: shotsTotal }); focusScore(); }}>Use {shotsTotal} as my score</Button>
+                  <Button size="sm" variant="quiet" onClick={() => { setKeep(true); focusScore(); }}>Keep {e.strokes}</Button>
                 </div>}>
                 Which is right?
               </Callout>
@@ -149,13 +176,13 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
               <h2 id="detail-h" className={caption}>Putts, tee shot, and penalties</h2>
               <div className={cx(group, "grid grid-cols-[minmax(0,1fr)] gap-6 p-0! sm:grid-cols-2 sm:gap-0")}>
                 <div className="px-4 pt-4 sm:px-5 sm:py-5">
-                  <Stepper label="Putts" value={e.putts} min={0} max={10} start={2} size="lg" unit={{ one: "putt", many: "putts" }} hint={puttsErr ? undefined : "Optional. Counts toward putting and greens stats."} onChange={(v) => patch({ putts: v })} />
+                  <Stepper label="Putts" value={e.putts} min={0} max={10} start={2} clearable size="lg" unit={{ one: "putt", many: "putts" }} hint="Optional. Counts toward putting and greens stats." onChange={(v) => patch({ putts: v })} />
                   {puttsErr && (
                     <p className="mt-2 flex items-start gap-2 text-[0.95rem] font-medium text-error" aria-live="polite"><ErrorIcon /><span>{puttsErr}</span></p>
                   )}
                 </div>
                 <div className="border-t border-rule/80 px-4 pb-4 pt-4 sm:border-l sm:border-t-0 sm:px-5 sm:py-5">
-                  <Stepper label="Penalty strokes" value={e.penalties} min={0} max={6} size="lg" unit={{ one: "penalty stroke", many: "penalty strokes" }} hint="Already part of your score." onChange={(v) => patch({ penalties: v ?? 0 })} />
+                  <Stepper label="Penalty strokes" value={e.penalties} min={0} max={6} size="lg" unit={{ one: "penalty stroke", many: "penalty strokes" }} hint="Already part of your score." onChange={(v) => onPenalties(v ?? 0)} />
                 </div>
                 {hole.par >= 4 && (
                   <div className="border-t border-rule/80 px-4 pb-4 pt-4 sm:col-span-2 sm:px-5 sm:pb-5">
@@ -196,7 +223,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
             The card so far
           </summary>
           <div className="mt-3">
-            <ScorecardTable holes={holes} entries={round.entries} currentHole={n} compact caption={`Scorecard, ${c.shortName}`} teeName={round.teeName} onSelectHole={(h) => router.push(`/clubhouse/rounds/${round.id}/${h}`)} />
+            <ScorecardTable holes={holes} entries={round.entries} currentHole={n} compact caption={`Scorecard, ${c.shortName}`} teeName={round.teeName} onSelectHole={(h) => { swallowStrayTap(); router.push(`/clubhouse/rounds/${round.id}/${h}`); }} />
           </div>
         </details>
       </Page>
@@ -206,14 +233,14 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
         {/* Two equal halves on phones, the same width on every hole (Finish round too); one column once large text needs it. */}
         <div className="mx-auto grid max-w-ledger grid-cols-[repeat(auto-fit,minmax(min(100%,8em),1fr))] items-center gap-2.5 px-4 py-2.5 sm:px-6 md:flex md:justify-between md:py-3 lg:px-8">
           {prev ? (
-            <ButtonLink href={`/clubhouse/rounds/${round.id}/${prev.n}`} variant="secondary" size="lg" className={half} icon={<ArrowIcon dir="left" />}>Hole {prev.n}</ButtonLink>
+            <ButtonLink href={`/clubhouse/rounds/${round.id}/${prev.n}`} onClick={settle} variant="secondary" size="lg" className={half} icon={<ArrowIcon dir="left" />}>Hole {prev.n}</ButtonLink>
           ) : <span className={half} aria-hidden="true" />}
           {next ? (
-            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}/${next.n}`} variant="primary" size="lg" className={cx(half, "flex-row-reverse md:min-w-60")} icon={<ArrowIcon />}>Hole {next.n}</ButtonLink>
+            <ButtonLink id={nextId} href={`/clubhouse/rounds/${round.id}/${next.n}`} onClick={settle} variant="primary" size="lg" className={cx(half, "flex-row-reverse md:min-w-60")} icon={<ArrowIcon />}>Hole {next.n}</ButtonLink>
           ) : round.status === "complete" ? (
-            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}`} variant="primary" size="lg" className={cx(half, "md:min-w-60")}>Back to card</ButtonLink>
+            <ButtonLink id={nextId} href={`/clubhouse/rounds/${round.id}`} onClick={settle} variant="primary" size="lg" className={cx(half, "md:min-w-60")}>Back to card</ButtonLink>
           ) : (
-            <Button id="hole-next" variant="primary" size="lg" className={cx(half, "md:min-w-60")} onClick={() => (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
+            <Button id={nextId} variant="primary" size="lg" className={cx(half, "md:min-w-60")} onClick={(ev) => settle(ev) && (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
           )}
         </div>
         <div aria-live="polite">
@@ -221,9 +248,9 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
           <div className="mx-auto max-w-ledger px-4 pb-4 sm:px-6 lg:px-8" role="region" aria-label="Unscored holes">
             <Callout title={`${missing.length === 1 ? "Hole" : "Holes"} ${missing.map((h) => h.n).join(", ")} ${missing.length === 1 ? "has" : "have"} no score yet.`}
               action={<div className="mt-3 flex flex-wrap gap-2">
-                <ButtonLink href={`/clubhouse/rounds/${round.id}/${missing[0].n}`} size="sm" variant="secondary" onClick={() => setFinishing(false)}>Score hole {missing[0].n}</ButtonLink>
+                <ButtonLink href={`/clubhouse/rounds/${round.id}/${missing[0].n}`} size="sm" variant="secondary" onClick={() => { swallowStrayTap(); setFinishing(false); }}>Score hole {missing[0].n}</ButtonLink>
                 {frontDone && <Button size="sm" variant="secondary" onClick={() => finish(true)}>Finish as the front nine</Button>}
-                <ButtonLink href="/clubhouse" size="sm" variant="quiet">Save and finish later</ButtonLink>
+                <ButtonLink href="/clubhouse" size="sm" variant="quiet" onClick={() => swallowStrayTap()}>Save and finish later</ButtonLink>
               </div>}>
               Score every hole to post the card, so it can count toward your handicap.
             </Callout>

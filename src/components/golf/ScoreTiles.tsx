@@ -80,7 +80,7 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
               onKeyDown={(e) => onKey(e, n)}
               style={{ "--i": i } as CSSProperties}
               className={cx(
-                "hang group/t relative flex min-h-[4.75rem] min-w-0 flex-col items-center justify-center gap-1.5 rounded-lg border bg-paper-2 px-1 py-2 text-ink shadow-card @[30rem]:min-h-[5.5rem]",
+                "hang group/t relative flex touch-manipulation min-h-[4.75rem] min-w-0 flex-col items-center justify-center gap-1.5 rounded-lg border bg-paper-2 px-1 py-2 text-ink shadow-card @[30rem]:min-h-[5.5rem]",
                 "transition-[background-color,border-color,transform,box-shadow] duration-150 is-hover:border-green/45 is-hover:bg-tint is-pressed:scale-[0.96]",
                 "aria-checked:border-green aria-checked:bg-green aria-checked:text-on-green aria-checked:shadow-[0_6px_16px_-8px_rgb(0_103_71/0.8)]",
                 "disabled:cursor-not-allowed disabled:border-dashed disabled:bg-transparent disabled:text-ink-2 disabled:shadow-none",
@@ -111,12 +111,15 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
         </button>
       )}
       <p className="sr-only" aria-live="polite" id={`${id}-live`}>{said}</p>
-      {value != null && (
-        <p className="mt-3 flex items-center gap-3 text-ink-2" aria-hidden="true">
-          <ScoreMark strokes={value} par={par} size="sm" />
-          <span className="font-serif italic">{scoreName(value, par)} on a par {par}</span>
-        </p>
-      )}
+      {/* Always takes its line, so choosing the first score doesn't shift everything below the tiles. */}
+      <p className="mt-3 flex min-h-8 items-center gap-3 text-ink-2" aria-hidden="true">
+        {value != null && (
+          <>
+            <ScoreMark strokes={value} par={par} size="sm" />
+            <span className="font-serif italic">{scoreName(value, par)} on a par {par}</span>
+          </>
+        )}
+      </p>
     </div>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { BigNumber, PageHeader, ScorecardTable, scoreShort, toParText } from "@/components/golf";
 import { fmtDate } from "@/components/golf/charts";
 import { Button, ButtonLink, Callout, Field, SectionHeading, TextArea, useToast } from "@/components/ui";
 import type { Course, Hole } from "@/lib/course-types";
 import { teeOf, yardsAt } from "@/lib/courses";
 import { formatIndex, keyOf } from "@/lib/handicap";
-import { useClub } from "@/lib/hooks";
+import { swallowStrayTap, useClub } from "@/lib/hooks";
 import { deleteRound, nextUnplayed, setRoundNote } from "@/lib/round-actions";
 import { honors as honorsOf, summarize, type RoundSummary } from "@/lib/stats";
 import type { Round } from "@/lib/types";
@@ -24,6 +24,8 @@ export function RoundCard({ id }: { id: string }) {
   const s = useMemo(() => (round && c ? summarize(round, store.customCourses) : null), [round, c, store.customCourses]);
   const story = useMemo(() => (s && round ? tell(s, store.rounds, store.customCourses) : []), [s, round, store.rounds, store.customCourses]);
   const verdict = useVerdict(id);
+  const deleting = useRef(false); // a second tap must not "delete" again and replace the toast with an empty Undo
+  useEffect(() => { deleting.current = false; }, []); // also when the router reshows this card after an Undo
 
   if (!ready) return <Placeholder label="Fetching the card" />;
   if (!round || !c || !s) return <Gone />;
@@ -39,6 +41,9 @@ export function RoundCard({ id }: { id: string }) {
   const cardHoles = s.holes.map((h) => ({ ...h, yards: yardsAt(c, tee, h) }));
 
   const remove = () => {
+    if (deleting.current) return;
+    deleting.current = true;
+    swallowStrayTap();
     const undo = deleteRound(round.id);
     toast({ message: `Deleted the card from ${c.shortName}`, action: { label: "Undo", onClick: undo }, duration: 8000 });
     router.push("/clubhouse/rounds");
@@ -97,6 +102,12 @@ export function RoundCard({ id }: { id: string }) {
             </ul>
           </div>
           <div className="grid content-start gap-4">
+            {!diff && handicap.pendingNine === round.id && (
+              <div className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
+                <p className="caps text-label text-gold-ink">Toward your index</p>
+                <p className="mt-2 text-ink">A 9-hole card counts in pairs: your next 9-hole card joins this one to make one 18-hole differential.</p>
+              </div>
+            )}
             {diff && (
               <div className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
                 <p className="caps text-label text-gold-ink">Toward your index</p>
@@ -144,7 +155,7 @@ export function RoundCard({ id }: { id: string }) {
         <section aria-labelledby="card-h" className="min-w-0">
           <SectionHeading id="card-h" eyebrow="Hole by hole" title="The card" lede="Select a hole number to change it." />
           <div className="mt-6">
-            <ScorecardTable holes={cardHoles} entries={round.entries} teeName={round.teeName} caption={`Scorecard, ${c.shortName}, ${fmtDate(round.date)}`} onSelectHole={(n) => router.push(`/clubhouse/rounds/${round.id}/${n}`)} />
+            <ScorecardTable holes={cardHoles} entries={round.entries} teeName={round.teeName} caption={`Scorecard, ${c.shortName}, ${fmtDate(round.date)}`} onSelectHole={(n) => { swallowStrayTap(); router.push(`/clubhouse/rounds/${round.id}/${n}`); }} />
           </div>
         </section>
       )}
