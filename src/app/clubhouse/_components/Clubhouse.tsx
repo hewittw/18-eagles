@@ -280,6 +280,7 @@ function IndexQuestion() {
       return;
     }
     patchProfile({ enteredIndex: r.value, welcomedAt: Date.now() });
+    focusHeading("hero-title");
   };
   return (
     <Card padding="lg" className="w-full max-w-md justify-self-start md:justify-self-end">
@@ -293,7 +294,7 @@ function IndexQuestion() {
         </Field>
         <Button type="submit" variant="primary" size="lg" block>Use this index</Button>
         <div className="border-t border-rule pt-4">
-          <Button type="button" variant="secondary" block onClick={() => patchProfile({ enteredIndex: null, welcomedAt: Date.now() })}>
+          <Button type="button" variant="secondary" block onClick={() => { patchProfile({ enteredIndex: null, welcomedAt: Date.now() }); focusHeading("hero-title"); }}>
             Not yet: I&apos;ll earn one
           </Button>
           <p className="mt-2 text-center text-sm text-ink-2">It takes three cards. Your first can be today.</p>
@@ -304,11 +305,16 @@ function IndexQuestion() {
 }
 
 function GoalQuestion() {
+  // Held locally until saved, so arrow keys can move through the choices without committing the first one.
+  const [g, setG] = useState<Goal | null>(null);
   return (
     <section aria-labelledby="goal-q">
       <SectionHeading id="goal-q" eyebrow="One more question" title="What are you playing for?" lede="Your stats will measure against it. Change it anytime in the Locker." />
       <div className="mt-6 max-w-2xl">
-        <ChoiceGroup legend="Your goal" hideLegend layout="grid" size="lg" value={null} onChange={(g) => patchProfile({ goal: g })} options={GOALS} />
+        <ChoiceGroup legend="Your goal" hideLegend layout="grid" size="lg" value={g} onChange={setG} options={GOALS} />
+        <Button variant="primary" size="md" className="mt-4" disabled={!g} onClick={() => { if (!g) return; patchProfile({ goal: g }); focusHeading("tee-off"); }}>
+          Save my goal
+        </Button>
       </div>
     </section>
   );
@@ -367,6 +373,17 @@ function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typ
 }
 
 /** Strokes from a recent average to the goal: "Break 90" means 89 or better; scratch means par 72. */
+/** Move focus to a heading after the control that had it disappears (no visible ring on a non-control). */
+function focusHeading(id: string) {
+  requestAnimationFrame(() => {
+    const h = document.getElementById(id);
+    if (!h) return;
+    h.tabIndex = -1;
+    h.style.outline = "none";
+    h.focus();
+  });
+}
+
 const toGo = (avg: number, g: Goal) => avg - (g === "scratch" ? goalTarget[g] : goalTarget[g] - 1);
 
 function progressLine(entries: Store["rounds"][number]["entries"], holes: { n: number; par: number }[]) {

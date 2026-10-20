@@ -6,7 +6,7 @@ export type ToastOptions = {
   message: string;
   /** Usually "Undo". Undo over confirm: do the thing, then offer to take it back. */
   action?: { label: string; onClick(): void };
-  /** ms. At least 6000 (and 8000 when there's an action); paused while hovered or focused. */
+  /** ms. At least 6000; paused while hovered or focused. A toast with an action stays until dismissed. */
   duration?: number;
 };
 type Item = ToastOptions & { id: number };
@@ -68,14 +68,15 @@ function ToastCard({ item, onDone }: { item: Item; onDone: () => void }) {
   useEffect(() => { done.current = onDone; });
 
   useEffect(() => {
-    if (paused) return;
+    // A toast with an action (Undo) waits to be dismissed, so a keyboard user always has time to reach it (WCAG 2.2.1).
+    if (paused || item.action) return;
     started.current = performance.now();
     const t = window.setTimeout(() => done.current(), left.current);
     return () => {
       window.clearTimeout(t);
       left.current = Math.max(1500, left.current - (performance.now() - started.current));
     };
-  }, [paused]);
+  }, [paused, item.action]);
 
   return (
     <Toast
