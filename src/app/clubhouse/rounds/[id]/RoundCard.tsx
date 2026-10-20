@@ -10,6 +10,7 @@ import { useClub } from "@/lib/hooks";
 import { deleteRound, nextUnplayed, setRoundNote } from "@/lib/round-actions";
 import { honors as honorsOf, summarize, type RoundSummary } from "@/lib/stats";
 import type { Round } from "@/lib/types";
+import { useVerdict, VerdictMark } from "../../_components/Challenge";
 import { Page, Placeholder } from "../../_components/Placeholder";
 import { DocTitle } from "./[hole]/HoleScreen";
 
@@ -21,6 +22,7 @@ export function RoundCard({ id }: { id: string }) {
   const c = round ? course(round.courseSlug) : undefined;
   const s = useMemo(() => (round && c ? summarize(round, store.customCourses) : null), [round, c, store.customCourses]);
   const story = useMemo(() => (s && round ? tell(s, store.rounds, store.customCourses) : []), [s, round, store.rounds, store.customCourses]);
+  const verdict = useVerdict(id);
 
   if (!ready) return <Placeholder label="Fetching the card" />;
   if (!round || !c || !s) return <Gone />;
@@ -106,6 +108,18 @@ export function RoundCard({ id }: { id: string }) {
                       : `Your index moved ${formatIndex(handicap.history[handicap.history.length - 2].index)} → ${formatIndex(handicap.history[handicap.history.length - 1].index)}.`}
                   </p>
                 )}
+              </div>
+            )}
+            {verdict && (
+              <div className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
+                <p className="caps text-label text-gold-ink">The challenge</p>
+                <p className="mt-1 font-display text-xl leading-snug text-ink">{verdict.challenge.title}</p>
+                <p className="mt-3 flex items-start gap-3 text-ink">
+                  <VerdictMark status={verdict.status} size="sm" tone="paper" />
+                  <span className="min-w-0">
+                    <strong className="font-semibold">{verdict.status === "met" ? "Met" : verdict.status === "missed" ? "Missed" : "Skipped"}:</strong> {verdict.text}.
+                  </span>
+                </p>
               </div>
             )}
             {earned.length > 0 && (
