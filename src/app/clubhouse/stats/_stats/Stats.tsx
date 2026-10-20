@@ -208,7 +208,7 @@ function StatsBody() {
 
           {/* I · The trend */}
           <section aria-labelledby="trend-h" className="grid gap-6">
-            <SectionHeading id="trend-h" numeral="I" eyebrow="Over time" title="The trend" lede="Lower is better, so the best rounds sit at the top. Select a point to open that card." />
+            <SectionHeading id="trend-h" eyebrow="Over time" title="The trend" lede="Lower is better, so the best rounds sit at the top. Select a point to open that card." />
             <Segmented<Metric>
               legend="Show"
               className="max-w-md"
@@ -235,7 +235,7 @@ function StatsBody() {
 
           {/* II · How you score */}
           <section aria-labelledby="score-h" className="grid gap-6">
-            <SectionHeading id="score-h" numeral="II" eyebrow="Hole by hole" title="How you score" />
+            <SectionHeading id="score-h" eyebrow="Hole by hole" title="How you score" />
             {holeByHole ? (
               <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
                 <DistributionBar types={b.types} holes={b.holesPlayed} />
@@ -248,7 +248,7 @@ function StatsBody() {
 
           {/* III · On and around the greens */}
           <section aria-labelledby="greens-h" className="grid gap-6">
-            <SectionHeading id="greens-h" numeral="III" eyebrow="The short game" title="Putting and greens" />
+            <SectionHeading id="greens-h" eyebrow="The short game" title="Putting and greens" />
             <dl className="grid grid-cols-2 gap-3 max-lg:[&>*:last-child]:col-span-2 lg:grid-cols-5 lg:gap-4">
               <Figure label="Putts per round" value={b.puttsPerRound == null ? null : b.puttsPerRound.toFixed(1)} explain="Every putt, scaled to 18 holes." missing="Track putts on every hole of a round to see this." />
               <Figure label="Putts per hole" value={b.puttsPerHole == null ? null : b.puttsPerHole.toFixed(2)} explain="Under 2.00 means more one-putts than three-putts." missing="Track putts on every hole of a round to see this." />
@@ -261,13 +261,13 @@ function StatsBody() {
 
           {/* IV · The bag */}
           <section aria-labelledby="bag-h" className="grid gap-6">
-            <SectionHeading id="bag-h" numeral="IV" eyebrow="The bag" title="Clubs you reach for" />
+            <SectionHeading id="bag-h" eyebrow="The bag" title="Clubs you reach for" />
             <ClubUsage clubs={b.clubs} />
           </section>
 
           {/* V · One course, hole by hole */}
           <section aria-labelledby="heat-h" className="grid gap-6">
-            <SectionHeading id="heat-h" numeral="V" eyebrow={filteredCourse ? filteredCourse.shortName : "One course"} title="Hole by hole" />
+            <SectionHeading id="heat-h" eyebrow={filteredCourse ? filteredCourse.shortName : "One course"} title="Hole by hole" />
             {filteredCourse && b.holeAverages ? (
               holeByHole ? (
                 <HoleHeat rows={b.holeAverages} courseName={filteredCourse.shortName} />

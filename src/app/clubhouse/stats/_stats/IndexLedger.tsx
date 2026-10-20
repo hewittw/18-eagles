@@ -32,7 +32,6 @@ export function IndexLedger({ handicap: h }: { handicap: HandicapState }) {
     <section aria-labelledby="index-h" className="grid gap-6">
       <SectionHeading
         id="index-h"
-        numeral="VI"
         eyebrow="The handicap committee"
         title="How your index is made"
         lede={rule}

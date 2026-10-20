@@ -9,7 +9,7 @@ export { SectionHeading, type SectionHeadingProps } from "./SectionHeading";
 export { Tag, type TagProps } from "./Tag";
 export { Toast, ToastProvider, useToast, type ToastOptions } from "./Toast";
 export { ConfirmDialog, type ConfirmDialogProps } from "./ConfirmDialog";
-export { SkipLink, SkipTo } from "./SkipLink";
+export { SkipLink, SkipTo, focusTarget } from "./SkipLink";
 export { VisuallyHidden } from "./VisuallyHidden";
 export { Callout, type CalloutProps } from "./Callout";
 export { ActionList, ActionRow, ActionTile, Icon, Chevron, type IconName, type ActionRowProps } from "./ActionList";

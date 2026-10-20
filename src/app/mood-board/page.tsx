@@ -187,7 +187,7 @@ export default function MoodBoardPage() {
         </div>
       </header>
 
-      <main id="main" tabIndex={-1} className="pb-28 outline-none">
+      <main id="main" className="pb-28 outline-none">
         <Section
           id="s-board"
           numeral="I"

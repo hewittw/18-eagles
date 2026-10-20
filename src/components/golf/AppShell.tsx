@@ -63,7 +63,7 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
           <div className="hidden md:block">{nav("bar")}</div>
         </div>
       </header>
-      <main id="main" tabIndex={-1} className="flex-1 outline-none">
+      <main id="main" className="flex-1 outline-none">
         {children}
       </main>
       {/* On phones too, so everyone is told where the cards live; the padding clears the fixed tab bar. */}

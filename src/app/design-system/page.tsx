@@ -84,7 +84,7 @@ export default function DesignSystemPage() {
           </ol>
         </nav>
 
-        <main id="main" tabIndex={-1} className="grid min-w-0 gap-20 outline-none sm:gap-28">
+        <main id="main" className="grid min-w-0 gap-20 outline-none sm:gap-28">
           <Section id="principles" numeral="I" eyebrow="Week 3, applied" title="Six rules the parts keep" lede="Patterns and flows from the lecture, turned into defaults, so a page built from these parts gets them for free.">
             <Principles />
           </Section>
