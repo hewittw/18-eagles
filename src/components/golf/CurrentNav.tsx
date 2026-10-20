@@ -10,7 +10,7 @@ export function CurrentNav({ variant }: { variant: "bar" | "tabs" }) {
     : path.startsWith("/clubhouse/rounds") || path.startsWith("/clubhouse/round") ? "cards"
     : path.startsWith("/clubhouse/stats") ? "stats"
     : path.startsWith("/clubhouse/locker") ? "locker"
-    : path === "/clubhouse" || path === "/clubhouse/" ? "clubhouse"
+    : path === "/clubhouse" || path === "/clubhouse/" || path.startsWith("/clubhouse/trophies") ? "clubhouse"
     : undefined;
   return <AppNav current={current} variant={variant} />;
 }

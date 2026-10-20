@@ -10,12 +10,13 @@ import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { nextUnplayed } from "@/lib/round-actions";
 import { goalTarget, honors as honorsOf, summarize, type RoundSummary } from "@/lib/stats";
-import { sampleSeason } from "@/lib/sample";
 import { patchProfile, update } from "@/lib/store";
 import type { Goal, Store } from "@/lib/types";
 import { parseIndex } from "@/lib/validate";
 import { Page, Placeholder } from "./Placeholder";
 import { NextChallenge } from "./Challenge";
+import { NewGolferShowcase } from "./Showcase";
+import { TrophyCase } from "./TrophyCase";
 import { BagStep, focusHeading, HomeCourseStep, setupStep, SetupSteps } from "./Onboarding";
 import { TeeOff } from "./TeeOff";
 
@@ -61,6 +62,7 @@ export function Clubhouse() {
       <Hero store={store} welcomed={welcomed} step={step} handicap={handicap} done={done} photo={(teeCourse.hero ?? course("augusta-national")?.hero) || null} />
 
       <Page className="grid grid-cols-[minmax(0,1fr)] gap-14 md:gap-20">
+        {step === 3 && <TrophyCase />}
         {active && activeCourse && (
           <section aria-labelledby="in-progress">
             <Card tone="green" padding="lg" className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
@@ -78,7 +80,7 @@ export function Clubhouse() {
           </section>
         )}
 
-        {step === 0 && <JustLooking />}
+        {step === 0 && <NewGolferShowcase />}
         {step === 1 && <HomeCourseStep />}
         {step === 2 && <BagStep />}
 
@@ -124,22 +126,6 @@ export function Clubhouse() {
 
         {step === 3 && !store.profile.goal && <GoalQuestion />}
 
-        {freshHonors.length > 0 && (
-          <section aria-labelledby="honors">
-            <SectionHeading id="honors" eyebrow="New since your last visit" title="Honors" />
-            <ul className="mt-6 flex flex-wrap gap-3">
-              {freshHonors.slice(0, 4).map((h) => (
-                <li key={h.id} className="brass-plate hang rounded-xs px-5 py-3">
-                  <p className="font-display text-xl leading-tight">{h.title}</p>
-                  <p className="caps mt-1 text-[0.72rem]">{h.detail} · {fmtDate(h.date)}</p>
-                </li>
-              ))}
-            </ul>
-            {freshHonors.length > 4 && (
-              <ButtonLink href="/clubhouse/locker" className="mt-4">All {freshHonors.length} new honors</ButtonLink>
-            )}
-          </section>
-        )}
 
         {done.length > 0 && (
           <section aria-labelledby="recent">
@@ -168,7 +154,7 @@ export function Clubhouse() {
             </ActionList>
             <ActionList className="mt-4" label="More">
               <ActionRow href="/clubhouse/stats" icon="chart" title="See how you play" detail="Every breakdown, filtered by course and season" />
-              <ActionRow href="/clubhouse/locker" icon="bag" title="Your locker" detail="Bag, goal, honors and your saved data" />
+              <ActionRow href="/clubhouse/locker" icon="bag" title="Your locker" detail="Bag, goal and your saved data" />
             </ActionList>
           </section>
         )}
@@ -188,7 +174,7 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
     <section aria-labelledby="hero-title" className="tex-locker on-green relative isolate overflow-hidden">
       {photo && (
         <>
-          <Image src={photo.src} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
+          <Image src={photo.src} alt="" fill loading="eager" fetchPriority="high" sizes="100vw" className="-z-20 object-cover" />
           {/* A Masters-green wash, deepest behind the text, so every word keeps its contrast over the photo */}
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_72_50/0.94)_0%,rgb(0_88_61/0.86)_45%,rgb(0_103_71/0.55)_100%)] max-md:bg-[linear-gradient(180deg,rgb(0_72_50/0.9)_0%,rgb(0_88_61/0.92)_100%)]" />
           <p className="absolute bottom-2 right-3 text-[0.7rem] text-white/80">Photo: {photo.credit}</p>
@@ -322,19 +308,6 @@ function IndexQuestion() {
   );
 }
 
-/** Under the first question: a way in for someone who only wants to look around first. */
-function JustLooking() {
-  return (
-    <section aria-labelledby="just-looking" className="grid gap-4 rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card sm:grid-cols-[1fr_auto] sm:items-center sm:p-6">
-      <div>
-        <h2 id="just-looking" className="font-serif text-xl font-bold text-ink">Just looking?</h2>
-        <p className="mt-1 max-w-measure text-ink-2">Explore a sample season: 13 rounds at Rancho Santa Fe, Torrey Pines, Pebble Beach and St Andrews, with a handicap, stats and honors. Erase it from the Locker when you&apos;re ready to start your own.</p>
-      </div>
-      <Button onClick={() => { update(() => sampleSeason()); focusHeading("hero-title"); }}>Explore a sample season</Button>
-    </section>
-  );
-}
-
 function GoalQuestion() {
   // Held locally until saved, so arrow keys can move through the choices without committing the first one.
   const [g, setG] = useState<Goal | null>(null);
@@ -386,7 +359,7 @@ function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typ
     <Link href={`/clubhouse/courses/${course.slug}`} className="group/plate block min-w-0 self-start overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card transition-transform is-pressed:scale-[0.99]">
       <div className="relative aspect-[4/3] overflow-hidden border-b border-rule bg-paper-3">
         {course.hero ? (
-          <Image src={course.hero.src} alt={course.hero.alt} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" priority />
+          <Image src={course.hero.src} alt={course.hero.alt} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" />
         ) : (
           <HoleIllustration hole={sig} seed={course.slug} orientation="landscape" detail="plain" className="h-full w-full" decorative />
         )}
