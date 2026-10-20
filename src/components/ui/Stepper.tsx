@@ -1,5 +1,5 @@
 "use client";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { cx } from "./cx";
 
 export type StepperProps = {
@@ -22,14 +22,25 @@ export type StepperProps = {
 export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md", hint, unit, start, disabled }: StepperProps) {
   const id = useId();
   const [said, setSaid] = useState("");
+  // A button disables itself at its limit; hand focus to the other one so keyboard focus is never dropped.
+  const decRef = useRef<HTMLButtonElement>(null);
+  const incRef = useRef<HTMLButtonElement>(null);
   const btn = size === "lg" ? "size-tile text-[1.6rem]" : "size-tap text-[1.3rem]";
   const words = (n: number | null) => (n == null ? "not set" : unit ? `${n} ${n === 1 ? unit.one : unit.many}` : String(n));
   const set = (n: number | null) => {
     onChange(n);
     setSaid(`${label}: ${words(n)}`);
   };
-  const dec = () => value != null && value > min && set(value - 1);
-  const inc = () => set(value == null ? (start ?? min) : Math.min(max, value + 1));
+  const dec = () => {
+    if (value == null || value <= min) return;
+    set(value - 1);
+    if (value - 1 <= min) incRef.current?.focus();
+  };
+  const inc = () => {
+    const n = value == null ? (start ?? min) : Math.min(max, value + 1);
+    set(n);
+    if (n >= max) decRef.current?.focus();
+  };
   const atMin = value == null || value <= min;
   const atMax = value != null && value >= max;
   const b =
@@ -41,7 +52,7 @@ export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md"
       <p id={`${id}-l`} className="text-[1rem] font-medium text-ink">{label}</p>
       {hint && <p id={`${id}-h`} className="text-[0.92rem] text-ink-2">{hint}</p>}
       <div role="group" aria-labelledby={`${id}-l`} aria-describedby={hint ? `${id}-h` : undefined} className="mt-2 inline-flex items-stretch gap-1.5">
-        <button type="button" className={cx(b, btn)} onClick={dec} disabled={disabled || atMin} aria-label={`Fewer ${label.toLowerCase()}`}>
+        <button ref={decRef} type="button" className={cx(b, btn)} onClick={dec} disabled={disabled || atMin} aria-label={`Fewer ${label.toLowerCase()}`}>
           <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true"><path d="M2 8 H14" stroke="currentColor" strokeWidth="2" /></svg>
         </button>
         <span
@@ -55,7 +66,7 @@ export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md"
           <span aria-hidden={value == null || undefined}>{value ?? "–"}</span>
           {value == null && <span className="sr-only">not set</span>}
         </span>
-        <button type="button" className={cx(b, btn)} onClick={inc} disabled={disabled || atMax} aria-label={`More ${label.toLowerCase()}`}>
+        <button ref={incRef} type="button" className={cx(b, btn)} onClick={inc} disabled={disabled || atMax} aria-label={`More ${label.toLowerCase()}`}>
           <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true"><path d="M2 8 H14 M8 2 V14" stroke="currentColor" strokeWidth="2" /></svg>
         </button>
       </div>

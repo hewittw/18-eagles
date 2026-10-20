@@ -6,7 +6,9 @@ export type CalloutProps = { tone?: "info" | "gold"; title?: string; children: R
 /** Gentle guidance ("1 of 3 rounds to your index"). A note in the margin, not an empty state and not an alarm. */
 export function Callout({ tone = "info", title, children, className, action }: CalloutProps) {
   return (
-    <aside
+    // role="note", not <aside>: a margin note inside the page, not a complementary landmark.
+    <div
+      role="note"
       className={cx(
         "relative flex min-w-0 gap-4 rounded-xs border p-4 sm:p-5",
         tone === "info" ? "border-rule bg-paper-2 shadow-[inset_3px_0_0_var(--color-link)]" : "tex-linen border-gold-ink/50 shadow-[inset_3px_0_0_var(--color-gold-ink)]",
@@ -31,6 +33,6 @@ export function Callout({ tone = "info", title, children, className, action }: C
         <div className={cx("text-[0.98rem] leading-relaxed text-ink-2", title && "mt-1")}>{children}</div>
         {action && <div className="mt-3">{action}</div>}
       </div>
-    </aside>
+    </div>
   );
 }

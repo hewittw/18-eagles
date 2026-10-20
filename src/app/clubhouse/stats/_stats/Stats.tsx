@@ -46,6 +46,11 @@ function StatsBody() {
   const [metric, setMetricState] = useState<Metric>(() => load<Metric>(METRIC_KEY, "gross"));
   const setFilters = (f: Filters) => { setRawFilters(f); save(FILTER_KEY, f); };
   const setMetric = (m: Metric) => { setMetricState(m); save(METRIC_KEY, m); };
+  // The reset buttons disappear once used: put keyboard focus on the first filter, not the page body.
+  const resetFilters = () => {
+    setFilters(DEFAULT_FILTERS);
+    requestAnimationFrame(() => document.querySelector<HTMLInputElement>('section[aria-labelledby="filters-h"] input:checked')?.focus());
+  };
 
   const finished = useMemo(() => store.rounds.filter((r) => r.status === "complete" && course(r.courseSlug)), [store.rounds, course]);
 
@@ -129,13 +134,13 @@ function StatsBody() {
             {isDefault ? (finished.length === 1 ? "Showing 1 round" : `Showing all ${finished.length} rounds`) : `Showing ${b.count} of ${finished.length} ${finished.length === 1 ? "round" : "rounds"}`}
           </p>
           {!isDefault && (
-            <Button variant="quiet" size="sm" onClick={() => setFilters(DEFAULT_FILTERS)}>Reset filters</Button>
+            <Button variant="quiet" size="sm" onClick={resetFilters}>Reset filters</Button>
           )}
         </div>
       </section>
 
       {b.count === 0 ? (
-        <Callout title="No cards match these filters" action={<Button variant="secondary" size="sm" onClick={() => setFilters(DEFAULT_FILTERS)}>Show every round</Button>}>
+        <Callout title="No cards match these filters" action={<Button variant="secondary" size="sm" onClick={resetFilters}>Show every round</Button>}>
           {filters.holes === "9" ? "You haven't logged a nine-hole round in this range." : "Try a longer range, another course, or all holes."}
         </Callout>
       ) : (
@@ -271,7 +276,11 @@ function StatsBody() {
               <Callout title="Pick a course to see each hole" action={
                 <div className="flex flex-wrap gap-2">
                   {played.slice(0, 3).map((p) => (
-                    <Button key={p.slug} variant="secondary" size="sm" onClick={() => setFilters({ ...filters, course: p.slug })}>
+                    <Button key={p.slug} variant="secondary" size="sm" onClick={() => {
+                      setFilters({ ...filters, course: p.slug });
+                      // This button goes away; land on the section's heading, just above that course's holes.
+                      requestAnimationFrame(() => { const h = document.getElementById("heat-h"); if (h) { h.tabIndex = -1; h.style.outline = "none"; h.focus(); } });
+                    }}>
                       {p.course.shortName}
                     </Button>
                   ))}

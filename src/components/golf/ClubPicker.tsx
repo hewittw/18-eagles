@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Club, ClubKind } from "@/lib/types";
 import { cx } from "../ui/cx";
 
@@ -31,9 +31,23 @@ const GROUPS: { kind: ClubKind; label: string }[] = [
  */
 export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15, disabled }: ClubPickerProps) {
   const clubs = bag.filter((c) => c.inBag);
+  const firstId = GROUPS.flatMap((g) => clubs.filter((c) => c.kind === g.kind))[0]?.id;
   const byId = new Map(bag.map((c) => [c.id, c]));
   const [said, setSaid] = useState("");
   const [cleared, setCleared] = useState<string[] | null>(null);
+  // Clear and Undo swap places and Remove last disables itself at zero: keep keyboard focus on a live control.
+  const undoRef = useRef<HTMLButtonElement>(null);
+  const removeRef = useRef<HTMLButtonElement>(null);
+  const firstClubRef = useRef<HTMLButtonElement>(null);
+  // Where focus goes after the next render (a ref, so asking for it doesn't cost another render).
+  const refocus = useRef<"undo" | "remove" | "club" | null>(null);
+  const setRefocus = (to: "undo" | "remove" | "club") => { refocus.current = to; };
+  useEffect(() => {
+    const to = refocus.current;
+    if (!to) return;
+    refocus.current = null;
+    (to === "undo" ? undoRef : to === "remove" ? removeRef : firstClubRef).current?.focus();
+  });
   const nameOf = (id: string) => byId.get(id)?.name ?? id;
   const shortOf = (id: string) => byId.get(id)?.short ?? id;
   const tail = (n: number) => (holeLabel ? ` ${n} ${n === 1 ? "stroke" : "strokes"} on ${holeLabel.toLowerCase()}.` : "");
@@ -52,17 +66,20 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
     const next = shots.slice(0, -1);
     onChange(next);
     setCleared(null);
+    if (!next.length) setRefocus("club");
     setSaid(`Removed shot ${shots.length}, ${nameOf(shots[shots.length - 1])}.${tail(next.length)}`);
   };
   const clear = () => {
     if (!shots.length) return;
     setCleared(shots);
     onChange([]);
+    setRefocus("undo");
     setSaid(`Cleared ${shots.length} ${shots.length === 1 ? "shot" : "shots"}. Undo is next to the list.`);
   };
   const undoClear = () => {
     if (!cleared) return;
     onChange(cleared);
+    setRefocus("remove");
     setSaid(`Restored ${cleared.length} ${cleared.length === 1 ? "shot" : "shots"}.`);
     setCleared(null);
   };
@@ -83,6 +100,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
                   return (
                     <button
                       key={c.id}
+                      ref={c.id === firstId ? firstClubRef : undefined}
                       type="button"
                       onClick={() => add(c)}
                       disabled={disabled || full}
@@ -132,12 +150,12 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
         )}
         <div className="flex gap-1.5">
           {cleared ? (
-            <button type="button" onClick={undoClear} className="caps min-h-tap rounded-xs border border-ink bg-paper-2 px-4 text-[0.82rem] text-ink is-hover:bg-paper-3 is-pressed:translate-y-px">
+            <button ref={undoRef} type="button" onClick={undoClear} className="caps min-h-tap rounded-xs border border-ink bg-paper-2 px-4 text-[0.82rem] text-ink is-hover:bg-paper-3 is-pressed:translate-y-px">
               Undo clear
             </button>
           ) : (
             <>
-              <button type="button" onClick={removeLast} disabled={disabled || !shots.length} className="caps min-h-tap rounded-xs border border-ink bg-paper-2 px-4 text-[0.82rem] text-ink is-hover:bg-paper-3 is-pressed:translate-y-px disabled:cursor-not-allowed disabled:border-dashed disabled:border-rule-strong disabled:bg-transparent disabled:text-ink-2">
+              <button ref={removeRef} type="button" onClick={removeLast} disabled={disabled || !shots.length} className="caps min-h-tap rounded-xs border border-ink bg-paper-2 px-4 text-[0.82rem] text-ink is-hover:bg-paper-3 is-pressed:translate-y-px disabled:cursor-not-allowed disabled:border-dashed disabled:border-rule-strong disabled:bg-transparent disabled:text-ink-2">
                 Remove last
               </button>
               <button type="button" onClick={clear} disabled={disabled || !shots.length} className="caps min-h-tap rounded-xs px-3 text-[0.82rem] text-ink underline decoration-rule-strong underline-offset-4 is-hover:bg-paper-3 disabled:cursor-not-allowed disabled:no-underline disabled:text-ink-2">

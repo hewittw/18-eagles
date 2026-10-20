@@ -114,6 +114,8 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
               </div>
             </section>
 
+            {/* Always mounted, so the question is announced when it appears */}
+            <div aria-live="polite" className="contents">
             {mismatch && (
               <Callout title={`You logged ${e.shots.length} ${e.shots.length === 1 ? "shot" : "shots"}${e.penalties ? ` and ${e.penalties} penalty` : ""} but scored ${e.strokes}.`}
                 action={<div className="mt-3 flex flex-wrap gap-2">
@@ -123,6 +125,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
                 Which is right?
               </Callout>
             )}
+            </div>
 
             <section aria-labelledby="detail-h" className="grid gap-8 sm:grid-cols-2">
               <h2 id="detail-h" className="sr-only">Putts, tee shot, and penalties</h2>
@@ -174,6 +177,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
             <Button variant="primary" size="lg" onClick={() => (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
           )}
         </div>
+        <div aria-live="polite">
         {finishing && missing.length > 0 && (
           <div className="mx-auto max-w-ledger px-4 pb-4 sm:px-6 lg:px-8" role="region" aria-label="Unscored holes">
             <Callout title={`${missing.length === 1 ? "Hole" : "Holes"} ${missing.map((h) => h.n).join(", ")} ${missing.length === 1 ? "has" : "have"} no score yet.`}
@@ -186,6 +190,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
             </Callout>
           </div>
         )}
+        </div>
       </div>
     </>
   );
@@ -211,6 +216,10 @@ function Missing({ what = "round", roundId }: { what?: "round" | "hole"; roundId
 export function DocTitle({ title }: { title: string }) {
   useEffect(() => {
     document.title = title;
+    // After a client-side navigation Next writes the route's metadata title a moment later; put this one back.
+    const keep = new MutationObserver(() => { if (document.title !== title) document.title = title; });
+    keep.observe(document.head, { childList: true, subtree: true, characterData: true });
+    return () => keep.disconnect();
   }, [title]);
   return null;
 }
