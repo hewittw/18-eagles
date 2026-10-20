@@ -6,7 +6,7 @@ import Link from "next/link";
 import { TrophyArt } from "@/components/golf/TrophyArt";
 import { Button, Chevron, cx } from "@/components/ui";
 import { BUILT_IN, findCourse } from "@/lib/courses";
-import { sampleSeason } from "@/lib/sample";
+import { withSampleSeason } from "@/lib/sample";
 import { update } from "@/lib/store";
 import { CATALOG, TIER_WORD, trophyDef } from "@/lib/trophies";
 import { VerdictMark } from "./Challenge";
@@ -53,7 +53,7 @@ export function NewGolferShowcase() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button onClick={() => { update(() => sampleSeason()); focusHeading("hero-title"); }}>Explore a sample season</Button>
+          <Button onClick={() => { update((s) => withSampleSeason(s)); focusHeading("hero-title"); }}>Explore a sample season</Button>
           <Button variant="quiet" onClick={focusIndex}>Start with your index</Button>
         </div>
       </div>

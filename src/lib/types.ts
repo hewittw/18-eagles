@@ -43,6 +43,7 @@ export type Round = {
 export type Goal = "100" | "90" | "80" | "scratch";
 
 export type Profile = {
+  name: string | null; // what the golfer is called: asked first, shown in the hero and on the locker
   enteredIndex: number | null; // the index the golfer typed on the first visit
   goal: Goal | null;
   homeCourse: string | null; // course slug

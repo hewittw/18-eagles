@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Button, ButtonLink, Icon, TextInput, ToggleChip } from "@/components/ui";
 import type { Course } from "@/lib/course-types";
 import { useClub } from "@/lib/hooks";
@@ -256,5 +256,84 @@ export function BagStep() {
         <Button variant="primary" size="lg" onClick={save} className="max-sm:flex-1">That&apos;s my bag</Button>
       </div>
     </section>
+  );
+}
+
+// ───────────────────────── step 0: the name (the very first screen) ─────────────────────────
+/**
+ * The first thing a brand-new golfer sees, and the only thing: one question, full screen. A native modal <dialog>
+ * keeps the rest of the page inert (no tabbing into the nav behind it) and Escape can't skip it.
+ */
+export function NameGate({ photo }: { photo: { src: string } | null }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const input = useRef<HTMLInputElement>(null);
+  const [name, setName] = useState("");
+  const [error, setError] = useState<string | undefined>();
+  useEffect(() => {
+    const d = ref.current;
+    if (d && !d.open) d.showModal();
+    input.current?.focus();
+  }, []);
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const v = name.trim().replace(/\s+/g, " ");
+    const err = !v ? "Type your name, or what your playing partners call you." : v.length > 30 ? `Keep it to 30 characters (that's ${v.length}).` : undefined;
+    if (err) {
+      setError(err);
+      input.current?.focus();
+      return;
+    }
+    ref.current?.close();
+    patchProfile({ name: v });
+    focusHeading("index-q");
+  };
+  return (
+    <dialog
+      ref={ref}
+      aria-labelledby="name-q"
+      onCancel={(e) => e.preventDefault()}
+      className="on-green fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto bg-green-3 p-0 text-on-green backdrop:bg-green-3"
+    >
+      {photo && (
+        <>
+          <Image src={photo.src} alt="" fill loading="eager" fetchPriority="high" sizes="100vw" className="-z-0 object-cover" />
+          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_72_50/0.82)_0%,rgb(0_88_61/0.93)_60%,rgb(0_72_50/0.97)_100%)]" />
+        </>
+      )}
+      <div className="relative mx-auto grid min-h-dvh max-w-xl content-center px-6 py-16">
+        <span className="grid size-16 place-items-center rounded-full border-2 border-gold font-display text-3xl text-gold" aria-hidden="true">E</span>
+        <p className="caps mt-8 text-label text-gold">Welcome to 18 Eagles</p>
+        <form onSubmit={submit} noValidate className="mt-2 grid gap-6">
+          <h1 id="name-q" className="font-display text-display-1 text-on-green">
+            <label htmlFor="golfer-name">What should we call you?</label>
+          </h1>
+          <p className="-mt-2 max-w-md font-serif text-lede text-paper-3">Your name goes on your locker, your cards and your trophies. It stays on this device.</p>
+          <div>
+            <input
+              ref={input}
+              id="golfer-name"
+              name="name"
+              autoComplete="given-name"
+              autoCapitalize="words"
+              enterKeyHint="go"
+              maxLength={40}
+              value={name}
+              onChange={(e) => { setName(e.target.value); if (error) setError(undefined); }}
+              aria-invalid={error ? true : undefined}
+              aria-describedby={error ? "golfer-name-err" : undefined}
+              placeholder="Your name"
+              className="min-h-tile w-full rounded-lg border-2 border-white/70 bg-white px-4 font-serif text-2xl text-ink placeholder:text-ink-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold aria-invalid:border-gold"
+            />
+            {error && (
+              <p id="golfer-name-err" role="alert" className="mt-2 flex items-center gap-2 font-medium text-gold">
+                <svg viewBox="0 0 20 20" className="size-5 shrink-0" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M10 5.5 V11 M10 13.5 V14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                {error}
+              </p>
+            )}
+          </div>
+          <Button type="submit" variant="primary" tone="green" size="lg" block>Open my locker</Button>
+        </form>
+      </div>
+    </dialog>
   );
 }

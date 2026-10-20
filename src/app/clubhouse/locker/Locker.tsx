@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { PageHeader } from "@/components/golf";
 import { ActionList, ActionRow, Button, ButtonLink, Callout, ChoiceGroup, ConfirmDialog, Field, NumberInput, SectionHeading, Select, TextInput, ToggleChip, useToast } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
-import { sampleSeason } from "@/lib/sample";
+import { withSampleSeason } from "@/lib/sample";
 import { honors } from "@/lib/stats";
 import { exportJSON, importJSON, patchProfile, resetAll, todayISO, update } from "@/lib/store";
 import type { ClubKind, Goal } from "@/lib/types";
@@ -103,7 +103,7 @@ export function Locker() {
 
   return (
     <Page>
-      <PageHeader eyebrow="The bag and your settings" title="Locker" />
+      <PageHeader eyebrow="The bag and your settings" title={profile.name ? `${profile.name}\u2019s locker` : "Locker"} />
 
       {/* The locker door: a brass nameplate with the essentials */}
       <div className="tex-locker on-green mt-6 overflow-hidden rounded-2xl border border-green-3 px-5 py-7 shadow-card sm:px-10 sm:py-9">
@@ -114,7 +114,7 @@ export function Locker() {
           <div className="brass-plate relative rounded-lg px-10 py-5 text-center">
             <Screw className="left-2.5 top-1/2 -translate-y-1/2" />
             <Screw className="right-2.5 top-1/2 -translate-y-1/2" />
-            <p className="caps text-[0.75rem] tracking-[0.3em]">Locker No. 18</p>
+            <p className="caps text-[0.75rem] tracking-[0.3em]">{profile.name ? `${profile.name} · Locker No. 18` : "Locker No. 18"}</p>
             <p className="mt-1 font-display text-[2.1rem] leading-none uppercase tracking-[0.06em]">
               {handicap.display != null ? formatIndex(handicap.display) : "No index yet"}
             </p>
@@ -238,6 +238,9 @@ export function Locker() {
             </div>
           </Group>
 
+          <Group caption="Your name" className="mt-8">
+            <NameForm key={profile.name ?? ""} name={profile.name} onSaved={(n) => toast({ message: `Saved. Welcome, ${n}.` })} />
+          </Group>
           <Group caption="Home course" className="mt-8">
             <div className="p-4 sm:p-5">
               <Field label="Home course" hideLabel hint="Chosen for you on the Clubhouse Tee off card.">
@@ -343,8 +346,8 @@ export function Locker() {
         cancelLabel="Keep my data"
         onCancel={() => setDialog(null)}
         onConfirm={() => {
-          const sample = sampleSeason(store.customCourses);
-          update(() => ({ ...sample, customCourses: store.customCourses }));
+          const sample = withSampleSeason(store);
+          update(() => sample);
           setDialog(null);
           setIndexText(null);
           toast({ message: `Loaded a sample season: ${sample.rounds.length} rounds` });
@@ -372,6 +375,29 @@ export function Locker() {
 }
 
 /** An iOS Settings group: a small caption above, one rounded card with rows split by hairlines, an optional note below. */
+/** The golfer's name, shown in the Clubhouse greeting and on the locker plate. */
+function NameForm({ name, onSaved }: { name: string | null; onSaved: (n: string) => void }) {
+  const [v, setV] = useState(name ?? "");
+  const [error, setError] = useState<string | undefined>();
+  const ref = useRef<HTMLInputElement>(null);
+  const save = (e: FormEvent) => {
+    e.preventDefault();
+    const n = v.trim().replace(/\s+/g, " ");
+    const err = !n ? "Type your name, or a nickname." : n.length > 30 ? `Keep it to 30 characters (that's ${n.length}).` : undefined;
+    if (err) { setError(err); ref.current?.focus(); return; }
+    patchProfile({ name: n });
+    onSaved(n);
+  };
+  return (
+    <form noValidate onSubmit={save} className="grid gap-3 p-4 sm:p-5">
+      <Field label="Your name" hint="Shown on your locker and in the Clubhouse greeting." error={error}>
+        {(a) => <TextInput ref={ref} {...a} value={v} maxLength={40} autoComplete="given-name" onChange={(e) => { setV(e.target.value); if (error) setError(undefined); }} />}
+      </Field>
+      <div><Button type="submit" variant="primary">Save name</Button></div>
+    </form>
+  );
+}
+
 function Group({ caption, footer, className, children }: { caption?: ReactNode; footer?: ReactNode; className?: string; children: ReactNode }) {
   return (
     <div className={`min-w-0 ${className ?? ""}`}>

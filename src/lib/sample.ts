@@ -59,7 +59,7 @@ export function sampleSeason(custom: Course[] = []): Store {
     ...s,
     bag: DEFAULT_BAG.map((c) => ({ ...c })),
     rounds,
-    profile: { enteredIndex: 16.8, goal: "90", homeCourse: home ? home.slug : null, lastTee, welcomedAt: Date.now() - 130 * 864e5, bagSetAt: Date.now() - 130 * 864e5 },
+    profile: { name: null, enteredIndex: 16.8, goal: "90", homeCourse: home ? home.slug : null, lastTee, welcomedAt: Date.now() - 130 * 864e5, bagSetAt: Date.now() - 130 * 864e5 },
     lastVisit: Date.now() - 5 * 864e5,
   };
 }
@@ -68,3 +68,9 @@ export const teeLabel = (course: Course, name: string) => {
   const t = teeOf(course, name);
   return `${t.name} · ${t.yards.toLocaleString()} yds · ${t.rating.toFixed(1)}/${t.slope}`;
 };
+
+/** Load the sample season but keep who the golfer is (their name) and the courses they added. */
+export function withSampleSeason(prev: Store): Store {
+  const sample = sampleSeason(prev.customCourses);
+  return { ...sample, profile: { ...sample.profile, name: prev.profile.name }, customCourses: prev.customCourses };
+}

@@ -17,7 +17,7 @@ import { Page, Placeholder } from "./Placeholder";
 import { NextChallenge } from "./Challenge";
 import { NewGolferShowcase } from "./Showcase";
 import { TrophyCase } from "./TrophyCase";
-import { BagStep, focusHeading, HomeCourseStep, setupStep, SetupSteps } from "./Onboarding";
+import { BagStep, focusHeading, HomeCourseStep, NameGate, setupStep, SetupSteps } from "./Onboarding";
 import { TeeOff } from "./TeeOff";
 
 const GOALS: { value: Goal; label: string }[] = [
@@ -55,6 +55,8 @@ export function Clubhouse() {
   const last = done[0];
   const teeCourse = last ? last.course : defaultHome(store.profile.homeCourse, store.customCourses);
   const activeCourse = active ? course(active.courseSlug) : undefined;
+  // The very first visit: nothing but the name question.
+  if (!store.profile.name && !welcomed) return <NameGate photo={course("augusta-national")?.hero ?? null} />;
   const lastHere = last && done.find((d) => d.course.slug === teeCourse.slug && d.holes.length === 18);
 
   return (
@@ -184,7 +186,7 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
         <div className="min-w-0">
           <p className="caps text-label text-gold">The Clubhouse</p>
           <h1 id="hero-title" className="mt-2 font-display text-display-2 text-on-green">
-            {welcomed ? (done.length ? "Welcome back." : step < 3 ? "Let\u2019s set up your locker." : "Your locker is ready.") : "Welcome to 18 Eagles."}
+            {greeting(welcomed ? (done.length ? "Welcome back" : step < 3 ? "Let\u2019s set up your locker" : "Your locker is ready") : "Welcome to 18 Eagles", store.profile.name)}
           </h1>
           {welcomed && step < 3 ? (
             <p className="mt-5 max-w-xl font-serif text-lede text-paper-3">
@@ -375,6 +377,9 @@ function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typ
     </Link>
   );
 }
+
+/** "Welcome back, Hewitt." (or just "Welcome back." before there's a name). */
+const greeting = (text: string, name: string | null) => (name ? `${text}, ${name}.` : `${text}.`);
 
 /** Strokes from a recent average to the goal: "Break 90" means 89 or better; scratch means par 72. */
 const toGo = (avg: number, g: Goal) => avg - (g === "scratch" ? goalTarget[g] : goalTarget[g] - 1);
