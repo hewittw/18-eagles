@@ -69,7 +69,7 @@ function TrophyShelf() {
     <div className="tex-locker on-green overflow-hidden rounded-2xl border border-green-3 shadow-card">
       <div className="px-4 pt-6 sm:px-7 sm:pt-7">
         <p className="caps text-label text-gold">The Trophy Room</p>
-        <h3 className="mt-1 font-display text-title text-on-green">{CATALOG.length} trophies to win. None on the shelf yet.</h3>
+        <h3 className="mt-1 text-balance font-display text-title text-on-green">{CATALOG.length} trophies to win. None on the shelf yet.</h3>
         <p className="mt-2 max-w-2xl font-serif text-lede text-paper-3">
           {weekly} are played for every week and the case empties each Monday. {crystal} are crystal, won every time it happens. The rest are career milestones on the way to your goal.
         </p>
@@ -85,7 +85,7 @@ function TrophyShelf() {
                 </div>
                 <span aria-hidden="true" className="mx-auto mt-1 block h-1 w-24 rounded-full bg-black/25" />
               </div>
-              <p className="caps mt-3 text-[0.64rem] text-gold">{t.category === "crystal" ? "Crystal" : `${CATEGORY_WORD[t.category]} · ${id === "week-low" ? "Gold to bronze" : TIER_WORD[t.tier]}`}</p>
+              <p className="caps mt-3 text-balance text-[0.64rem] text-gold">{t.category === "crystal" ? "Crystal" : `${CATEGORY_WORD[t.category]} · ${id === "week-low" ? "Gold to bronze" : TIER_WORD[t.tier]}`}</p>
               <h4 className="mt-1 font-serif text-[1.1rem] leading-tight text-on-green">{t.name}</h4>
               <p className="mt-1 text-pretty text-[0.86rem] leading-snug text-paper-3">{id === "week-low" ? "Your best card of the week, ranked against all your cards." : t.how}</p>
             </li>
@@ -180,7 +180,7 @@ function ChallengeMock() {
       <div role="img" aria-label="Example challenge: two three-putts or fewer. Four of the last five challenges met.">
         <div aria-hidden="true" className="rounded-lg bg-green-3 p-4 text-on-green">
           <p className="caps text-[0.66rem] text-gold">Your challenge for the next round</p>
-          <p className="mt-1 font-display text-[1.6rem] leading-tight">Two three-putts or fewer</p>
+          <p className="mt-1 text-balance font-display text-[1.6rem] leading-tight">Two three-putts or fewer</p>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {marks.map((m, i) => <VerdictMark key={i} status={m} size="sm" />)}
           </div>
@@ -207,7 +207,7 @@ function CourseStrip() {
           <li key={c!.slug} className="min-w-0 max-sm:[&:nth-child(n+5)]:hidden">
             <Link href={`/clubhouse/courses/${c!.slug}`} className="group/c block overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card transition-transform duration-150 is-pressed:scale-[0.98]">
               <span className="relative block aspect-[4/3] bg-tint">
-                <Image src={c!.hero!.src} alt="" fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px" className="object-cover transition-transform duration-300 group-hover/c:scale-[1.03]" />
+                <Image src={c!.hero!.src} alt="" fill loading={c!.slug === "augusta-national" ? "eager" : undefined} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px" className="object-cover transition-transform duration-300 group-hover/c:scale-[1.03]" />
               </span>
               <span className="block p-3">
                 <span className="block truncate font-serif text-[1.02rem] text-ink">{c!.shortName}</span>

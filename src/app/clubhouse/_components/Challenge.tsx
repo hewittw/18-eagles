@@ -59,7 +59,7 @@ export function NextChallenge({ className }: { className?: string }) {
             <p className="mb-6 flex items-start gap-3 rounded-lg bg-black/15 px-4 py-3 text-on-green">
               <VerdictMark status={last.status} size="sm" />
               <span className="min-w-0">
-                <span className="caps block text-[0.72rem] text-gold">Last round · {last.course}, {fmtDate(last.date)}</span>
+                <span className="caps block text-balance text-[0.72rem] text-gold">Last round · {last.course}, {fmtDate(last.date)}</span>
                 <span className="mt-0.5 block font-serif text-lg leading-snug">
                   {last.status === "met" ? "Challenge met" : last.status === "missed" ? "Challenge missed" : "Challenge skipped"}: {last.text}.
                 </span>
@@ -68,7 +68,7 @@ export function NextChallenge({ className }: { className?: string }) {
             </p>
           )}
           <h2 id="challenge">
-            <span className="caps block text-label text-gold">Your challenge for the next round</span>
+            <span className="caps block text-balance text-label text-gold">Your challenge for the next round</span>
             <span className="mt-2 block text-balance font-display text-display-2 text-on-green">{next.title}</span>
           </h2>
           <p className="mt-3 max-w-xl text-pretty font-serif text-lede text-paper-3">{next.why}</p>
@@ -84,7 +84,7 @@ export function NextChallenge({ className }: { className?: string }) {
             ) : (
               <p className="font-serif text-lg text-paper-3">Meet this one to start a streak.</p>
             )}
-            <p className="caps mt-4 text-[0.72rem] text-gold">
+            <p className="caps mt-4 text-balance text-[0.72rem] text-gold">
               Last {recent.length} {recent.length === 1 ? "challenge" : "challenges"} · {metCount} of {judged.length} met
             </p>
             <ol className="mt-2 flex flex-wrap gap-1.5 md:justify-end" aria-label={`Your last ${recent.length} challenges, oldest first`}>

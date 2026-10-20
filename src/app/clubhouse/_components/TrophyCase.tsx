@@ -44,7 +44,9 @@ export function SheenStyle() {
         .trophy-sheen::after { content: ""; position: absolute; inset: -40% auto -40% -60%; width: 45%;
           background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.28), transparent);
           transform: skewX(-18deg); animation: trophy-sheen 1.6s 0.5s cubic-bezier(0.3, 0, 0.2, 1) both; }
-        @keyframes trophy-sheen { from { left: -60%; } to { left: 130%; } }
+        /* Starts and ends well outside the tile (the skew leans the band's ends sideways) and fades at both ends,
+           so nothing is left showing once it has passed. */
+        @keyframes trophy-sheen { from { left: -110%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } to { left: 180%; opacity: 0; } }
         .trophy-rise { animation: trophy-rise 520ms var(--ease-hang) both; animation-delay: calc(var(--i, 0) * 70ms); }
         @keyframes trophy-rise { from { transform: translateY(8px) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
       }
@@ -120,8 +122,8 @@ export function TrophyCase({ className }: { className?: string }) {
         <div className="grid gap-5 px-4 pb-5 pt-6 sm:px-7 sm:pt-7 md:pb-7">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
             <div className="min-w-0">
-              <p className="caps text-label text-gold">Trophy Room · week of {weekRange(week)}</p>
-              <h2 id="trophy-case" className="mt-1 font-display text-title text-on-green">
+              <p className="caps text-balance text-label text-gold">Trophy Room · week of {weekRange(week)}</p>
+              <h2 id="trophy-case" className="mt-1 text-balance font-display text-title text-on-green">
                 {wonThisWeek ? `${wonThisWeek} of 3 won this week` : "Three trophies to play for this week"}
               </h2>
               <p className="mt-1 max-w-xl font-serif text-paper-3">
@@ -136,11 +138,11 @@ export function TrophyCase({ className }: { className?: string }) {
           <WeekSlots week={week} honorsSeen={store.honorsSeen} since={since} />
         </div>
 
-        <div className="grid gap-4 border-t border-white/15 bg-black/[0.12] px-4 py-5 sm:px-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+        <div className="grid gap-4 border-t border-white/15 bg-black/[0.12] px-4 py-5 sm:px-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           {latest.length ? (
             <div className="min-w-0">
               <h3 className="caps text-[0.72rem] text-gold">Latest on the shelf</h3>
-              <ul className="mt-2.5 grid gap-2 sm:grid-cols-3">
+              <ul className="mt-2.5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 {latest.map((e) => {
                   const d = trophyDef(e.id);
                   const fresh = isFresh(e, store.honorsSeen, since);
@@ -157,7 +159,7 @@ export function TrophyCase({ className }: { className?: string }) {
                   );
                   const face = "flex min-h-16 min-w-0 items-center gap-3 rounded-lg bg-white/[0.07] px-3 py-2.5";
                   return (
-                    <li key={e.key} className="min-w-0 max-sm:[&:nth-child(3)]:hidden">
+                    <li key={e.key} className="min-w-0 max-lg:[&:nth-child(3)]:hidden">
                       {e.roundId ? (
                         <Link href={`/clubhouse/rounds/${e.roundId}`} className={cx(face, "group/l transition-colors duration-150 is-hover:bg-white/[0.12] is-pressed:bg-white/[0.16]")}>{body}</Link>
                       ) : (
@@ -171,7 +173,7 @@ export function TrophyCase({ className }: { className?: string }) {
           ) : (
             <p className="font-serif text-paper-3">Your first card puts the first trophy on the shelf.</p>
           )}
-          <ButtonLink href="/clubhouse/trophies" tone="green" variant="primary" className="md:self-end">
+          <ButtonLink href="/clubhouse/trophies" tone="green" variant="primary" className="justify-self-start lg:self-end">
             Trophy Room
           </ButtonLink>
         </div>

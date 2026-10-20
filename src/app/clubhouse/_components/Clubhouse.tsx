@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { BigNumber, HoleIllustration, toParText } from "@/components/golf";
+import { BigNumber, HoleIllustration, placeOf, toParText } from "@/components/golf";
 import { fmtDate } from "@/components/golf/charts";
 import { ActionList, ActionRow, ActionTile, Button, Chevron, ButtonLink, Card, ChoiceGroup, Field, focusInvalid, NumberInput, SectionHeading } from "@/components/ui";
 import { defaultHome, holesFor } from "@/lib/courses";
@@ -59,29 +59,37 @@ export function Clubhouse() {
   // (A screen tall behind the modal, like the placeholder before it, so nothing shifts as it opens.)
   if (!store.profile.name && !welcomed) return <div className="min-h-dvh"><NameGate photo={course("augusta-national")?.hero ?? null} /></div>;
   const lastHere = last && done.find((d) => d.course.slug === teeCourse.slug && d.holes.length === 18);
+  const resumeAt = active && activeCourse ? nextUnplayed(active, activeCourse) : null;
+  // A round in progress comes first; a golfer with no cards yet sees Tee off before the (empty) trophy case.
+  const caseFirst = step === 3 && done.length > 0;
+  const caseLast = step === 3 && done.length === 0;
 
   return (
     <>
-      <Hero store={store} welcomed={welcomed} step={step} handicap={handicap} done={done} photo={(teeCourse.hero ?? course("augusta-national")?.hero) || null} />
+      <Hero
+        store={store} welcomed={welcomed} step={step} handicap={handicap} done={done}
+        live={active && activeCourse && resumeAt != null ? { hole: resumeAt, course: activeCourse.shortName } : null}
+        photo={((activeCourse ?? teeCourse).hero ?? course("augusta-national")?.hero) || null}
+      />
 
       <Page className="grid grid-cols-[minmax(0,1fr)] gap-14 md:gap-20">
-        {step === 3 && <TrophyCase />}
-        {active && activeCourse && (
+        {active && activeCourse && resumeAt != null && (
           <section aria-labelledby="in-progress">
             <Card tone="green" padding="lg" className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
-              <div>
+              <div className="min-w-0">
                 <p className="caps text-label text-gold">Round in progress</p>
-                <h2 id="in-progress" className="mt-1 font-display text-title text-on-green">{activeCourse.name}</h2>
+                <h2 id="in-progress" className="mt-1 text-balance font-display text-title text-on-green">{activeCourse.name}</h2>
                 <p className="mt-2 font-numeral text-lg text-paper-3">
                   {progressLine(active.entries, holesFor(activeCourse, active.holes))}
                 </p>
               </div>
-              <ButtonLink href={`/clubhouse/rounds/${active.id}/${nextUnplayed(active, activeCourse)}`} tone="green" variant="primary" size="lg">
-                Resume at hole {nextUnplayed(active, activeCourse)}
+              <ButtonLink href={`/clubhouse/rounds/${active.id}/${resumeAt}`} tone="green" variant="primary" size="lg" className="whitespace-nowrap">
+                Resume at hole {resumeAt}
               </ButtonLink>
             </Card>
           </section>
         )}
+        {caseFirst && <TrophyCase />}
 
         {step === 0 && <NewGolferShowcase />}
         {step === 1 && <HomeCourseStep />}
@@ -91,10 +99,12 @@ export function Clubhouse() {
           <div className="min-w-0">
             <SectionHeading
               id="tee-off"
-              eyebrow={last ? "Coming back" : "Your first round · you're set"}
-              title={lastHere ? `Last time at ${teeCourse.shortName}: ${lastHere.gross}. Beat it.` : `Tee off at ${teeCourse.shortName}`}
+              eyebrow={active ? "Not this one?" : last ? "Coming back" : "Your first round · you're set"}
+              title={active ? "Start a different round" : lastHere ? `Last time at ${teeCourse.shortName}: ${lastHere.gross}. Beat it.` : `Tee off at ${teeCourse.shortName}`}
               lede={
-                lastHere ? (
+                active ? (
+                  <>Your round in progress stays saved; Resume is at the top of the Clubhouse.</>
+                ) : lastHere ? (
                   <>Your best here is {Math.min(...done.filter((d) => d.course.slug === teeCourse.slug && d.holes.length === 18).map((d) => d.gross))}. Your tees are remembered.</>
                 ) : (
                   <>Pick your tees and go. On each hole, tap the clubs you hit (they count your score) or just tap the score; putts and notes are optional.</>
@@ -110,7 +120,7 @@ export function Clubhouse() {
             <div className="mt-8">
               {active ? (
                 <details className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
-                  <summary className="flex min-h-tap cursor-pointer items-center font-semibold text-green">Start a different round instead</summary>
+                  <summary className="flex min-h-tap cursor-pointer items-center font-semibold text-green">Tee off at {teeCourse.shortName} instead</summary>
                   <div className="mt-5"><TeeOff course={teeCourse} rememberedTee={store.profile.lastTee[teeCourse.slug]} label="Start a new round" /></div>
                 </details>
               ) : (
@@ -129,6 +139,7 @@ export function Clubhouse() {
 
         {step === 3 && !store.profile.goal && <GoalQuestion />}
 
+        {caseLast && <TrophyCase />}
 
         {done.length > 0 && (
           <section aria-labelledby="recent">
@@ -167,11 +178,13 @@ export function Clubhouse() {
 }
 
 // ───────────────────────── the hero: the handicap, or the one question ─────────────────────────
-function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; welcomed: boolean; step: number; handicap: ReturnType<typeof useClub>["handicap"]; done: RoundSummary[]; photo: { src: string; alt: string; credit: string } | null }) {
+function Hero({ store, welcomed, step, handicap, done, photo, live }: { store: Store; welcomed: boolean; step: number; handicap: ReturnType<typeof useClub>["handicap"]; done: RoundSummary[]; photo: { src: string; alt: string; credit: string } | null; live: { hole: number; course: string } | null }) {
   const goal = store.profile.goal;
   const avg18 = done.filter((d) => d.holes.length === 18).slice(0, 5);
   const recentAvg = avg18.length ? avg18.reduce((a, d) => a + d.gross, 0) / avg18.length : null;
   const cardsSoFar = 3 - handicap.roundsToFirst;
+  // An odd 9-hole card waits for another nine before it makes one differential.
+  const halfWaiting = handicap.roundsToFirst > 0 && done.filter((d) => d.holes.length === 9).length % 2 === 1;
 
   return (
     <section aria-labelledby="hero-title" className="tex-locker on-green relative isolate overflow-hidden">
@@ -185,9 +198,11 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
       )}
       <div className="mx-auto grid max-w-ledger gap-10 px-4 pb-12 pt-10 sm:px-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-center md:pb-16 md:pt-14 lg:px-8">
         <div className="min-w-0">
-          <p className="caps text-label text-gold">The Clubhouse</p>
-          <h1 id="hero-title" className="mt-2 font-display text-display-2 text-on-green">
-            {greeting(welcomed ? (done.length ? "Welcome back" : step < 3 ? "Let\u2019s set up your locker" : "Your locker is ready") : "Welcome to 18 Eagles", store.profile.name)}
+          <p className="caps text-balance text-label text-gold">{live ? "Round in progress" : "The Clubhouse"}</p>
+          <h1 id="hero-title" className="mt-2 text-balance font-display text-display-2 text-on-green">
+            {live
+              ? greeting(`Hole ${live.hole} at ${live.course} is waiting`, store.profile.name)
+              : greeting(welcomed ? (done.length ? "Welcome back" : step < 3 ? "Let\u2019s set up your locker" : "Your locker is ready") : "Welcome to 18 Eagles", store.profile.name)}
           </h1>
           {welcomed && step < 3 ? (
             <p className="mt-5 max-w-xl font-serif text-lede text-paper-3">
@@ -207,9 +222,10 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
               ) : (
                 <div>
                   <p className="caps text-label text-gold">Earning your Handicap Index</p>
-                  <Tracker n={cardsSoFar} />
-                  <p className="mt-4 max-w-md font-serif text-lede text-paper-3">
-                    {cardsSoFar === 0 ? "Post three cards and your index appears here." : `${3 - cardsSoFar} more ${3 - cardsSoFar === 1 ? "card" : "cards"} and your index appears here.`}
+                  <Tracker n={cardsSoFar} half={halfWaiting} />
+                  <p className="mt-4 max-w-md text-pretty font-serif text-lede text-paper-3">
+                    {cardsSoFar === 0 ? "Post three 18-hole cards and your index appears here." : `${3 - cardsSoFar} more ${3 - cardsSoFar === 1 ? "card" : "cards"} and your index appears here.`}
+                    {" "}{halfWaiting ? "Your 9-hole card is half of one: play another nine to complete it." : "A 9-hole card counts as half: two nines make one."}
                   </p>
                 </div>
               )}
@@ -229,7 +245,7 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
             </p>
           )}
         </div>
-        {!welcomed ? <IndexQuestion /> : step < 3 ? <SetupSteps step={step} homeCourse={store.profile.homeCourse} /> : <MiniBoard done={done} />}
+        {!welcomed ? <IndexQuestion /> : step < 3 ? <SetupSteps step={step} homeCourse={store.profile.homeCourse} /> : <MiniBoard done={done} className={live ? "max-md:hidden" : undefined} />}
       </div>
     </section>
   );
@@ -258,14 +274,21 @@ function IndexLine({ handicap, cardsSoFar }: { handicap: ReturnType<typeof useCl
   );
 }
 
-function Tracker({ n }: { n: number }) {
+function Tracker({ n, half }: { n: number; half?: boolean }) {
   return (
-    <ol className="mt-3 flex gap-2" aria-label={`${n} of 3 cards posted`}>
-      {[0, 1, 2].map((i) => (
-        <li key={i} className={`grid size-16 place-items-center rounded-xs border font-numeral text-3xl font-semibold ${i < n ? "border-gold bg-gold text-green-3" : "border-gold/60 text-gold"}`} aria-hidden="true">
-          {i + 1}
-        </li>
-      ))}
+    <ol className="mt-3 flex gap-2" aria-label={`${n} of 3 cards posted${half ? ", and half of the next one: a 9-hole card" : ""}`}>
+      {[0, 1, 2].map((i) => {
+        const halfHere = half && i === n;
+        return (
+          <li
+            key={i}
+            className={`grid size-16 place-items-center rounded-xs border font-numeral text-3xl font-semibold ${i < n ? "border-gold bg-gold text-green-3" : halfHere ? "border-gold bg-[linear-gradient(90deg,var(--color-gold)_50%,transparent_50%)] text-green-3" : "border-gold/60 text-gold"}`}
+            aria-hidden="true"
+          >
+            {halfHere ? <span className="rounded-xs bg-green-3 px-1 text-xl text-gold">½</span> : i + 1}
+          </li>
+        );
+      })}
     </ol>
   );
 }
@@ -333,23 +356,23 @@ function GoalQuestion() {
 }
 
 /** The last few cards as hung leaderboard tiles, or the first card's place on the board. */
-function MiniBoard({ done }: { done: RoundSummary[] }) {
+function MiniBoard({ done, className }: { done: RoundSummary[]; className?: string }) {
   const recent = done.slice(0, 5).reverse();
   if (!recent.length) {
     return (
-      <div className="justify-self-start rounded-xs border border-gold/40 p-5 md:justify-self-end">
+      <div className={`justify-self-start rounded-xs border border-gold/40 p-5 md:justify-self-end ${className ?? ""}`}>
         <p className="caps text-label text-gold">The board</p>
         <p className="mt-2 max-w-xs font-serif text-paper-3">Your first card hangs here, hole by hole, the way the old scoreboards did it.</p>
       </div>
     );
   }
   return (
-    <div className="min-w-0 justify-self-start md:justify-self-end">
+    <div className={`min-w-0 max-md:w-full md:justify-self-end ${className ?? ""}`}>
       <p className="caps text-label text-gold">Last {recent.length} {recent.length === 1 ? "card" : "cards"}</p>
-      <ol className="mt-3 flex gap-1.5">
+      <ol className="mt-3 grid grid-cols-5 gap-2 md:flex md:gap-1.5">
         {recent.map((d, i) => (
           <li key={d.round.id} className="hang" style={{ ["--i" as string]: i }}>
-            <Link href={`/clubhouse/rounds/${d.round.id}`} className="tile grid w-14 place-items-center gap-0.5 rounded-xs px-1 pb-1.5 pt-2 text-ink is-hover:border-ink sm:w-16" aria-label={`${d.gross} ${toParText(d.toPar)} ${fmtDate(d.round.date, { month: "short" })}: ${d.course.shortName}, ${fmtDate(d.round.date)}`}>
+            <Link href={`/clubhouse/rounds/${d.round.id}`} className="tile grid w-full place-items-center gap-0.5 rounded-xs px-1 pb-1.5 pt-2 text-ink is-hover:border-ink md:w-16" aria-label={`${d.gross} ${toParText(d.toPar)} ${fmtDate(d.round.date, { month: "short" })}: ${d.course.shortName}, ${fmtDate(d.round.date)}`}>
               <span className="font-numeral text-2xl font-semibold tabular-nums sm:text-3xl">{d.gross}</span>{" "}
               <span className={`font-numeral text-sm tabular-nums ${d.toPar < 0 ? "text-under" : "text-green"}`}>{toParText(d.toPar)}</span>{" "}
               <span className="caps text-[0.6rem] text-ink-2">{fmtDate(d.round.date, { month: "short" })}</span>
@@ -374,8 +397,8 @@ function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typ
       </div>
       <div className="flex items-baseline justify-between gap-4 p-4">
         <span className="min-w-0">
-          <span className="block truncate font-serif text-lg text-ink">{course.name}</span>
-          <span className="block text-sm text-ink-2">{course.city}, {course.region}</span>
+          <span className="block text-balance font-serif text-lg text-ink">{course.name}</span>
+          <span className="block text-sm text-ink-2">{placeOf(course)}</span>
         </span>
         <span className="flex shrink-0 items-center gap-3 font-numeral text-ink-2 tabular-nums">Par {course.tees[0].par}<Chevron className="text-rule-strong" /></span>
       </div>

@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { placeOf } from "@/components/golf";
 import { Button, ButtonLink, focusInvalid, Icon, SkipTo, TextInput, ToggleChip } from "@/components/ui";
 import type { Course } from "@/lib/course-types";
 import { useClub } from "@/lib/hooks";
-import { patchProfile, update } from "@/lib/store";
+import { withSampleSeason } from "@/lib/sample";
+import { byClubOrder, patchProfile, update } from "@/lib/store";
 import type { Club } from "@/lib/types";
 
 // The first visit's setup: three short questions answered on the Clubhouse itself (no wizard, no tour).
@@ -50,8 +52,20 @@ export function reopenStep(i: number, homeCourse?: string | null) {
 export function SetupSteps({ step, homeCourse }: { step: number; homeCourse?: string | null }) {
   return (
     <div className="min-w-0 justify-self-start md:justify-self-end">
-      <p className="caps text-label text-gold">Set up your locker</p>
-      <ol className="mt-3 grid gap-2">
+      {/* Phones: one compact line, so the step's question sits near the top of the screen. The step itself has its
+          own Back button, so "Change" lives in the full list from md. */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 md:hidden">
+        <p className="caps text-label text-gold">
+          Step {Math.min(step, 2) + 1} of 3<span className="text-paper-3"> · {SETUP[Math.min(step, 2)]}</span>
+        </p>
+        <ol className="flex items-center gap-1.5" aria-hidden="true">
+          {SETUP.map((label, i) => (
+            <li key={label} className={`h-2 rounded-full ${i < step ? "w-5 bg-gold" : i === step ? "w-8 bg-on-green" : "w-5 border border-white/60"}`} />
+          ))}
+        </ol>
+      </div>
+      <p className="caps text-label text-gold max-md:hidden">Set up your locker</p>
+      <ol className="mt-3 grid gap-2 max-md:hidden">
         {SETUP.map((label, i) => {
           const done = i < step;
           const now = i === step;
@@ -124,7 +138,7 @@ export function HomeCourseStep() {
       <div>
         <BackButton onClick={() => reopenStep(0, pick)}>Back to your index</BackButton>
         <p className="caps text-label text-gold-ink">Step 2 of 3</p>
-        <h2 id="setup-home" className="mt-1 font-display text-display-2 text-ink">Where do you usually play?</h2>
+        <h2 id="setup-home" className="mt-1 text-balance font-display text-display-2 text-ink">Where do you usually play?</h2>
         <p className="mt-3 max-w-measure font-serif text-lede text-ink-2">Your home course opens ready to play each time, with its tees, pars and yardages. You can play any course whenever you like.</p>
       </div>
 
@@ -170,11 +184,11 @@ export function HomeCourseStep() {
       {/* The action bar keeps one shape whatever is picked: the choice on the left (one line, cut short if long), a
           fixed button on the right. On phones it sits exactly on the tab bar; from md it's inline. */}
       <ActionBar
-        label={pick ? "Your home course" : "Home course"}
-        value={pick ? (courses.find((c) => c.slug === pick)?.name ?? "") : "Pick one above"}
+        label="Home course"
+        value={pick ? (courses.find((c) => c.slug === pick)?.shortName ?? "") : "Pick one above"}
         muted={!pick}
       >
-        <Button variant="primary" size="lg" onClick={save} className="w-40 shrink-0 sm:w-48">Continue</Button>
+        <Button variant="primary" size="lg" onClick={save} className="w-40 shrink-0 whitespace-nowrap sm:w-48">Continue</Button>
       </ActionBar>
     </section>
   );
@@ -185,8 +199,9 @@ function CourseRadio({ course, checked, describedBy, onPick }: { course: Course;
     <label className="group/cr relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card transition-[transform,box-shadow] duration-150 is-pressed:scale-[0.98] has-checked:border-green has-checked:ring-2 has-checked:ring-green has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus">
       <input type="radio" name="home-course" value={course.slug} checked={checked} onChange={onPick} aria-describedby={describedBy} className="sr-only" />
       <span className="relative block aspect-[16/10] bg-tint">
+        {/* Augusta is also the hero photo; eager here too, so both copies of it load the same way. */}
         {course.hero ? (
-          <Image src={course.hero.src} alt="" fill sizes="(max-width: 640px) 50vw, 260px" className="object-cover" />
+          <Image src={course.hero.src} alt="" fill loading={course.slug === "augusta-national" ? "eager" : undefined} sizes="(max-width: 640px) 50vw, 260px" className="object-cover" />
         ) : (
           <span className="grid h-full place-items-center text-green"><Icon name="flag" className="size-8" /></span>
         )}
@@ -195,8 +210,8 @@ function CourseRadio({ course, checked, describedBy, onPick }: { course: Course;
         </span>
       </span>
       <span className="flex flex-1 flex-col p-3">
-        <span className="line-clamp-2 font-serif text-[1.05rem] leading-snug text-ink">{course.name}</span>
-        <span className="mt-0.5 truncate text-sm text-ink-2">{course.city}, {course.region}</span>
+        <span className="line-clamp-2 font-serif text-[1.05rem] leading-snug text-ink">{course.shortName}</span>
+        <span className="mt-0.5 line-clamp-2 text-sm text-ink-2">{placeOf(course)}</span>
       </span>
     </label>
   );
@@ -229,10 +244,10 @@ export function BagStep() {
       <div>
         <BackButton onClick={() => reopenStep(1, store.profile.homeCourse)}>Back to your home course</BackButton>
         <p className="caps text-label text-gold-ink">Step 3 of 3</p>
-        <h2 id="setup-bag" className="mt-1 font-display text-display-2 text-ink">What&apos;s in your bag?</h2>
+        <h2 id="setup-bag" className="mt-1 text-balance font-display text-display-2 text-ink">What&apos;s in your bag?</h2>
         <p className="mt-3 max-w-measure font-serif text-lede text-ink-2">These become the club buttons on every hole: tap the club you hit, and the shots count your score. A standard set is filled in; tap a club to take it out or put it in.</p>
       </div>
-      <div className="-my-3 empty:hidden"><SkipTo href="#bag-save">Skip the clubs to That&apos;s my bag</SkipTo></div>
+      <div className="-my-3 empty:hidden"><SkipTo href="#bag-save">Skip the clubs to Continue</SkipTo></div>
       <div className="overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card">
         <p className="flex items-center justify-between gap-3 border-b border-rule/80 bg-paper-3 px-4 py-2.5 sm:px-5" role="status" aria-live="polite">
           <span className="caps text-label text-ink-2">In the bag</span>{" "}
@@ -240,7 +255,7 @@ export function BagStep() {
         </p>
         <div className="divide-y divide-rule/80">
           {KINDS.map(({ kind, label }) => {
-            const clubs = bag.filter((c) => c.kind === kind);
+            const clubs = bag.filter((c) => c.kind === kind).sort(byClubOrder);
             if (!clubs.length) return null;
             return (
               <div key={kind} className="px-4 py-3.5 sm:px-5" role="group" aria-labelledby={`sb-${kind}`}>
@@ -262,7 +277,7 @@ export function BagStep() {
       {inBag > 14 && <p className="text-ink-2">The Rules allow 14 clubs. That&apos;s fine for practice; take some out before a competition.</p>}
       {error && <p id="bag-err" className="font-medium text-error" role="alert">{error}</p>}
       <ActionBar label="In the bag" value={`${inBag} ${inBag === 1 ? "club" : "clubs"}`}>
-        <Button id="bag-save" variant="primary" size="lg" onClick={save} className="w-40 shrink-0 sm:w-48" aria-describedby={error ? "bag-err" : undefined}>That&apos;s my bag</Button>
+        <Button id="bag-save" variant="primary" size="lg" onClick={save} className="w-40 shrink-0 whitespace-nowrap sm:w-48" aria-describedby={error ? "bag-err" : undefined}>Continue</Button>
       </ActionBar>
     </section>
   );
@@ -273,7 +288,7 @@ function ActionBar({ label, value, muted, children }: { label: string; value: st
   return (
     <div data-obscures className="sticky bottom-[calc(var(--tabbar)+env(safe-area-inset-bottom))] z-10 -mx-4 flex items-center gap-4 border-t border-rule bg-paper/95 px-4 py-3 backdrop-blur-xl sm:-mx-6 sm:px-6 md:static md:mx-0 md:rounded-xl md:border md:border-rule/70 md:bg-paper-2 md:p-4 md:shadow-card">
       <p className="min-w-0 flex-1" aria-live="polite">
-        <span className="caps block text-[0.7rem] text-ink-2">{label}</span>
+        <span className="caps block truncate text-[0.7rem] text-ink-2">{label}</span>
         <span className={`block truncate font-serif text-[1.05rem] leading-snug ${muted ? "text-ink-2" : "text-ink"}`}>{value}</span>
       </p>
       {children}
@@ -296,13 +311,14 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
     const d = ref.current;
     if (!d) return;
     if (!d.open) d.showModal();
-    input.current?.focus();
+    // No scroll on focus: on a short screen (a phone on its side) the heading stays in view above the field.
+    input.current?.focus({ preventScroll: true });
     // Chrome closes a modal on a second Escape even when "cancel" is prevented. Without a name there's nothing behind
     // it yet, so open it again with focus back in the field (the button is the one way forward).
     const reopen = () => {
       if (saved.current) return;
       d.showModal();
-      input.current?.focus();
+      input.current?.focus({ preventScroll: true });
     };
     d.addEventListener("close", reopen);
     return () => d.removeEventListener("close", reopen);
@@ -321,6 +337,13 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
     patchProfile({ name: v });
     focusHeading("index-q");
   };
+  // "Just looking?": straight into the sample season, no name needed (greetings read "Welcome back." without one).
+  const explore = () => {
+    saved.current = true;
+    ref.current?.close();
+    update((s) => withSampleSeason(s));
+    focusHeading("hero-title");
+  };
   return (
     <dialog
       ref={ref}
@@ -328,17 +351,19 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
       onCancel={(e) => e.preventDefault()}
       className="on-green fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto bg-green-3 p-0 text-on-green backdrop:bg-green-3"
     >
+      {/* Fixed to the viewport, so the photo and its wash stay behind everything however far the dialog scrolls. */}
       {photo && (
-        <>
-          <Image src={photo.src} alt="" fill loading="eager" fetchPriority="high" sizes="100vw" className="-z-0 object-cover" />
-          <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_72_50/0.82)_0%,rgb(0_88_61/0.93)_60%,rgb(0_72_50/0.97)_100%)]" />
-        </>
+        <div aria-hidden="true" className="fixed inset-0">
+          <Image src={photo.src} alt="" fill loading="eager" fetchPriority="high" sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_72_50/0.82)_0%,rgb(0_88_61/0.93)_60%,rgb(0_72_50/0.97)_100%)]" />
+        </div>
       )}
-      <div className="relative mx-auto grid min-h-dvh max-w-xl content-center px-6 py-16">
-        <span className="grid size-16 place-items-center rounded-full border-2 border-gold font-display text-3xl text-gold" aria-hidden="true">E</span>
-        <p className="caps mt-8 text-label text-gold">Welcome to 18 Eagles</p>
-        <form onSubmit={submit} noValidate className="mt-2 grid gap-6">
-          <h1 id="name-q" className="font-display text-display-1 text-on-green">
+      <div className="relative mx-auto grid min-h-dvh max-w-xl content-center px-6 py-16 [@media(max-height:32rem)]:py-6">
+        <span className="grid size-16 place-items-center rounded-full border-2 border-gold font-display text-3xl text-gold [@media(max-height:32rem)]:hidden" aria-hidden="true">E</span>
+        <p className="caps mt-8 text-label text-gold [@media(max-height:32rem)]:mt-0">Welcome to 18 Eagles</p>
+        <p className="mt-2 max-w-md text-pretty font-serif text-paper-3">A golf journal that keeps every card you play and works out your handicap from them.</p>
+        <form onSubmit={submit} noValidate className="mt-6 grid gap-6 [@media(max-height:32rem)]:mt-4 [@media(max-height:32rem)]:gap-4">
+          <h1 id="name-q" className="text-balance font-display text-display-1 text-on-green">
             <label htmlFor="golfer-name">What should we call you?</label>
           </h1>
           <p id="golfer-name-hint" className="-mt-2 max-w-md font-serif text-lede text-paper-3">Your name goes on your locker, your cards and your trophies. It stays on this device.</p>
@@ -367,6 +392,10 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
           </div>
           <Button type="submit" variant="primary" tone="green" size="lg" block>Open my locker</Button>
         </form>
+        <p className="mt-5 flex flex-wrap items-center justify-center gap-x-1 text-center text-paper-3">
+          Just looking?
+          <Button variant="quiet" tone="green" size="sm" onClick={explore}>Explore a sample season</Button>
+        </p>
       </div>
     </dialog>
   );
