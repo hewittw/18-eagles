@@ -105,7 +105,7 @@ export function Clubhouse() {
             <div className="mt-8">
               {active ? (
                 <details className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
-                  <summary className="cursor-pointer font-semibold text-green">Start a different round instead</summary>
+                  <summary className="flex min-h-tap cursor-pointer items-center font-semibold text-green">Start a different round instead</summary>
                   <div className="mt-5"><TeeOff course={teeCourse} rememberedTee={store.profile.lastTee[teeCourse.slug]} label="Start a new round" /></div>
                 </details>
               ) : (
@@ -366,9 +366,9 @@ function MiniBoard({ done }: { done: RoundSummary[] }) {
       <ol className="mt-3 flex gap-1.5">
         {recent.map((d, i) => (
           <li key={d.round.id} className="hang" style={{ ["--i" as string]: i }}>
-            <Link href={`/clubhouse/rounds/${d.round.id}`} className="tile grid w-14 place-items-center gap-0.5 rounded-xs px-1 pb-1.5 pt-2 text-ink is-hover:border-ink sm:w-16" aria-label={`${d.course.shortName}, ${fmtDate(d.round.date)}: ${d.gross}, ${toParText(d.toPar)}`}>
-              <span className="font-numeral text-2xl font-semibold tabular-nums sm:text-3xl">{d.gross}</span>
-              <span className={`font-numeral text-sm tabular-nums ${d.toPar < 0 ? "text-under" : "text-green"}`}>{toParText(d.toPar)}</span>
+            <Link href={`/clubhouse/rounds/${d.round.id}`} className="tile grid w-14 place-items-center gap-0.5 rounded-xs px-1 pb-1.5 pt-2 text-ink is-hover:border-ink sm:w-16" aria-label={`${d.gross} ${toParText(d.toPar)} ${fmtDate(d.round.date, { month: "short" })}: ${d.course.shortName}, ${fmtDate(d.round.date)}`}>
+              <span className="font-numeral text-2xl font-semibold tabular-nums sm:text-3xl">{d.gross}</span>{" "}
+              <span className={`font-numeral text-sm tabular-nums ${d.toPar < 0 ? "text-under" : "text-green"}`}>{toParText(d.toPar)}</span>{" "}
               <span className="caps text-[0.6rem] text-ink-2">{fmtDate(d.round.date, { month: "short" })}</span>
             </Link>
           </li>

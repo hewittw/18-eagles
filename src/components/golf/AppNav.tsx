@@ -55,7 +55,7 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
                   <span aria-hidden="true" className={cx("grid h-7 w-12 place-items-center rounded-full transition-colors", on ? "bg-tint" : "bg-transparent")}>
                     <NavIcon k={n.key} className={cx("size-[1.35rem]", on && "[&_path]:stroke-[1.9]")} />
                   </span>
-                  <span className={cx("truncate text-[0.68rem] tracking-[0.01em]", on ? "font-bold" : "font-medium")}>{n.label}</span>
+                  <span className={cx("max-w-full text-center text-[0.68rem] leading-tight tracking-[0.01em] [overflow-wrap:anywhere]", on ? "font-bold" : "font-medium")}>{n.label}</span>
                 </Link>
               </li>
             );

@@ -117,24 +117,24 @@ function CardRow({ s, counts }: { s: RoundSummary; counts: boolean }) {
   const d = new Date(r.date + "T12:00:00");
   const tee = teeOf(s.course, r.teeName);
   const under = s.toPar < 0;
-  const spoken = `${d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}, ${s.course.shortName}, ${tee.name} tees, ${NINE_SPOKEN[r.holes]}: ${s.gross}, ${toParSpoken(s.toPar)}${counts ? ". Counts toward your index" : ""}.`;
   return (
     <li>
       <Link
         href={`/clubhouse/rounds/${r.id}`}
-        aria-label={spoken + (r.note ? ` Note: ${r.note}` : "")}
         className="group/row flex min-h-20 items-center gap-3.5 px-3.5 py-3 transition-colors duration-150 -outline-offset-2 is-hover:bg-paper-3 is-pressed:bg-tint sm:gap-4 sm:px-5"
       >
         <span className="grid w-12 shrink-0 place-items-center rounded-sm bg-paper-3 py-1.5 leading-none" aria-hidden="true">
           <span className="caps text-[0.62rem] text-ink-2">{d.toLocaleDateString("en-US", { weekday: "short" })}</span>
           <span className="mt-0.5 font-numeral text-[1.4rem] font-semibold tabular-nums text-ink">{d.getDate()}</span>
         </span>
-        <span className="min-w-0 flex-1" aria-hidden="true">
+        {/* The row's name is its visible text, with the short date and score spelled out for screen readers. */}
+        <span className="sr-only">{d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}: </span>
+        <span className="min-w-0 flex-1">
           <span className="block truncate font-serif text-[1.15rem] leading-snug text-ink">{s.course.shortName}</span>
           <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.9rem] text-ink-2">
             <TeeSwatch color={tee.color} name={tee.name} />
             <span aria-hidden="true">·</span>
-            <span>{NINE_LABEL[r.holes]}</span>
+            <span><span className="sr-only">tees, </span>{NINE_LABEL[r.holes]}</span>
             {r.mode === "logged" && <><span aria-hidden="true">·</span><span>Logged</span></>}
             {counts && <Tag tone="gold" className="ml-0.5">Counts</Tag>}
           </span>
@@ -144,6 +144,7 @@ function CardRow({ s, counts }: { s: RoundSummary; counts: boolean }) {
           <span className="font-numeral text-[1.9rem] font-semibold tabular-nums text-ink">{s.gross}</span>
           <span className={cx("mt-1 font-numeral text-[1rem] font-semibold tabular-nums", under ? "text-under" : "text-ink-2")}>{toParText(s.toPar)}</span>
         </span>
+        <span className="sr-only">. Score {s.gross}, {toParSpoken(s.toPar)}{counts ? ". Counts toward your index" : ""}.</span>
         <Chevron className="text-rule-strong transition-transform group-hover/row:translate-x-0.5" />
       </Link>
     </li>
