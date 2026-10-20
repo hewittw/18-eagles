@@ -11,5 +11,5 @@ export function Placeholder({ label = "Opening your locker" }: { label?: string 
 
 /** The standard page container. */
 export function Page({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto w-full max-w-ledger px-4 pb-20 pt-8 sm:px-6 md:pt-12 lg:px-8 ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-ledger grid-cols-[minmax(0,1fr)] px-4 pb-20 pt-8 sm:px-6 md:pt-12 lg:px-8 ${className}`}>{children}</div>;
 }

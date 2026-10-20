@@ -57,7 +57,7 @@ function CardsBody() {
         eyebrow="Every round"
         title="Cards"
         lede={total ? `${total} ${total === 1 ? "card" : "cards"} in the book, newest first. A star marks the ones counting toward your index.` : undefined}
-        actions={<ButtonLink href="/clubhouse/rounds/new" variant={active || !total ? "secondary" : "primary"}>Log a round you&apos;ve played</ButtonLink>}
+        actions={<ButtonLink href="/clubhouse/rounds/new" size="sm" icon={<Icon name="plus" className="size-5" />} variant={active || !total ? "secondary" : "primary"}>Log a past round</ButtonLink>}
       />
 
       {active && activeCourse && <InProgress roundId={active.id} courseName={activeCourse.name} next={nextUnplayed(active, activeCourse)} nine={active.holes} holeCount={activeCourse.holes.length} played={Object.values(active.entries).filter((e) => e.strokes != null).length} />}

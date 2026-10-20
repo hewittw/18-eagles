@@ -66,7 +66,7 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
   }
   return (
     <nav aria-label={label} className={cx("on-green", className)}>
-      <ul className="flex items-stretch gap-1">
+      <ul className="flex flex-wrap items-stretch justify-end gap-x-1">
         {NAV.map((n) => {
           const on = current === n.key;
           return (

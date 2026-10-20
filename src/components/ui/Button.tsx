@@ -17,7 +17,7 @@ type VisualProps = {
 };
 
 const base =
-  "group/btn relative inline-flex select-none items-center justify-center gap-2.5 rounded-lg border font-numeral font-semibold uppercase tracking-[0.08em] leading-none whitespace-nowrap " +
+  "group/btn relative inline-flex select-none items-center justify-center gap-2.5 max-w-full rounded-lg border text-center text-balance font-numeral font-semibold uppercase tracking-[0.08em] leading-tight " +
   "transition-[background-color,color,border-color,transform] duration-150 ease-press is-pressed:scale-[0.98] " +
   "disabled:cursor-not-allowed disabled:translate-y-0 aria-disabled:cursor-not-allowed";
 

@@ -50,7 +50,7 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
     <div className="flex min-h-dvh flex-col">
       <SkipLink />
       <header className="tex-locker on-green sticky top-0 z-40 border-b border-gold/40">
-        <div className="mx-auto flex max-w-ledger items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-ledger flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 lg:px-8">
           <Link href="/clubhouse" className="-mx-1 flex min-h-tile items-center px-1 md:min-h-16" aria-label="18 Eagles, the clubhouse">
             <Wordmark tone="green" />
           </Link>

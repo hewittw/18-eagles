@@ -35,7 +35,7 @@ export function PageHeader({ title, eyebrow, back, actions, lede, tone = "paper"
           {eyebrow && <p className={cx("caps text-label", green ? "text-gold" : "text-gold-ink")}>{eyebrow}</p>}
           <h1 className={cx("mt-1.5 font-display text-display-1 font-normal text-balance", green ? "text-on-green" : "text-ink")}>{title}</h1>
         </div>
-        {actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
+        {actions && <div className="flex min-w-0 max-w-full flex-wrap gap-2">{actions}</div>}
       </div>
       {lede && <p className={cx("mt-3 max-w-measure font-serif text-lede", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
     </header>
