@@ -36,7 +36,15 @@ export function AddCourseForm() {
     window.history.replaceState(window.history.state, "", u.pathname + u.search + u.hash);
   }, [prefill, setD]);
   // Back from the new course's page shows this form again (the router keeps it mounted): ready to use, not stuck saving.
-  useEffect(() => () => setSaving(false), []);
+  // After a save, keep the form as typed until the page is hidden (no flash of a blank form or errors), then clear it.
+  const saved = useRef(false);
+  useEffect(() => () => {
+    setSaving(false);
+    if (!saved.current) return;
+    saved.current = false;
+    clearDraft();
+    setSubmitted(false);
+  }, [clearDraft]);
 
   const taken = useMemo(() => courses.map((c) => c.name), [courses]);
   const errors: Errors<CourseField> = submitted ? validateCourse(d, taken) : {};
@@ -71,8 +79,8 @@ export function AddCourseForm() {
     // From the first-visit "My course isn't here": the new course becomes home and setup carries on at the Clubhouse.
     const asHome = params.get("then") === "home";
     update((s) => ({ ...s, customCourses: [...s.customCourses, course], profile: asHome ? { ...s.profile, homeCourse: course.slug } : s.profile }));
-    clearDraft();
-    setSubmitted(false);
+    saved.current = true;
+    clearDraft({ keepShown: true });
     toast({ message: asHome ? `Added ${course.name} as your home course` : `Added ${course.name}` });
     router.push(asHome ? "/clubhouse" : `/clubhouse/courses/${course.slug}`);
   }
