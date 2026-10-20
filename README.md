@@ -146,8 +146,32 @@ Everything is saved in localStorage: rounds, the bag, the profile, honors seen, 
 - Scores are never color alone (signs and shapes too), targets are 44px or larger, and motion respects reduced-motion.
 
 ## First-run check
-_Coming once the tool is deployed: the agent uses 18 Eagles as a brand-new golfer, comes back later, and reports
-what was confusing. The feedback and what we changed go here._
+An agent used the live site as a brand-new golfer (a 14-handicap from Jackson Park), driving a fresh headless Chromium
+with Playwright and empty localStorage. It ran four sessions: a first visit on a phone (name, a wrong index, Back, home
+course, bag, three holes by club taps, tiles, putts and a note, then leaving mid-round); coming back later in a new
+context to resume, finish, and look at the card, the challenge, the trophies and stats; a laptop pass (adding a course
+with errors, logging last week's round); and a keyboard-only pass. Full write-up with screenshots: [`docs/first-run-check.md`](docs/first-run-check.md).
+
+**What it found**
+- **Delights:** club taps count the score and putts by themselves ("Through 1 · E"). The Add-a-course form puts each
+  error by its field, moves focus there, and keeps what you typed, even across a reload. "Make Jackson Park my home course".
+  "Last time at Jackson Park: 81. Beat it."
+- **Resuming is buried:** with a round in progress, the hero still says "Your locker is ready", and Resume sits under the
+  trophy case, about 1.6 phone screens down. On a first visit, the empty trophy case also pushes Tee off off the screen.
+- **Wrong-looking numbers:** the finished card's "White yds" row showed the Blue tee's yards. 9-hole courses said
+  "18 holes". After a nine, the challenge said "Your last card was 88" for a 44.
+- **Keyboard:** after Tee off or Resume, focus was left on the page body instead of the hole's heading.
+- **Dead end:** adding your course from onboarding step 2 left onboarding on step 2, and the new course wasn't in the tiles.
+
+**What we changed**
+- Focus now lands on the new page's visible heading after Tee off and Resume (`RouteFocus`).
+- The card's yards row shows the tees you played (a shared `yardsAt` helper, also used by the hole screen).
+- 9-hole courses read "9 holes" on the card and in Cards. A partial putts total reads "Putts · 3 holes".
+- The challenge after a nine says "Shoot 87 or better (44 for nine)" and "works out to 88 over 18 holes".
+- Stats say "Track putts on every hole of a round to see this" instead of implying you never tracked them.
+
+Still to do (recommendations in the doc): put Resume in the hero, put Tee off ahead of an empty trophy case, and return
+from Add a course to onboarding with the course picked.
 
 ## Stack
 Next.js 16 (App Router) · Tailwind CSS v4 · localStorage · Vercel Hobby. Charts are hand-built SVG, with no chart library.

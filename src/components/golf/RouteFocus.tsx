@@ -23,9 +23,10 @@ export function RouteFocus() {
     let tries = 0;
     let t = 0;
     const go = () => {
-      const h = document.querySelector<HTMLElement>("main h1");
-      // Wait for the new page's own <h1>: not the old page's (still mounted for a moment), not the placeholder.
-      if (!h || h === last.current || h.closest("[aria-busy='true']")) {
+      // The new page's own <h1>: not the old page's (still mounted for a moment, or kept hidden by the router),
+      // not the placeholder. Hidden pages can't take focus, so only a rendered <h1> counts.
+      const h = Array.from(document.querySelectorAll<HTMLElement>("main h1")).find((x) => x !== last.current && x.getClientRects().length > 0);
+      if (!h || h.closest("[aria-busy='true']")) {
         if (tries++ < 120) t = window.setTimeout(go, 50);
         return;
       }

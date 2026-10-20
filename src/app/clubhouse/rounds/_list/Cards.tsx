@@ -134,7 +134,7 @@ function CardRow({ s, counts }: { s: RoundSummary; counts: boolean }) {
           <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.9rem] text-ink-2">
             <TeeSwatch color={tee.color} name={tee.name} />
             <span aria-hidden="true">·</span>
-            <span><span className="sr-only">tees, </span>{NINE_LABEL[r.holes]}</span>
+            <span><span className="sr-only">tees, </span>{s.holes.length === 9 && r.holes === "18" ? "9 holes" : NINE_LABEL[r.holes]}</span>
             {r.mode === "logged" && <><span aria-hidden="true">·</span><span>Logged</span></>}
             {counts && <Tag tone="gold" className="ml-0.5">Counts</Tag>}
           </span>

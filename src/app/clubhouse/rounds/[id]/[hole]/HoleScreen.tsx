@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ClubPicker, FairwayPicker, HoleIllustration, ScorecardTable, ScoreTiles, toParText } from "@/components/golf";
 import { ArrowIcon, Button, ButtonLink, Callout, ErrorIcon, Field, Stepper, TextArea, cx, useToast } from "@/components/ui";
-import { holesFor } from "@/lib/courses";
+import { holesFor, yardsAt } from "@/lib/courses";
 import { useClub } from "@/lib/hooks";
 import { finishRound } from "@/lib/round-actions";
 import { emptyEntry, setEntry, update } from "@/lib/store";
@@ -38,7 +38,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
   const next = holes[idx + 1];
   const e: HoleEntry = { ...emptyEntry(), ...round.entries[n] };
   const tee = c.tees.find((t) => t.name === round.teeName) ?? c.tees[0];
-  const yards = c.tees[0].name === tee.name ? hole.yards : Math.round((hole.yards * tee.yards) / c.tees[0].yards);
+  const yards = yardsAt(c, tee, hole);
   const patch = (p: Partial<HoleEntry>) => setEntry(round.id, n, p);
 
   const played = holes.filter((h) => round.entries[h.n]?.strokes != null);

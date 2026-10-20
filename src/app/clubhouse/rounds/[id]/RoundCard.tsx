@@ -5,6 +5,7 @@ import { BigNumber, PageHeader, ScorecardTable, scoreShort, toParText } from "@/
 import { fmtDate } from "@/components/golf/charts";
 import { Button, ButtonLink, Callout, Field, SectionHeading, TextArea, useToast } from "@/components/ui";
 import type { Course, Hole } from "@/lib/course-types";
+import { teeOf, yardsAt } from "@/lib/courses";
 import { formatIndex, keyOf } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { deleteRound, nextUnplayed, setRoundNote } from "@/lib/round-actions";
@@ -32,7 +33,10 @@ export function RoundCard({ id }: { id: string }) {
   const isLatest = diff && handicap.differentials[0] && keyOf(handicap.differentials[0]) === keyOf(diff);
   const earned = honorsOf(store.rounds, store.customCourses, handicap.history).filter((h) => h.roundId === round.id);
   const playing = round.status === "playing";
-  const nineLabel = round.holes === "18" ? "18 holes" : round.holes === "front" ? "Front nine" : "Back nine";
+  const nineLabel = round.holes === "18" ? `${s.holes.length} holes` : round.holes === "front" ? "Front nine" : "Back nine";
+  // The yards row names the tees played, so show that tee's yards (the course lists the first tee's).
+  const tee = teeOf(c, round.teeName);
+  const cardHoles = s.holes.map((h) => ({ ...h, yards: yardsAt(c, tee, h) }));
 
   const remove = () => {
     const undo = deleteRound(round.id);
@@ -64,7 +68,7 @@ export function RoundCard({ id }: { id: string }) {
           {[
             ["Out", s.front != null ? String(s.front) : "—"],
             ["In", s.back != null ? String(s.back) : "—"],
-            ["Putts", s.putts != null ? String(s.putts) : "—"],
+            [s.putts != null && s.puttHoles < s.played ? `Putts · ${s.puttHoles} holes` : "Putts", s.putts != null ? String(s.putts) : "—"],
             ["Greens", s.girHoles ? `${s.gir} of ${s.girHoles}` : "—"],
             ["Fairways", s.fairwayHoles ? `${s.fairways} of ${s.fairwayHoles}` : "—"],
             ["Penalties", round.totalOnly != null ? "—" : String(s.penalties)],
@@ -140,7 +144,7 @@ export function RoundCard({ id }: { id: string }) {
         <section aria-labelledby="card-h" className="min-w-0">
           <SectionHeading id="card-h" eyebrow="Hole by hole" title="The card" lede="Select a hole number to change it." />
           <div className="mt-6">
-            <ScorecardTable holes={s.holes} entries={round.entries} teeName={round.teeName} caption={`Scorecard, ${c.shortName}, ${fmtDate(round.date)}`} onSelectHole={(n) => router.push(`/clubhouse/rounds/${round.id}/${n}`)} />
+            <ScorecardTable holes={cardHoles} entries={round.entries} teeName={round.teeName} caption={`Scorecard, ${c.shortName}, ${fmtDate(round.date)}`} onSelectHole={(n) => router.push(`/clubhouse/rounds/${round.id}/${n}`)} />
           </div>
         </section>
       )}

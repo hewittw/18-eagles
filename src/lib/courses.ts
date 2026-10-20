@@ -24,6 +24,11 @@ export function holesFor(course: Course, nine: Nine): Hole[] {
 
 export const roundHoles = (r: Round, course: Course) => holesFor(course, r.holes);
 
+/** A hole's yards from a tee. Holes list the first tee's yards; other tees scale by their total. */
+export function yardsAt(course: Course, tee: Tee, hole: Hole): number {
+  return course.tees[0].name === tee.name ? hole.yards : Math.round((hole.yards * tee.yards) / course.tees[0].yards);
+}
+
 /** The default home course: the golfer's choice, else the first course tagged "home". */
 export function defaultHome(homeSlug: string | null, custom: Course[] = []): Course {
   return (homeSlug && findCourse(homeSlug, custom)) || BUILT_IN.find((c) => c.slug === "rancho-santa-fe") || BUILT_IN.find((c) => c.tags.includes("home")) || BUILT_IN[0];

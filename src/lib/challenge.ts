@@ -162,12 +162,15 @@ function derive(window: RoundSummary[], level: Level, recent: Metric[]): Challen
   if (!pick) {
     const avg = window.reduce((a, s) => a + per18(s, s.gross), 0) / n;
     const target = Math.round(avg) - 1;
+    // Nine-hole cards are scaled to 18 here and judged at half the target, so say both.
+    const nines = window.some((s) => s.holes.length < 18);
+    const was = `${n === 1 ? (nines ? "Your last card works out to" : "Your last card was") : `Your last ${n} average`} ${fmt1(avg)}${nines ? " over 18 holes" : ""}`;
     return {
       metric: "score", dir: "max", target, avg, bench: null, window: n, level,
-      title: `Shoot ${target} or better`,
+      title: nines ? `Shoot ${target} or better (${Math.round(target / 2)} for nine)` : `Shoot ${target} or better`,
       why: cands.length
-        ? `You're at or past the mark for ${LEVEL_PHRASE[level]} in every area you track. ${n === 1 ? "Your last card was" : `Your last ${n} average`} ${fmt1(avg)}; take one more off.`
-        : `${n === 1 ? "Your last card was" : `Your last ${n} average`} ${fmt1(avg)}. Keep hole-by-hole detail and the challenge gets specific.`,
+        ? `You're at or past the mark for ${LEVEL_PHRASE[level]} in every area you track. ${was}; take one more off.`
+        : `${was}. Keep hole-by-hole detail and the challenge gets specific.`,
     };
   }
   const d = DEFS[pick.metric];

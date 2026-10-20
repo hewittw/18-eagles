@@ -250,9 +250,9 @@ function StatsBody() {
           <section aria-labelledby="greens-h" className="grid gap-6">
             <SectionHeading id="greens-h" numeral="III" eyebrow="The short game" title="Putting and greens" />
             <dl className="grid grid-cols-2 gap-3 max-lg:[&>*:last-child]:col-span-2 lg:grid-cols-5 lg:gap-4">
-              <Figure label="Putts per round" value={b.puttsPerRound == null ? null : b.puttsPerRound.toFixed(1)} explain="Every putt, scaled to 18 holes." missing="Track putts on the hole screen to see this." />
-              <Figure label="Putts per hole" value={b.puttsPerHole == null ? null : b.puttsPerHole.toFixed(2)} explain="Under 2.00 means more one-putts than three-putts." missing="Track putts on the hole screen to see this." />
-              <Figure label="Greens in regulation" value={b.girPct == null ? null : pct(b.girPct)} explain="On the green with two putts left for par." missing="Track putts on the hole screen to see this." />
+              <Figure label="Putts per round" value={b.puttsPerRound == null ? null : b.puttsPerRound.toFixed(1)} explain="Every putt, scaled to 18 holes." missing="Track putts on every hole of a round to see this." />
+              <Figure label="Putts per hole" value={b.puttsPerHole == null ? null : b.puttsPerHole.toFixed(2)} explain="Under 2.00 means more one-putts than three-putts." missing="Track putts on every hole of a round to see this." />
+              <Figure label="Greens in regulation" value={b.girPct == null ? null : pct(b.girPct)} explain="On the green with two putts left for par." missing="Track putts on every hole of a round to see this." />
               <Figure label="Fairways hit" value={b.fairwayPct == null ? null : pct(b.fairwayPct)} explain="Tee shots on par 4s and 5s that stay in the short grass." missing="Mark the fairway on the hole screen to see this." />
               <Figure label="Penalties per round" value={b.penaltiesPerRound == null ? null : b.penaltiesPerRound.toFixed(1)} explain="Penalty strokes, scaled to 18 holes." missing="Score hole by hole to see this." />
             </dl>
