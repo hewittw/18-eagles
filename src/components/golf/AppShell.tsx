@@ -49,7 +49,7 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
   return (
     <div className="flex min-h-dvh flex-col">
       <SkipLink />
-      <header className="tex-locker on-green sticky top-0 z-40 border-b border-gold/40">
+      <header data-obscures className="tex-locker on-green sticky top-0 z-40 border-b border-gold/40">
         <div className="mx-auto flex max-w-ledger flex-wrap items-center justify-between gap-x-4 px-4 sm:px-6 lg:px-8">
           <Link href="/clubhouse" className="-mx-1 flex min-h-tile items-center px-1 md:min-h-16" aria-label="18 Eagles, the clubhouse">
             <Wordmark tone="green" />
@@ -57,16 +57,17 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
           <div className="hidden md:block">{nav("bar")}</div>
         </div>
       </header>
-      <main id="main" tabIndex={-1} className="flex-1 pb-[calc(4.5rem+env(safe-area-inset-bottom))] outline-none md:pb-0">
+      <main id="main" tabIndex={-1} className="flex-1 outline-none">
         {children}
       </main>
-      <footer className="hidden border-t border-rule md:block">
+      {/* On phones too, so everyone is told where the cards live; the padding clears the fixed tab bar. */}
+      <footer className="border-t border-rule pb-[calc(var(--tabbar)+env(safe-area-inset-bottom))] md:pb-0">
         <div className="mx-auto flex max-w-ledger flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-6 text-[0.92rem] text-ink-2 sm:px-6 lg:px-8">
           <p className="caps text-[0.72rem] text-gold-ink">18 Eagles · A golf journal</p>
-          <p>Your rounds are saved in this browser only. Export them from the Locker.</p>
+          <p>Your rounds are saved in this browser only, on this device. Clearing the browser&apos;s data erases them, so export a copy from the Locker.</p>
         </div>
       </footer>
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-paper/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
+      <div data-obscures className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-paper/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
         {nav("tabs")}
       </div>
     </div>

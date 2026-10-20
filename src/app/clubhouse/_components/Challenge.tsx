@@ -63,7 +63,7 @@ export function NextChallenge({ className }: { className?: string }) {
                 <span className="mt-0.5 block font-serif text-lg leading-snug">
                   {last.status === "met" ? "Challenge met" : last.status === "missed" ? "Challenge missed" : "Challenge skipped"}: {last.text}.
                 </span>
-                <Link href={`/clubhouse/rounds/${last.roundId}`} className="link mt-1 inline-block text-sm">See the card</Link>
+                <Link href={`/clubhouse/rounds/${last.roundId}`} className="link mt-1 inline-flex min-h-6 items-center text-sm">See the card<span className="sr-only"> from {last.course}, {fmtDate(last.date)}</span></Link>
               </span>
             </p>
           )}

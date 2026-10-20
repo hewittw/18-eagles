@@ -61,10 +61,12 @@ export function AddCourseForm() {
     }
     setSaving(true);
     const course = buildCourse(d, courses.map((c) => c.slug));
-    update((s) => ({ ...s, customCourses: [...s.customCourses, course] }));
+    // From the first-visit "My course isn't here": the new course becomes home and setup carries on at the Clubhouse.
+    const asHome = params.get("then") === "home";
+    update((s) => ({ ...s, customCourses: [...s.customCourses, course], profile: asHome ? { ...s.profile, homeCourse: course.slug } : s.profile }));
     clearDraft();
-    toast({ message: `Added ${course.name}` });
-    router.push(`/clubhouse/courses/${course.slug}`);
+    toast({ message: asHome ? `Added ${course.name} as your home course` : `Added ${course.name}` });
+    router.push(asHome ? "/clubhouse" : `/clubhouse/courses/${course.slug}`);
   }
 
   const errorCount = ORDER.filter((k) => errors[k]).length;

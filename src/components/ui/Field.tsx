@@ -29,6 +29,16 @@ export function ErrorIcon() {
 }
 
 /**
+ * Move focus to a field that just got an error, so a screen reader reads its label and the linked error. If focus is
+ * already there (Enter pressed inside it), blur first: focusing an already-focused field announces nothing.
+ */
+export function focusInvalid(el: HTMLElement | null | undefined) {
+  if (!el) return;
+  if (document.activeElement === el) el.blur();
+  el.focus();
+}
+
+/**
  * One labelled field: <label htmlFor>, an optional hint, the control (render prop), and the error next to it.
  * The hint and error are linked with aria-describedby; aria-invalid is set when there's an error.
  */

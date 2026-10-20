@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { BigNumber, HoleIllustration, toParText } from "@/components/golf";
 import { fmtDate } from "@/components/golf/charts";
-import { ActionList, ActionRow, ActionTile, Button, Chevron, ButtonLink, Card, ChoiceGroup, Field, NumberInput, SectionHeading } from "@/components/ui";
+import { ActionList, ActionRow, ActionTile, Button, Chevron, ButtonLink, Card, ChoiceGroup, Field, focusInvalid, NumberInput, SectionHeading } from "@/components/ui";
 import { defaultHome, holesFor } from "@/lib/courses";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
@@ -56,7 +56,8 @@ export function Clubhouse() {
   const teeCourse = last ? last.course : defaultHome(store.profile.homeCourse, store.customCourses);
   const activeCourse = active ? course(active.courseSlug) : undefined;
   // The very first visit: nothing but the name question.
-  if (!store.profile.name && !welcomed) return <NameGate photo={course("augusta-national")?.hero ?? null} />;
+  // (A screen tall behind the modal, like the placeholder before it, so nothing shifts as it opens.)
+  if (!store.profile.name && !welcomed) return <div className="min-h-dvh"><NameGate photo={course("augusta-national")?.hero ?? null} /></div>;
   const lastHere = last && done.find((d) => d.course.slug === teeCourse.slug && d.holes.length === 18);
 
   return (
@@ -178,8 +179,8 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
         <>
           <Image src={photo.src} alt="" fill loading="eager" fetchPriority="high" sizes="100vw" className="-z-20 object-cover" />
           {/* A Masters-green wash, deepest behind the text, so every word keeps its contrast over the photo */}
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_72_50/0.94)_0%,rgb(0_88_61/0.86)_45%,rgb(0_103_71/0.55)_100%)] max-md:bg-[linear-gradient(180deg,rgb(0_72_50/0.9)_0%,rgb(0_88_61/0.92)_100%)]" />
-          <p className="absolute bottom-2 right-3 text-[0.7rem] text-white/80">Photo: {photo.credit}</p>
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(0_72_50/0.94)_0%,rgb(0_88_61/0.86)_45%,rgb(0_103_71/0.72)_100%)] max-md:bg-[linear-gradient(180deg,rgb(0_72_50/0.9)_0%,rgb(0_88_61/0.92)_100%)]" />
+          <p className="absolute bottom-2 right-3 rounded-xs bg-black/55 px-1.5 py-0.5 text-[0.7rem] text-white">Photo: {photo.credit}</p>
         </>
       )}
       <div className="mx-auto grid max-w-ledger gap-10 px-4 pb-12 pt-10 sm:px-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-center md:pb-16 md:pt-14 lg:px-8">
@@ -281,7 +282,7 @@ function IndexQuestion() {
     const r = parseIndex(raw);
     if (r.error) {
       setError(r.error);
-      input.current?.focus();
+      focusInvalid(input.current);
       return;
     }
     patchProfile({ enteredIndex: r.value, welcomedAt: Date.now() });
@@ -295,8 +296,8 @@ function IndexQuestion() {
           <h2 id="index-q" className="mt-1 font-serif text-xl font-bold text-ink">Do you have a Handicap Index?</h2>
           <p className="mt-1 text-ink-2">We&apos;ll use it until your own cards take over.</p>
         </div>
-        <Field label="Your Handicap Index" hint="Like 12.4. A plus handicap is written +1.2." error={error}>
-          {(a) => <NumberInput ref={input} decimal {...a} value={raw} onChange={(e) => { setRaw(e.target.value); if (error) setError(undefined); }} autoComplete="off" />}
+        <Field label="Your Handicap Index" hint="About how many strokes over par you usually shoot, from your GHIN or club card. Like 12.4; a plus handicap is written +1.2." error={error}>
+          {(a) => <NumberInput ref={input} decimal inputMode="text" pattern={undefined} {...a} value={raw} onChange={(e) => { setRaw(e.target.value); if (error) setError(undefined); }} autoComplete="off" enterKeyHint="done" className="max-w-[10rem]" />}
         </Field>
         <Button type="submit" variant="primary" size="lg" block>Use this index</Button>
         <div className="border-t border-rule pt-4">
@@ -313,12 +314,17 @@ function IndexQuestion() {
 function GoalQuestion() {
   // Held locally until saved, so arrow keys can move through the choices without committing the first one.
   const [g, setG] = useState<Goal | null>(null);
+  // Never a disabled button with no reason: Save stays enabled and says what's missing next to the choices.
+  const [error, setError] = useState<string | undefined>();
   return (
     <section aria-labelledby="goal-q">
       <SectionHeading id="goal-q" eyebrow="Optional" title="What are you playing for?" lede="Your stats will measure against it. Change it anytime in the Locker." />
       <div className="mt-6 max-w-2xl">
-        <ChoiceGroup legend="Your goal" hideLegend layout="grid" size="lg" value={g} onChange={setG} options={GOALS} />
-        <Button variant="primary" size="md" className="mt-4" disabled={!g} onClick={() => { if (!g) return; patchProfile({ goal: g }); focusHeading("tee-off"); }}>
+        <ChoiceGroup legend="Your goal" hideLegend layout="grid" size="lg" value={g} onChange={(v) => { setG(v); setError(undefined); }} options={GOALS} error={error} name="goal-q" />
+        <Button variant="primary" size="md" className="mt-4" onClick={() => {
+          if (!g) { setError("Choose a goal first. It's optional: you can leave this and set one in the Locker."); focusInvalid(document.querySelector<HTMLElement>("input[name=goal-q]")); return; }
+          patchProfile({ goal: g }); focusHeading("tee-off");
+        }}>
           Save my goal
         </Button>
       </div>

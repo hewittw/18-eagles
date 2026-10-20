@@ -23,7 +23,7 @@ export function TeeOff({ course, rememberedTee, tone = "paper", label }: { cours
     <div className="grid gap-6">
       <ChoiceGroup
         legend="Tees"
-        hint="Your rating and slope come from the tees you play."
+        hint="Each tee has a rating and slope: how hard the course plays from there. Your handicap uses them."
         layout="grid"
         value={tee}
         onChange={setTee}

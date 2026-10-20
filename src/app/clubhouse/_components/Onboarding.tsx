@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { Button, ButtonLink, Icon, TextInput, ToggleChip } from "@/components/ui";
+import { Button, ButtonLink, focusInvalid, Icon, SkipTo, TextInput, ToggleChip } from "@/components/ui";
 import type { Course } from "@/lib/course-types";
 import { useClub } from "@/lib/hooks";
 import { patchProfile, update } from "@/lib/store";
@@ -111,7 +111,8 @@ export function HomeCourseStep() {
   const save = () => {
     if (!pick) {
       setError("Choose the course you play most, or add yours.");
-      document.querySelector<HTMLInputElement>("input[name=home-course]")?.focus();
+      // The first tile reads its group's error; with no tiles showing (a search with no match), the search box does.
+      focusInvalid(document.querySelector<HTMLInputElement>("input[name=home-course]") ?? document.getElementById("home-q"));
       return;
     }
     patchProfile({ homeCourse: pick });
@@ -119,27 +120,27 @@ export function HomeCourseStep() {
   };
 
   return (
-    <section aria-labelledby="setup-home" className="grid gap-6">
+    <section aria-labelledby="setup-home" className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
       <div>
-        <BackButton onClick={() => reopenStep(0)}>Back to your index</BackButton>
+        <BackButton onClick={() => reopenStep(0, pick)}>Back to your index</BackButton>
         <p className="caps text-label text-gold-ink">Step 2 of 3</p>
         <h2 id="setup-home" className="mt-1 font-display text-display-2 text-ink">Where do you usually play?</h2>
         <p className="mt-3 max-w-measure font-serif text-lede text-ink-2">Your home course opens ready to play each time, with its tees, pars and yardages. You can play any course whenever you like.</p>
       </div>
 
       <div className="max-w-md">
-        <label htmlFor="home-q" className="sr-only">Search courses</label>
+        <label htmlFor="home-q" className="mb-2 block text-[1rem] font-medium text-ink">Search courses</label>
         <div className="relative">
           <svg viewBox="0 0 20 20" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-ink-2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M13 13 L18 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
-          <TextInput id="home-q" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or place" className="rounded-full! bg-paper-3! pl-11!" autoComplete="off" />
+          <TextInput id="home-q" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or place" className="rounded-full! bg-paper-3! pl-11!" autoComplete="off" enterKeyHint="search" onKeyDown={(e) => { if (e.key === "Enter" && list.length === 1) { setPick(list[0].slug); lastHome = list[0].slug; setError(undefined); } }} aria-describedby={error && !list.length ? "home-err" : undefined} />
         </div>
       </div>
 
-      <fieldset aria-describedby={error ? "home-err" : undefined}>
+      <fieldset role="radiogroup" aria-describedby={error ? "home-err" : undefined} aria-invalid={error ? true : undefined}>
         <legend className="sr-only">Your home course</legend>
         <p className="caps mb-3 text-label text-ink-2" role="status" aria-live="polite">{q.trim() ? `${list.length} ${list.length === 1 ? "course matches" : "courses match"}` : all ? `All ${list.length} courses` : "Suggested courses"}</p>
         {error && (
-          <p id="home-err" className="mb-3 flex items-center gap-2 font-medium text-error" role="alert">
+          <p id="home-err" className="mb-3 flex items-center gap-2 font-medium text-error">
             <svg viewBox="0 0 20 20" className="size-5 shrink-0" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M10 5.5 V11 M10 13.5 V14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
             {error}
           </p>
@@ -148,7 +149,7 @@ export function HomeCourseStep() {
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {(all || q.trim() ? list : list.slice(0, 8)).map((c) => (
               <li key={c.slug} className="min-w-0">
-                <CourseRadio course={c} checked={pick === c.slug} onPick={() => { setPick(c.slug); setError(undefined); }} />
+                <CourseRadio course={c} checked={pick === c.slug} describedBy={error ? "home-err" : undefined} onPick={() => { setPick(c.slug); lastHome = c.slug; setError(undefined); }} />
               </li>
             ))}
           </ul>
@@ -162,20 +163,27 @@ export function HomeCourseStep() {
       </fieldset>
 
 
-      <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 -mx-4 flex flex-wrap items-center gap-3 border-t border-rule bg-paper/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
-        <Button variant="primary" size="lg" onClick={save} className="max-sm:flex-1">
-          {pick ? `Make ${courses.find((c) => c.slug === pick)?.shortName} my home course` : "Make it my home course"}
-        </Button>
-        <ButtonLink href="/clubhouse/courses/new" icon={<Icon name="plus" className="size-5" />}>My course isn&apos;t here</ButtonLink>
+      <div>
+        <ButtonLink href="/clubhouse/courses/new?then=home" icon={<Icon name="plus" className="size-5" />}>My course isn&apos;t here</ButtonLink>
       </div>
+
+      {/* The action bar keeps one shape whatever is picked: the choice on the left (one line, cut short if long), a
+          fixed button on the right. On phones it sits exactly on the tab bar; from md it's inline. */}
+      <ActionBar
+        label={pick ? "Your home course" : "Home course"}
+        value={pick ? (courses.find((c) => c.slug === pick)?.name ?? "") : "Pick one above"}
+        muted={!pick}
+      >
+        <Button variant="primary" size="lg" onClick={save} className="w-40 shrink-0 sm:w-48">Continue</Button>
+      </ActionBar>
     </section>
   );
 }
 
-function CourseRadio({ course, checked, onPick }: { course: Course; checked: boolean; onPick: () => void }) {
+function CourseRadio({ course, checked, describedBy, onPick }: { course: Course; checked: boolean; describedBy?: string; onPick: () => void }) {
   return (
     <label className="group/cr relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card transition-[transform,box-shadow] duration-150 is-pressed:scale-[0.98] has-checked:border-green has-checked:ring-2 has-checked:ring-green has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus">
-      <input type="radio" name="home-course" value={course.slug} checked={checked} onChange={onPick} className="sr-only" />
+      <input type="radio" name="home-course" value={course.slug} checked={checked} onChange={onPick} aria-describedby={describedBy} className="sr-only" />
       <span className="relative block aspect-[16/10] bg-tint">
         {course.hero ? (
           <Image src={course.hero.src} alt="" fill sizes="(max-width: 640px) 50vw, 260px" className="object-cover" />
@@ -217,16 +225,17 @@ export function BagStep() {
     focusHeading("tee-off");
   };
   return (
-    <section aria-labelledby="setup-bag" className="grid gap-6">
+    <section aria-labelledby="setup-bag" className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6">
       <div>
         <BackButton onClick={() => reopenStep(1, store.profile.homeCourse)}>Back to your home course</BackButton>
         <p className="caps text-label text-gold-ink">Step 3 of 3</p>
         <h2 id="setup-bag" className="mt-1 font-display text-display-2 text-ink">What&apos;s in your bag?</h2>
         <p className="mt-3 max-w-measure font-serif text-lede text-ink-2">These become the club buttons on every hole: tap the club you hit, and the shots count your score. A standard set is filled in; tap a club to take it out or put it in.</p>
       </div>
+      <div className="-my-3 empty:hidden"><SkipTo href="#bag-save">Skip the clubs to That&apos;s my bag</SkipTo></div>
       <div className="overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card">
         <p className="flex items-center justify-between gap-3 border-b border-rule/80 bg-paper-3 px-4 py-2.5 sm:px-5" role="status" aria-live="polite">
-          <span className="caps text-label text-ink-2">In the bag</span>
+          <span className="caps text-label text-ink-2">In the bag</span>{" "}
           <span className={`font-numeral text-lg font-semibold tabular-nums ${inBag > 14 ? "text-error" : "text-ink"}`}>{inBag} of 14 allowed</span>
         </p>
         <div className="divide-y divide-rule/80">
@@ -251,11 +260,24 @@ export function BagStep() {
         </div>
       </div>
       {inBag > 14 && <p className="text-ink-2">The Rules allow 14 clubs. That&apos;s fine for practice; take some out before a competition.</p>}
-      {error && <p className="font-medium text-error" role="alert">{error}</p>}
-      <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 -mx-4 flex flex-wrap items-center gap-3 border-t border-rule bg-paper/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
-        <Button variant="primary" size="lg" onClick={save} className="max-sm:flex-1">That&apos;s my bag</Button>
-      </div>
+      {error && <p id="bag-err" className="font-medium text-error" role="alert">{error}</p>}
+      <ActionBar label="In the bag" value={`${inBag} ${inBag === 1 ? "club" : "clubs"}`}>
+        <Button id="bag-save" variant="primary" size="lg" onClick={save} className="w-40 shrink-0 sm:w-48" aria-describedby={error ? "bag-err" : undefined}>That&apos;s my bag</Button>
+      </ActionBar>
     </section>
+  );
+}
+
+/** A setup step's bottom bar: what's chosen on the left, the next step's button on the right. Same size every time. */
+function ActionBar({ label, value, muted, children }: { label: string; value: string; muted?: boolean; children: React.ReactNode }) {
+  return (
+    <div data-obscures className="sticky bottom-[calc(var(--tabbar)+env(safe-area-inset-bottom))] z-10 -mx-4 flex items-center gap-4 border-t border-rule bg-paper/95 px-4 py-3 backdrop-blur-xl sm:-mx-6 sm:px-6 md:static md:mx-0 md:rounded-xl md:border md:border-rule/70 md:bg-paper-2 md:p-4 md:shadow-card">
+      <p className="min-w-0 flex-1" aria-live="polite">
+        <span className="caps block text-[0.7rem] text-ink-2">{label}</span>
+        <span className={`block truncate font-serif text-[1.05rem] leading-snug ${muted ? "text-ink-2" : "text-ink"}`}>{value}</span>
+      </p>
+      {children}
+    </div>
   );
 }
 
@@ -269,10 +291,21 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
   const input = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [error, setError] = useState<string | undefined>();
+  const saved = useRef(false);
   useEffect(() => {
     const d = ref.current;
-    if (d && !d.open) d.showModal();
+    if (!d) return;
+    if (!d.open) d.showModal();
     input.current?.focus();
+    // Chrome closes a modal on a second Escape even when "cancel" is prevented. Without a name there's nothing behind
+    // it yet, so open it again with focus back in the field (the button is the one way forward).
+    const reopen = () => {
+      if (saved.current) return;
+      d.showModal();
+      input.current?.focus();
+    };
+    d.addEventListener("close", reopen);
+    return () => d.removeEventListener("close", reopen);
   }, []);
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -280,9 +313,10 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
     const err = !v ? "Type your name, or what your playing partners call you." : v.length > 30 ? `Keep it to 30 characters (that's ${v.length}).` : undefined;
     if (err) {
       setError(err);
-      input.current?.focus();
+      focusInvalid(input.current);
       return;
     }
+    saved.current = true;
     ref.current?.close();
     patchProfile({ name: v });
     focusHeading("index-q");
@@ -307,7 +341,7 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
           <h1 id="name-q" className="font-display text-display-1 text-on-green">
             <label htmlFor="golfer-name">What should we call you?</label>
           </h1>
-          <p className="-mt-2 max-w-md font-serif text-lede text-paper-3">Your name goes on your locker, your cards and your trophies. It stays on this device.</p>
+          <p id="golfer-name-hint" className="-mt-2 max-w-md font-serif text-lede text-paper-3">Your name goes on your locker, your cards and your trophies. It stays on this device.</p>
           <div>
             <input
               ref={input}
@@ -320,12 +354,12 @@ export function NameGate({ photo }: { photo: { src: string } | null }) {
               value={name}
               onChange={(e) => { setName(e.target.value); if (error) setError(undefined); }}
               aria-invalid={error ? true : undefined}
-              aria-describedby={error ? "golfer-name-err" : undefined}
+              aria-describedby={error ? "golfer-name-err golfer-name-hint" : "golfer-name-hint"}
               placeholder="Your name"
               className="min-h-tile w-full rounded-lg border-2 border-white/70 bg-white px-4 font-serif text-2xl text-ink placeholder:text-ink-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold aria-invalid:border-gold"
             />
             {error && (
-              <p id="golfer-name-err" role="alert" className="mt-2 flex items-center gap-2 font-medium text-gold">
+              <p id="golfer-name-err" className="mt-2 flex items-center gap-2 font-medium text-gold">
                 <svg viewBox="0 0 20 20" className="size-5 shrink-0" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M10 5.5 V11 M10 13.5 V14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
                 {error}
               </p>

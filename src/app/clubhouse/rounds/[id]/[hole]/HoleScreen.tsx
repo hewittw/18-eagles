@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ClubPicker, FairwayPicker, HoleIllustration, ScorecardTable, ScoreTiles, toParText } from "@/components/golf";
-import { ArrowIcon, Button, ButtonLink, Callout, ErrorIcon, Field, Stepper, TextArea, cx, useToast } from "@/components/ui";
+import { ArrowIcon, Button, ButtonLink, Callout, ErrorIcon, Field, SkipTo, Stepper, TextArea, cx, useToast } from "@/components/ui";
 import { holesFor, yardsAt } from "@/lib/courses";
 import { useClub } from "@/lib/hooks";
 import { finishRound } from "@/lib/round-actions";
@@ -121,6 +121,8 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
               <div className={group}>
                 <ScoreTiles par={hole.par} value={e.strokes} label={`Score for hole ${n}`} holeLabel={`Hole ${n}`} onChange={(v) => { setKeep(false); patch({ strokes: v }); }} />
               </div>
+              {/* The putts, clubs, note and the 18-hole card come before the bottom bar in Tab order: a way past them. */}
+              <div className="mt-2 empty:hidden"><SkipTo href="#hole-next">{next ? `Skip to Hole ${next.n}` : round.status === "complete" ? "Skip to Back to the card" : "Skip to Finish round"}</SkipTo></div>
             </section>
 
             {/* Always mounted, so the question is announced when it appears */}
@@ -193,17 +195,17 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
       </Page>
 
       {/* Moving on: an app's bottom action bar, sticky above the phone tab bar, at the bottom on desktop */}
-      <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-30 border-t border-rule bg-paper/92 shadow-[0_-8px_24px_-16px_rgb(0_0_0/0.35)] backdrop-blur-xl backdrop-saturate-150 md:bottom-0">
+      <div data-obscures className="sticky bottom-[calc(var(--tabbar)+env(safe-area-inset-bottom))] z-30 border-t border-rule bg-paper/92 shadow-[0_-8px_24px_-16px_rgb(0_0_0/0.35)] backdrop-blur-xl backdrop-saturate-150 md:bottom-0">
         <div className="mx-auto grid max-w-ledger grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 px-4 py-2.5 sm:px-6 md:flex md:justify-between md:py-3 lg:px-8">
           {prev ? (
             <ButtonLink href={`/clubhouse/rounds/${round.id}/${prev.n}`} variant="secondary" size="lg" icon={<ArrowIcon dir="left" />}>Hole {prev.n}</ButtonLink>
           ) : <span />}
           {next ? (
-            <ButtonLink href={`/clubhouse/rounds/${round.id}/${next.n}`} variant="primary" size="lg" className="flex-row-reverse md:min-w-60" icon={<ArrowIcon />}>Hole {next.n}</ButtonLink>
+            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}/${next.n}`} variant="primary" size="lg" className="flex-row-reverse md:min-w-60" icon={<ArrowIcon />}>Hole {next.n}</ButtonLink>
           ) : round.status === "complete" ? (
-            <ButtonLink href={`/clubhouse/rounds/${round.id}`} variant="primary" size="lg" className="md:min-w-60">Back to the card</ButtonLink>
+            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}`} variant="primary" size="lg" className="md:min-w-60">Back to the card</ButtonLink>
           ) : (
-            <Button variant="primary" size="lg" className="md:min-w-60" onClick={() => (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
+            <Button id="hole-next" variant="primary" size="lg" className="md:min-w-60" onClick={() => (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
           )}
         </div>
         <div aria-live="polite">

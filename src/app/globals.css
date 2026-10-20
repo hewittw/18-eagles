@@ -115,11 +115,19 @@
     --duration-hang: 420ms;
     --hang-stagger: 28ms;
     --paper-grain: none;
+    --tabbar: 4rem; /* the phone tab bar's height above the safe area; sticky bars sit exactly on top of it */
   }
   html {
     background-color: var(--color-paper);
     color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
+    /* Focus not obscured (WCAG 2.4.11): a control scrolled to by Tab stops clear of the sticky header, and on phones
+       of the tab bar plus a sticky action bar above it (--tabbar + ~5rem). From md the only bottom bar is the hole screen's. */
+    scroll-padding-top: 4.5rem;
+    scroll-padding-bottom: calc(10rem + env(safe-area-inset-bottom));
+  }
+  @media (width >= 48rem) {
+    html { scroll-padding-top: 5rem; scroll-padding-bottom: 6rem; }
   }
   body {
     background-color: var(--color-paper);

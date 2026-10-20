@@ -9,3 +9,24 @@ export function SkipLink({ href = "#main", children = "Skip to main content" }: 
     </a>
   );
 }
+
+/**
+ * A bypass inside a long run of controls (the 18 hole buttons, the 18 bag chips): hidden until focused, then shown in
+ * place, so Tab users reach the main action without walking every chip. The target needs an id and tabIndex={-1}.
+ */
+export function SkipTo({ href, children }: { href: string; children: string }) {
+  return (
+    <a
+      href={href}
+      onClick={(e) => {
+        const t = document.querySelector<HTMLElement>(href);
+        if (!t) return;
+        e.preventDefault();
+        t.focus();
+      }}
+      className="sr-only rounded-full bg-tint px-4 text-[0.95rem] font-semibold text-green focus:not-sr-only focus:inline-flex focus:min-h-tap focus:items-center"
+    >
+      {children}
+    </a>
+  );
+}

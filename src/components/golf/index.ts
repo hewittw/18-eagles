@@ -2,7 +2,7 @@
 export { AppShell, type AppShellProps } from "./AppShell";
 export { AppNav, NAV, NavIcon, type AppNavProps, type NavKey } from "./AppNav";
 export { PageHeader, type PageHeaderProps } from "./PageHeader";
-export { RouteFocus } from "./RouteFocus";
+export { FocusClear, RouteFocus } from "./RouteFocus";
 export { Wordmark, Roundel, type WordmarkProps } from "./Wordmark";
 export { BigNumber, type BigNumberProps } from "./BigNumber";
 export { ScoreMark, ScoreMarkKey, type ScoreMarkProps } from "./ScoreMark";
@@ -15,3 +15,4 @@ export { HoleIllustration, type HoleIllustrationProps } from "./HoleIllustration
 export { TeeSwatch, type TeeSwatchProps } from "./TeeSwatch";
 export { scoreName, scoreShort, toParText, toParSpoken } from "./score";
 export * from "./charts";
+export { SaveProblem } from "./SaveProblem";

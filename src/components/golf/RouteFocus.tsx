@@ -43,3 +43,43 @@ export function RouteFocus() {
   }, [path]);
   return null;
 }
+
+/**
+ * Focus not obscured (WCAG 2.4.11). The browser only scrolls a focused control into view when it's off screen, so a
+ * control that sits under the sticky header, the phone tab bar, or a sticky action bar stays hidden. On every focus
+ * change, scroll just enough to clear the bars marked `data-obscures`. (Styled radios are measured by their label.)
+ */
+export function FocusClear() {
+  useEffect(() => {
+    const onFocus = (e: FocusEvent) => {
+      const el = e.target as HTMLElement | null;
+      if (!el || el === document.body || !(el instanceof HTMLElement) || el.closest("dialog")) return;
+      // After the browser's own scroll-into-view for this focus change.
+      requestAnimationFrame(() => clear(el));
+    };
+    const clear = (el: HTMLElement) => {
+      if (document.activeElement !== el) return;
+      const box = (el.matches("input.sr-only") && el.closest("label")) || el;
+      const r = box.getBoundingClientRect();
+      if (!r.height) return;
+      let top = 0;
+      let bottom = window.innerHeight;
+      for (const bar of document.querySelectorAll<HTMLElement>("[data-obscures]")) {
+        if (bar.contains(el)) continue;
+        const b = bar.getBoundingClientRect();
+        if (!b.height || b.bottom <= 0 || b.top >= window.innerHeight) continue;
+        // Only a bar that's actually stuck to an edge right now (not a static one, or a sticky one still in the flow).
+        const cs = getComputedStyle(bar);
+        if (cs.position !== "sticky" && cs.position !== "fixed") continue;
+        if (b.top <= 1) top = Math.max(top, b.bottom);
+        else if (cs.position === "fixed" ? b.bottom >= window.innerHeight - 1 : cs.bottom !== "auto" && Math.abs(window.innerHeight - parseFloat(cs.bottom) - b.bottom) < 2) bottom = Math.min(bottom, b.top);
+      }
+      const gap = 12;
+      if (r.bottom > bottom - 2 && r.height < bottom - top) window.scrollBy({ top: r.bottom - bottom + gap, behavior: "instant" });
+      else if (r.top < top + 2) window.scrollBy({ top: r.top - top - gap, behavior: "instant" });
+    };
+    document.addEventListener("focusin", onFocus);
+    return () => document.removeEventListener("focusin", onFocus);
+  }, []);
+  return null;
+}

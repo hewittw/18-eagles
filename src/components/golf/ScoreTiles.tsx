@@ -72,7 +72,8 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
               type="button"
               role="radio"
               aria-checked={checked}
-              aria-label={`${n}, ${scoreName(n, par).toLowerCase()}`}
+              // starts with the tile's visible text ("5 Double"), then the full word when it differs (WCAG 2.5.3)
+              aria-label={scoreShort(n, par) === scoreName(n, par) ? `${n} ${scoreShort(n, par)}` : `${n} ${scoreShort(n, par)}: ${scoreName(n, par).toLowerCase()}`}
               tabIndex={n === tabStop ? 0 : -1}
               disabled={disabled}
               onClick={() => choose(n)}

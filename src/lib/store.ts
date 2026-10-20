@@ -51,14 +51,42 @@ function read(): Store {
   return cache;
 }
 
-function write(next: Store) {
-  cache = next;
+// A failed save (storage full, or blocked by the browser) is never silent: the change is kept in memory, the
+// app shows "Couldn't save" with Try again (SaveProblem), and the next successful write clears it.
+let saveFailed = false;
+const saveListeners = new Set<() => void>();
+function persist(next: Store) {
+  let ok = true;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   } catch {
-    /* storage full or blocked: keep working in memory */
+    ok = false; // keep working in memory
   }
+  if (ok !== !saveFailed) {
+    saveFailed = !ok;
+    saveListeners.forEach((l) => l());
+  }
+  return ok;
+}
+
+function write(next: Store) {
+  cache = next;
+  persist(next);
   listeners.forEach((l) => l());
+}
+
+/** True while the latest change couldn't be written to this device. */
+export function useSaveFailed(): boolean {
+  return useSyncExternalStore(
+    (l) => { saveListeners.add(l); return () => { saveListeners.delete(l); }; },
+    () => saveFailed,
+    () => false,
+  );
+}
+
+/** Try writing the in-memory cards to this device again. Returns whether it worked. */
+export function retrySave(): boolean {
+  return persist(read());
 }
 
 function subscribe(l: () => void) {

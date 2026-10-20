@@ -106,7 +106,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
                       onClick={() => add(c)}
                       disabled={disabled || full}
                       // the name starts with the tile's visible text ("7i 160"), so voice control can say what it sees (WCAG 2.5.3)
-                      aria-label={`${c.short}${carry ? ` ${carry}` : c.kind === "putter" ? " green" : ""}: ${c.name}${carry ? `, carries ${carry} yards` : ""}${isLast ? ", last club used" : ""}`}
+                      aria-label={`${c.short}${carry ? ` ${carry}` : c.kind === "putter" ? " green" : ""}: ${c.name}${carry ? `, carries ${carry} yards` : c.kind === "putter" ? ", on the green" : ""}${isLast ? ", last club used" : ""}`}
                       className={cx(
                         "group/c relative flex min-h-tile min-w-0 flex-col items-start justify-between rounded-md border border-rule bg-paper-2 px-2.5 py-2 text-left text-ink shadow-card",
                         "transition-[background-color,border-color,transform,color] duration-150",

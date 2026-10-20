@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { PageHeader } from "@/components/golf";
-import { ActionList, ActionRow, Button, ButtonLink, Callout, ChoiceGroup, ConfirmDialog, Field, NumberInput, SectionHeading, Select, TextInput, ToggleChip, useToast } from "@/components/ui";
+import { ActionList, ActionRow, Button, ButtonLink, Callout, ChoiceGroup, ConfirmDialog, Field, focusInvalid, NumberInput, SectionHeading, Select, TextInput, ToggleChip, useToast } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { withSampleSeason } from "@/lib/sample";
@@ -58,13 +58,13 @@ export function Locker() {
     e.preventDefault();
     if (!shownIndex.trim()) {
       setIndexError("Enter your Handicap Index, like 12.4. To go without one, use “Remove my index”.");
-      document.getElementById("l-index")?.focus();
+      focusInvalid(document.getElementById("l-index"));
       return;
     }
     const r = parseIndex(shownIndex);
     if (r.error) {
       setIndexError(r.error);
-      document.getElementById("l-index")?.focus();
+      focusInvalid(document.getElementById("l-index"));
       return;
     }
     setIndexError(undefined);
@@ -94,7 +94,7 @@ export function Locker() {
     const err = importJSON(await file.text());
     setImportError(err ?? undefined);
     if (err) {
-      document.getElementById("l-import")?.focus();
+      focusInvalid(document.getElementById("l-import"));
       return;
     }
     setIndexText(null);
@@ -309,7 +309,7 @@ export function Locker() {
 
       {/* Your data */}
       <section aria-labelledby="data-h" className="mt-14">
-        <SectionHeading id="data-h" title="Your data" lede="Saved on this device only. There's no account, so keep a copy if the cards matter to you." />
+        <SectionHeading id="data-h" title="Your data" lede="Saved in this browser on this device only. There's no account, and clearing the browser's data (history, cookies and site data) erases every card, so keep a copy if they matter to you." />
         <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-10">
           <Group caption="Backup">
             <SettingRow title="Keep a copy" detail="Download every card, your bag, and your settings as one file.">
@@ -384,16 +384,18 @@ function NameForm({ name, onSaved }: { name: string | null; onSaved: (n: string)
     e.preventDefault();
     const n = v.trim().replace(/\s+/g, " ");
     const err = !n ? "Type your name, or a nickname." : n.length > 30 ? `Keep it to 30 characters (that's ${n.length}).` : undefined;
-    if (err) { setError(err); ref.current?.focus(); return; }
+    if (err) { setError(err); focusInvalid(ref.current); return; }
     patchProfile({ name: n });
     onSaved(n);
+    // A new name remounts this form (it's keyed by the name); put focus back on its button.
+    requestAnimationFrame(() => document.getElementById("l-name-save")?.focus());
   };
   return (
     <form noValidate onSubmit={save} className="grid gap-3 p-4 sm:p-5">
       <Field label="Your name" hint="Shown on your locker and in the Clubhouse greeting." error={error}>
-        {(a) => <TextInput ref={ref} {...a} value={v} maxLength={40} autoComplete="given-name" onChange={(e) => { setV(e.target.value); if (error) setError(undefined); }} />}
+        {(a) => <TextInput ref={ref} {...a} value={v} maxLength={40} autoComplete="given-name" autoCapitalize="words" enterKeyHint="done" onChange={(e) => { setV(e.target.value); if (error) setError(undefined); }} />}
       </Field>
-      <div><Button type="submit" variant="primary">Save name</Button></div>
+      <div><Button id="l-name-save" type="submit" variant="primary">Save name</Button></div>
     </form>
   );
 }

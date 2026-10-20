@@ -137,7 +137,7 @@ function HoleMock() {
               <span key={c} className={cx("grid min-h-10 place-items-center rounded-lg border font-numeral text-[1.05rem] font-semibold sm:text-lg", c === "8i" || c === "Pt" ? "border-green bg-tint text-green" : "border-rule bg-paper-2 text-ink")}>{c}</span>
             ))}
           </div>
-          <p className="mt-3 flex items-center gap-2 font-numeral text-lg font-semibold text-ink">
+          <p className="mt-3 flex flex-wrap items-center gap-2 font-numeral text-lg font-semibold text-ink">
             <span className="caps text-[0.66rem] font-semibold text-ink-2">Shots</span> 8i <span className="text-ink-2">→</span> Pt <span className="text-ink-2">→</span> <span className="rounded-xs bg-green px-1.5 text-on-green">Pt</span>
           </p>
         </div>
@@ -181,7 +181,7 @@ function ChallengeMock() {
         <div aria-hidden="true" className="rounded-lg bg-green-3 p-4 text-on-green">
           <p className="caps text-[0.66rem] text-gold">Your challenge for the next round</p>
           <p className="mt-1 font-display text-[1.6rem] leading-tight">Two three-putts or fewer</p>
-          <div className="mt-3 flex gap-1.5">
+          <div className="mt-3 flex flex-wrap gap-1.5">
             {marks.map((m, i) => <VerdictMark key={i} status={m} size="sm" />)}
           </div>
         </div>

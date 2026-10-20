@@ -68,7 +68,7 @@ export function WeekSlots({ week, honorsSeen, since, headingLevel = 3 }: { week:
             style={{ ["--i" as string]: i }}
             className={cx(
               "trophy-rise relative flex min-w-0 flex-col items-center rounded-xl px-2 pb-3 pt-3 text-center md:px-5 md:pb-5 md:pt-5",
-              won ? "border border-gold/60 bg-white/[0.09]" : "border border-dashed border-white/40 bg-black/[0.14]",
+              won ? "border border-gold/60 bg-white/[0.05]" : "border border-dashed border-white/40 bg-black/[0.14]",
             )}
           >
             {won && <span aria-hidden="true" className="trophy-sheen" />}

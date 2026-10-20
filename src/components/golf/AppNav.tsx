@@ -39,16 +39,16 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
   if (variant === "tabs") {
     return (
       <nav aria-label={label} className={className}>
-        <ul className="grid grid-cols-5">
+        <ul className="grid min-h-[var(--tabbar)] grid-cols-5">
           {NAV.map((n) => {
             const on = current === n.key;
             return (
-              <li key={n.key} className="min-w-0">
+              <li key={n.key} className="flex min-w-0">
                 <Link
                   href={n.href}
                   aria-current={on ? "page" : undefined}
                   className={cx(
-                    "relative flex min-h-tile flex-col items-center justify-center gap-0.5 px-0.5 pb-1 pt-1.5 transition-colors duration-150 -outline-offset-4",
+                    "relative flex min-h-tile w-full flex-col items-center justify-center gap-0.5 px-0.5 pb-1 pt-1.5 transition-colors duration-150 -outline-offset-4",
                     on ? "text-green" : "text-ink-2 is-hover:text-ink is-pressed:text-green",
                   )}
                 >
