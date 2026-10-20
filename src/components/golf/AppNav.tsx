@@ -38,7 +38,7 @@ export type AppNavProps = {
 export function AppNav({ current, variant = "bar", label = "18 Eagles", className }: AppNavProps) {
   if (variant === "tabs") {
     return (
-      <nav aria-label={label} className={cx("on-green", className)}>
+      <nav aria-label={label} className={className}>
         <ul className="grid grid-cols-5">
           {NAV.map((n) => {
             const on = current === n.key;
@@ -48,13 +48,14 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
                   href={n.href}
                   aria-current={on ? "page" : undefined}
                   className={cx(
-                    "relative flex min-h-tile flex-col items-center justify-center gap-1 px-0.5 pb-1.5 pt-2 transition-colors duration-150 -outline-offset-4",
-                    on ? "text-gold" : "text-paper-3 is-hover:text-on-green is-pressed:text-gold",
+                    "relative flex min-h-tile flex-col items-center justify-center gap-0.5 px-0.5 pb-1 pt-1.5 transition-colors duration-150 -outline-offset-4",
+                    on ? "text-green" : "text-ink-2 is-hover:text-ink is-pressed:text-green",
                   )}
                 >
-                  <span aria-hidden="true" className={cx("absolute inset-x-3 top-0 h-[3px] transition-opacity", on ? "bg-gold opacity-100" : "opacity-0")} />
-                  <NavIcon k={n.key} className="size-[1.4rem]" />
-                  <span className="caps truncate text-[0.68rem] tracking-[0.1em]">{n.label}</span>
+                  <span aria-hidden="true" className={cx("grid h-7 w-12 place-items-center rounded-full transition-colors", on ? "bg-tint" : "bg-transparent")}>
+                    <NavIcon k={n.key} className={cx("size-[1.35rem]", on && "[&_path]:stroke-[1.9]")} />
+                  </span>
+                  <span className={cx("truncate text-[0.68rem] tracking-[0.01em]", on ? "font-bold" : "font-medium")}>{n.label}</span>
                 </Link>
               </li>
             );

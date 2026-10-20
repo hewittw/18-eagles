@@ -183,9 +183,9 @@ export function ShellSpec() {
           <State tone="green" label="Current: Stats"><div className="scroll-x w-full"><AppNav current="stats" label="Specimen" className="w-max" /></div></State>
           <State tone="green" label="Hover and focus" force="focus"><div className="scroll-x w-full p-1"><AppNav label="Specimen" className="w-max" /></div></State>
         </States>
-        <States label="Tabs" tone="green" cols="2">
-          <State tone="green" label="Current: Cards"><div className="w-full"><AppNav variant="tabs" current="cards" label="Specimen" /></div></State>
-          <State tone="green" label="Hover" force="hover"><div className="w-full"><AppNav variant="tabs" label="Specimen" /></div></State>
+        <States label="Tabs" cols="2">
+          <State label="Current: Cards"><div className="w-full"><AppNav variant="tabs" current="cards" label="Specimen" /></div></State>
+          <State label="Hover" force="hover"><div className="w-full"><AppNav variant="tabs" label="Specimen" /></div></State>
         </States>
       </Spec>
       <Spec

@@ -18,6 +18,8 @@
   --color-green: #006747;       /* Fairway: the one primary action, chart marks */
   --color-green-2: #00563B;     /* hover / pressed */
   --color-green-3: #006747;     /* Locker Green: deep surfaces */
+  --color-tint: #E6F0EC;        /* Fairway Tint: secondary buttons, icon wells */
+  --color-tint-2: #D7E7E0;      /* its hover */
   --color-on-green: #FFFFFF;    /* text on green and green-3 */
   /* Brass */
   --color-gold: #FCE300;        /* Brass: on Locker Green ONLY (2.32:1 on paper) */
@@ -60,14 +62,16 @@
   --container-ledger: 80rem;
   --container-measure: 40rem;
 
-  /* Radii: square corners. Rounding is reserved for circles (score marks, pins). */
-  --radius-xs: 1px;
-  --radius-sm: 1px;
-  --radius-md: 2px;
-  --radius-lg: 2px;
-  --radius-xl: 3px;
+  /* Radii: an iOS app's continuous corners. Controls 10-14px, grouped cards 18px, sheets 24px. */
+  --radius-xs: 8px;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
 
-  /* Shadows: no soft SaaS shadows. A tile's bottom lip, a lift for things that float. */
+  /* Shadows: a card's soft lift (like the Masters app), a tile's bottom lip, a lift for things that float. */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 16px -6px rgb(0 0 0 / 0.12);
   --shadow-tile: inset 0 -2px 0 rgb(28 27 23 / 0.07);
   --shadow-lift: 0 1px 0 rgb(28 27 23 / 0.18), 0 18px 32px -20px rgb(28 27 23 / 0.55);
   --shadow-plate: inset 0 1px 0 rgb(255 255 255 / 0.45), inset 0 -1px 0 rgb(0 0 0 / 0.25), 0 1px 0 rgb(0 0 0 / 0.35);

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { BigNumber, HoleIllustration, toParText } from "@/components/golf";
 import { fmtDate } from "@/components/golf/charts";
-import { Button, ButtonLink, Card, ChoiceGroup, Field, NumberInput, SectionHeading } from "@/components/ui";
+import { ActionList, ActionRow, ActionTile, Button, Chevron, ButtonLink, Card, ChoiceGroup, Field, NumberInput, SectionHeading } from "@/components/ui";
 import { defaultHome, holesFor } from "@/lib/courses";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
@@ -24,7 +24,7 @@ const GOALS: { value: Goal; label: string }[] = [
 ];
 
 export function Clubhouse() {
-  const { ready, store, handicap, active, course } = useClub();
+  const { ready, store, handicap, active, course, courses } = useClub();
   const done = useMemo(
     () => store.rounds.filter((r) => r.status === "complete").map((r) => summarize(r, store.customCourses)).filter((s): s is RoundSummary => !!s && s.complete)
       .sort((a, b) => b.round.date.localeCompare(a.round.date) || b.round.createdAt - a.round.createdAt),
@@ -56,7 +56,7 @@ export function Clubhouse() {
     <>
       <Hero store={store} welcomed={welcomed} handicap={handicap} done={done} photo={(teeCourse.hero ?? course("augusta-national")?.hero) || null} />
 
-      <Page className="grid gap-14 md:gap-20">
+      <Page className="grid grid-cols-[minmax(0,1fr)] gap-14 md:gap-20">
         {active && activeCourse && (
           <section aria-labelledby="in-progress">
             <Card tone="green" padding="lg" className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
@@ -76,7 +76,7 @@ export function Clubhouse() {
 
         {welcomed && !store.profile.goal && <GoalQuestion />}
 
-        <section aria-labelledby="tee-off" className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
+        <section aria-labelledby="tee-off" className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
           <div className="min-w-0">
             <SectionHeading
               id="tee-off"
@@ -98,18 +98,18 @@ export function Clubhouse() {
             )}
             <div className="mt-8">
               {active ? (
-                <details className="rounded-xs border border-rule bg-paper-2 p-5">
-                  <summary className="cursor-pointer font-medium text-ink">Start a different round instead</summary>
+                <details className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
+                  <summary className="cursor-pointer font-semibold text-green">Start a different round instead</summary>
                   <div className="mt-5"><TeeOff course={teeCourse} rememberedTee={store.profile.lastTee[teeCourse.slug]} label="Start a new round" /></div>
                 </details>
               ) : (
                 <TeeOff course={teeCourse} rememberedTee={store.profile.lastTee[teeCourse.slug]} />
               )}
             </div>
-            <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[1rem]">
-              <Link href="/clubhouse/courses" className="link">Choose another course</Link>
-              <Link href="/clubhouse/rounds/new" className="link">Log a round you&apos;ve already played</Link>
-            </p>
+            <ul className="mt-6 grid grid-cols-2 gap-3" aria-label="Other ways to start">
+              <li><ActionTile href="/clubhouse/courses" icon="map" title="Choose another course" detail={`${courses.length} courses`} /></li>
+              <li><ActionTile href="/clubhouse/rounds/new" icon="pencil" title="Log a past round" detail="Already played it" /></li>
+            </ul>
           </div>
           <CoursePlate course={teeCourse} />
         </section>
@@ -126,32 +126,40 @@ export function Clubhouse() {
               ))}
             </ul>
             {freshHonors.length > 4 && (
-              <p className="mt-4"><Link href="/clubhouse/locker" className="link">All {freshHonors.length} new honors in your Locker</Link></p>
+              <ButtonLink href="/clubhouse/locker" className="mt-4">All {freshHonors.length} new honors</ButtonLink>
             )}
           </section>
         )}
 
         {done.length > 0 && (
           <section aria-labelledby="recent">
-            <SectionHeading id="recent" eyebrow="The card file" title="Recent cards" action={<Link href="/clubhouse/rounds" className="link">All {done.length} cards</Link>} />
-            <ol className="mt-6 divide-y divide-rule border-y border-rule">
+            <SectionHeading id="recent" eyebrow="The card file" title="Recent cards" action={<ButtonLink href="/clubhouse/rounds" size="sm">See all {done.length}</ButtonLink>} />
+            <ActionList className="mt-6" label="Your three most recent cards">
               {done.slice(0, 3).map((d) => (
-                <li key={d.round.id}>
-                  <Link href={`/clubhouse/rounds/${d.round.id}`} className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-1 py-4 transition-colors is-hover:bg-paper-3 sm:gap-6 sm:px-3">
-                    <span className="caps w-16 text-[0.78rem] text-ink-2">{fmtDate(d.round.date)}</span>
-                    <span className="min-w-0">
-                      <span className="block truncate font-serif text-lg text-ink">{d.course.shortName}</span>
-                      <span className="block text-sm text-ink-2">{d.round.teeName} tees · {d.holes.length === 18 ? "18 holes" : d.round.holes === "front" ? "Front 9" : "Back 9"}</span>
+                <ActionRow
+                  key={d.round.id}
+                  href={`/clubhouse/rounds/${d.round.id}`}
+                  leading={
+                    <span className="grid w-12 shrink-0 place-items-center rounded-sm bg-paper-3 py-1.5 leading-none">
+                      <span className="caps text-[0.62rem] text-ink-2">{fmtDate(d.round.date, { month: "short" }).split(" ")[0]}</span>
+                      <span className="mt-0.5 font-numeral text-xl font-semibold text-ink">{d.round.date.slice(8, 10).replace(/^0/, "")}</span>
                     </span>
-                    <span className="flex items-baseline gap-3 font-numeral tabular-nums">
-                      <span className="text-3xl font-semibold text-ink">{d.gross}</span>
-                      <span className={`w-10 text-right text-lg ${d.toPar < 0 ? "text-under" : "text-ink-2"}`}>{toParText(d.toPar)}</span>
+                  }
+                  title={<span className="font-serif text-lg font-normal">{d.course.shortName}</span>}
+                  detail={`${d.round.teeName} tees · ${d.holes.length === 18 ? "18 holes" : d.round.holes === "front" ? "Front 9" : "Back 9"}`}
+                  trailing={
+                    <span className="flex items-baseline gap-2 font-numeral tabular-nums">
+                      <span className="text-2xl font-semibold text-ink sm:text-3xl">{d.gross}</span>
+                      <span className={`w-9 text-right text-base ${d.toPar < 0 ? "text-under" : "text-ink-2"}`}>{toParText(d.toPar)}</span>
                     </span>
-                  </Link>
-                </li>
+                  }
+                />
               ))}
-            </ol>
-            <p className="mt-4"><Link href="/clubhouse/stats" className="link">See how you play: every breakdown in Stats</Link></p>
+            </ActionList>
+            <ActionList className="mt-4" label="More">
+              <ActionRow href="/clubhouse/stats" icon="chart" title="See how you play" detail="Every breakdown, filtered by course and season" />
+              <ActionRow href="/clubhouse/locker" icon="bag" title="Your locker" detail="Bag, goal, honors and your saved data" />
+            </ActionList>
           </section>
         )}
       </Page>
@@ -338,7 +346,7 @@ function MiniBoard({ done }: { done: RoundSummary[] }) {
 function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typeof useClub>["course"]>> }) {
   const sig = course.holes.find((h) => h.n === course.signatureHole) ?? course.holes[0];
   return (
-    <Link href={`/clubhouse/courses/${course.slug}`} className="group/plate block min-w-0 self-start rounded-xs border border-rule bg-paper-2 is-hover:border-ink">
+    <Link href={`/clubhouse/courses/${course.slug}`} className="group/plate block min-w-0 self-start overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card transition-transform is-pressed:scale-[0.99]">
       <div className="relative aspect-[4/3] overflow-hidden border-b border-rule bg-paper-3">
         {course.hero ? (
           <Image src={course.hero.src} alt={course.hero.alt} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" priority />
@@ -348,10 +356,10 @@ function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typ
       </div>
       <div className="flex items-baseline justify-between gap-4 p-4">
         <span className="min-w-0">
-          <span className="block truncate font-serif text-lg text-ink group-hover/plate:underline">{course.name}</span>
+          <span className="block truncate font-serif text-lg text-ink">{course.name}</span>
           <span className="block text-sm text-ink-2">{course.city}, {course.region}</span>
         </span>
-        <span className="shrink-0 font-numeral text-ink-2 tabular-nums">Par {course.tees[0].par}</span>
+        <span className="flex shrink-0 items-center gap-3 font-numeral text-ink-2 tabular-nums">Par {course.tees[0].par}<Chevron className="text-rule-strong" /></span>
       </div>
       {course.hero && <p className="px-4 pb-3 text-xs text-ink-2">Photo: {course.hero.credit}, {course.hero.license}</p>}
     </Link>

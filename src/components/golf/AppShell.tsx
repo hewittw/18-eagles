@@ -41,7 +41,7 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
           </div>
         </div>
         <div className="tex-paper min-h-0 flex-1 overflow-hidden">{children}</div>
-        {phone && <div className="tex-locker border-t border-gold/40">{nav("tabs")}</div>}
+        {phone && <div className="border-t border-rule bg-paper">{nav("tabs")}</div>}
       </div>
     );
   }
@@ -66,7 +66,7 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
           <p>Your rounds are saved in this browser only. Export them from the Locker.</p>
         </div>
       </footer>
-      <div className="tex-locker on-green fixed inset-x-0 bottom-0 z-40 border-t border-gold/40 pb-[env(safe-area-inset-bottom)] md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-paper/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
         {nav("tabs")}
       </div>
     </div>

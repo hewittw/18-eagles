@@ -12,4 +12,5 @@ export { ConfirmDialog, type ConfirmDialogProps } from "./ConfirmDialog";
 export { SkipLink } from "./SkipLink";
 export { VisuallyHidden } from "./VisuallyHidden";
 export { Callout, type CalloutProps } from "./Callout";
+export { ActionList, ActionRow, ActionTile, Icon, Chevron, type IconName, type ActionRowProps } from "./ActionList";
 export { cx } from "./cx";

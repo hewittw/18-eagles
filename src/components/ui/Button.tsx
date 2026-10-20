@@ -17,8 +17,8 @@ type VisualProps = {
 };
 
 const base =
-  "group/btn relative inline-flex select-none items-center justify-center gap-2.5 rounded-xs border font-numeral font-semibold uppercase tracking-[0.12em] leading-none whitespace-nowrap " +
-  "transition-[background-color,color,border-color,transform] duration-150 ease-press is-pressed:translate-y-px " +
+  "group/btn relative inline-flex select-none items-center justify-center gap-2.5 rounded-lg border font-numeral font-semibold uppercase tracking-[0.08em] leading-none whitespace-nowrap " +
+  "transition-[background-color,color,border-color,transform] duration-150 ease-press is-pressed:scale-[0.98] " +
   "disabled:cursor-not-allowed disabled:translate-y-0 aria-disabled:cursor-not-allowed";
 
 const sizes: Record<ButtonSize, string> = {
@@ -34,11 +34,11 @@ const variants: Record<ButtonTone, Record<ButtonVariant, string>> = {
       "border-green bg-green text-on-green is-hover:border-green-2 is-hover:bg-green-2 is-pressed:border-green-3 is-pressed:bg-green-3 " +
       "disabled:border-rule-strong disabled:bg-paper-3 disabled:text-ink-2",
     secondary:
-      "border-ink bg-paper-2 text-ink is-hover:bg-paper-3 is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green " +
-      "disabled:border-rule-strong disabled:border-dashed disabled:bg-transparent disabled:text-ink-2",
+      "border-green/25 bg-tint text-green is-hover:border-green/45 is-hover:bg-tint-2 is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green " +
+      "disabled:border-rule disabled:bg-paper-3 disabled:text-ink-2",
     quiet:
-      "border-transparent bg-transparent text-ink underline decoration-rule-strong decoration-1 underline-offset-[5px] is-hover:bg-paper-3 is-hover:decoration-ink is-pressed:bg-green is-pressed:text-on-green is-pressed:no-underline " +
-      "disabled:text-ink-2 disabled:no-underline",
+      "border-transparent bg-transparent text-green is-hover:bg-paper-3 is-pressed:bg-tint-2 " +
+      "disabled:text-ink-2",
     danger:
       "border-error bg-paper-2 text-error is-hover:bg-error is-hover:text-paper is-pressed:border-ink is-pressed:bg-ink is-pressed:text-paper " +
       "disabled:border-rule-strong disabled:border-dashed disabled:bg-transparent disabled:text-ink-2",
@@ -48,11 +48,11 @@ const variants: Record<ButtonTone, Record<ButtonVariant, string>> = {
       "border-on-green bg-on-green text-green-3 is-hover:border-paper-2 is-hover:bg-paper-2 is-pressed:border-gold is-pressed:bg-gold is-pressed:text-green-3 " +
       "disabled:border-paper-3/40 disabled:bg-transparent disabled:text-paper-3",
     secondary:
-      "border-paper-3 bg-transparent text-on-green is-hover:bg-white/8 is-pressed:border-on-green is-pressed:bg-on-green is-pressed:text-green-3 " +
+      "border-white/50 bg-white/10 text-on-green is-hover:bg-white/18 is-pressed:border-on-green is-pressed:bg-on-green is-pressed:text-green-3 " +
       "disabled:border-dashed disabled:border-paper-3/50 disabled:text-paper-3",
     quiet:
-      "border-transparent bg-transparent text-on-green underline decoration-paper-3/60 underline-offset-[5px] is-hover:bg-white/8 is-hover:decoration-on-green is-pressed:bg-on-green is-pressed:text-green-3 " +
-      "disabled:text-paper-3 disabled:no-underline",
+      "border-transparent bg-transparent text-on-green is-hover:bg-white/10 is-pressed:bg-white/20 " +
+      "disabled:text-paper-3",
     danger:
       "border-paper-3 bg-transparent text-on-green is-hover:bg-under is-hover:border-under is-pressed:bg-ink is-pressed:border-ink " +
       "disabled:border-dashed disabled:text-paper-3",

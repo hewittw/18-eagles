@@ -15,7 +15,7 @@ export type SectionHeadingProps = {
   className?: string;
 };
 
-/** A section title closed by the scorecard's double "Out" rule. Eyebrow in condensed caps, title in Caslon. */
+/** A section title, app style: green caps eyebrow, serif title, an optional pill action on the right. */
 export function SectionHeading({ eyebrow, title, level = 2, action, id, numeral, lede, tone = "paper", className }: SectionHeadingProps) {
   const H = level === 2 ? "h2" : "h3";
   const green = tone === "green";
@@ -31,7 +31,6 @@ export function SectionHeading({ eyebrow, title, level = 2, action, id, numeral,
         </div>
         {action && <div className="shrink-0">{action}</div>}
       </div>
-      <div className={cx("rule-double mt-3", green ? "text-gold/70" : "text-ink")} aria-hidden="true" />
       {lede && <p className={cx("mt-3 max-w-measure font-serif text-lede", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
     </div>
   );

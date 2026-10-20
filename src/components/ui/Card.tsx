@@ -14,13 +14,13 @@ export type CardProps = HTMLAttributes<HTMLElement> & {
 
 const pads = { none: "", sm: "p-4", md: "p-5 sm:p-6", lg: "p-6 sm:p-9" };
 
-/** A surface. Square corners and a hairline, never the grey-card-soft-shadow look. */
+/** A surface: an app card with continuous corners, a hairline and a soft lift. */
 export function Card({ as: As = "div", tone = "paper", texture = "none", padding = "md", className, children, ...rest }: CardProps) {
   return (
     <As
       className={cx(
-        "relative min-w-0 rounded-xs",
-        tone === "green" ? "tex-locker on-green border border-green-3" : texture === "linen" ? "tex-linen border border-rule text-ink" : "border border-rule bg-paper-2 text-ink",
+        "relative min-w-0 rounded-xl",
+        tone === "green" ? "tex-locker on-green border border-green-3" : texture === "linen" ? "tex-linen border border-rule text-ink" : "border border-rule/70 bg-paper-2 text-ink shadow-card",
         pads[padding],
         className,
       )}
