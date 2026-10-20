@@ -48,6 +48,15 @@ function CardsBody() {
     return groups;
   }, [store.rounds, store.customCourses]);
 
+  // Older rounds left unfinished when a new one was started: still saved, still resumable, never lost from view.
+  const unfinished = useMemo(
+    () => store.rounds
+      .filter((r) => r.status === "playing" && r.id !== active?.id)
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .map((r) => summarize(r, store.customCourses))
+      .filter((s): s is RoundSummary => !!s),
+    [store.rounds, store.customCourses, active?.id],
+  );
   const total = months.reduce((a, g) => a + g.rows.length, 0);
   const activeCourse = active ? course(active.courseSlug) : undefined;
 
@@ -61,6 +70,18 @@ function CardsBody() {
       />
 
       {active && activeCourse && <InProgress roundId={active.id} courseName={activeCourse.name} next={nextUnplayed(active, activeCourse)} nine={active.holes} holeCount={activeCourse.holes.length} played={Object.values(active.entries).filter((e) => e.strokes != null).length} />}
+
+      {unfinished.length > 0 && (
+        <section aria-labelledby="unfinished-h" className="min-w-0 max-w-3xl">
+          <div className="flex items-baseline justify-between gap-4 px-1 pb-2.5">
+            <h2 id="unfinished-h" className="font-display text-[1.45rem] leading-tight text-ink">Unfinished</h2>
+            <p className="caps text-[0.74rem] text-ink-2">Not posted</p>
+          </div>
+          <ol className="divide-y divide-rule/80 overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card">
+            {unfinished.map((s) => <CardRow key={s.round.id} s={s} counts={false} />)}
+          </ol>
+        </section>
+      )}
 
       {total === 0 ? (
         <section aria-labelledby="empty-h" className="grid justify-items-center gap-5 rounded-2xl border border-rule/70 bg-paper-2 px-5 py-12 text-center shadow-card sm:px-10 sm:py-16">
@@ -138,6 +159,7 @@ function CardRow({ s, counts }: { s: RoundSummary; counts: boolean }) {
             <span aria-hidden="true">·</span>
             <span><span className="sr-only">tees, </span>{s.holes.length === 9 && r.holes === "18" ? "9 holes" : NINE_LABEL[r.holes]}</span>
             {r.mode === "logged" && <><span aria-hidden="true">·</span><span>Logged</span></>}
+            {r.status === "playing" && <Tag className="ml-0.5">Through {s.played} of {s.holes.length}</Tag>}
             {counts && <Tag tone="gold" className="ml-0.5">Counts</Tag>}
           </span>
           {r.note && <span className="mt-1 block truncate font-serif text-[0.98rem] italic text-link">“{r.note}”</span>}

@@ -9,13 +9,17 @@ export function activeRound(s: Store): Round | null {
   return [...s.rounds].filter((r) => r.status === "playing").sort((a, b) => b.createdAt - a.createdAt)[0] ?? null;
 }
 
-/** Start a live round and remember the tees for this course. Returns the new round id. */
+/**
+ * Start a live round and remember the tees for this course. Returns the new round id. Only one round is in progress:
+ * the new one is what Resume opens. An unfinished round with no scores yet is dropped (nothing to lose); one with
+ * scores stays saved and is listed under "Unfinished" on Cards, where it can still be resumed or deleted.
+ */
 export function startRound(course: Course, teeName: string, nine: Nine): string {
   const id = newId();
   const first = holesFor(course, nine)[0].n;
   update((s) => ({
     ...s,
-    rounds: [...s.rounds, { id, courseSlug: course.slug, teeName, date: todayISO(), holes: nine, mode: "live", status: "playing", entries: {}, totalOnly: null, lastHole: first, note: "", createdAt: Date.now(), finishedAt: null }],
+    rounds: [...s.rounds.filter((r) => r.status !== "playing" || Object.values(r.entries).some((e) => e.strokes != null)), { id, courseSlug: course.slug, teeName, date: todayISO(), holes: nine, mode: "live", status: "playing", entries: {}, totalOnly: null, lastHole: first, note: "", createdAt: Date.now(), finishedAt: null }],
     profile: { ...s.profile, lastTee: { ...s.profile.lastTee, [course.slug]: teeName }, homeCourse: s.profile.homeCourse ?? course.slug },
   }));
   return id;
@@ -57,7 +61,7 @@ export function logPastRound(input: { course: Course; teeName: string; date: str
   const holes = holesFor(input.course, input.nine);
   update((s) => ({
     ...s,
-    rounds: [...s.rounds, { id, courseSlug: input.course.slug, teeName: input.teeName, date: input.date, holes: input.nine, mode: "logged", status: "complete", entries, totalOnly: input.strokes ? null : input.total, lastHole: holes[holes.length - 1].n, note: input.note, createdAt: Date.now(), finishedAt: Date.now() }],
+    rounds: [...s.rounds.filter((r) => r.status !== "playing" || Object.values(r.entries).some((e) => e.strokes != null)), { id, courseSlug: input.course.slug, teeName: input.teeName, date: input.date, holes: input.nine, mode: "logged", status: "complete", entries, totalOnly: input.strokes ? null : input.total, lastHole: holes[holes.length - 1].n, note: input.note, createdAt: Date.now(), finishedAt: Date.now() }],
     profile: { ...s.profile, lastTee: { ...s.profile.lastTee, [input.course.slug]: input.teeName }, homeCourse: s.profile.homeCourse ?? input.course.slug },
   }));
   return id;
