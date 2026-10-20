@@ -13,6 +13,7 @@ import type { ClubKind, Goal } from "@/lib/types";
 import { parseIndex } from "@/lib/validate";
 import { Page, Placeholder } from "../_components/Placeholder";
 import { useTrophies } from "../_components/TrophyCase";
+import { visibleById } from "../_components/Onboarding";
 
 const KINDS: { kind: ClubKind; label: string }[] = [
   { kind: "wood", label: "Woods" },
@@ -58,13 +59,13 @@ export function Locker() {
     e.preventDefault();
     if (!shownIndex.trim()) {
       setIndexError("Enter your Handicap Index, like 12.4. To go without one, use “Remove my index”.");
-      focusInvalid(document.getElementById("l-index"));
+      focusInvalid(visibleById("l-index"));
       return;
     }
     const r = parseIndex(shownIndex);
     if (r.error) {
       setIndexError(r.error);
-      focusInvalid(document.getElementById("l-index"));
+      focusInvalid(visibleById("l-index"));
       return;
     }
     setIndexError(undefined);
@@ -94,7 +95,7 @@ export function Locker() {
     const err = importJSON(await file.text());
     setImportError(err ?? undefined);
     if (err) {
-      focusInvalid(document.getElementById("l-import"));
+      focusInvalid(visibleById("l-import"));
       return;
     }
     setIndexText(null);
@@ -213,7 +214,7 @@ export function Locker() {
                 )}
               </p>
               <div className="flex flex-wrap gap-2">
-                <Button type="submit" variant="primary">Save index</Button>
+                <Button id="l-index-save" type="submit" variant="primary">Save index</Button>
                 {profile.enteredIndex != null && (
                   <Button
                     variant="quiet"
@@ -223,8 +224,9 @@ export function Locker() {
                       setIndexText(null);
                       setIndexError(undefined);
                       toast({ message: "Removed your entered index", action: { label: "Undo", onClick: () => patchProfile({ enteredIndex: was }) } });
-                      // This button goes away; keep keyboard focus in the form.
-                      document.getElementById("l-index")?.focus();
+                      // This button goes away; keep keyboard focus in the form, on its button (focusing the field
+                      // would open a phone's keyboard for a tap that typed nothing).
+                      visibleById("l-index-save")?.focus();
                     }}
                   >
                     Remove my index
@@ -398,7 +400,7 @@ function NameForm({ name, onSaved }: { name: string | null; onSaved: (n: string)
     patchProfile({ name: n });
     onSaved(n);
     // A new name remounts this form (it's keyed by the name); put focus back on its button.
-    requestAnimationFrame(() => document.getElementById("l-name-save")?.focus());
+    requestAnimationFrame(() => visibleById("l-name-save")?.focus());
   };
   return (
     <form noValidate onSubmit={save} className="grid gap-3 p-4 sm:p-5">

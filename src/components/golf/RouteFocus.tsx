@@ -2,6 +2,10 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
+// True while RouteFocus moves focus to a new page's <h1>, so FocusClear leaves the scroll alone: on Back/Forward the
+// browser has just restored the old scroll position, and pulling the page up to the <h1> would throw that away.
+let movingToHeading = false;
+
 /**
  * After a client-side route change, focus moves to the new page's <h1>, so a keyboard user starts at the top of
  * the new page (not on a link that no longer exists) and a screen reader reads the new page's name.
@@ -36,7 +40,12 @@ export function RouteFocus() {
         // A heading isn't a control: no ring on it. The next Tab lands on the page's first control, which has one.
         h.style.outline = "none";
       }
-      h.focus({ preventScroll: true });
+      movingToHeading = true;
+      try {
+        h.focus({ preventScroll: true });
+      } finally {
+        movingToHeading = false;
+      }
     };
     t = window.setTimeout(go, 0);
     return () => window.clearTimeout(t);
@@ -51,14 +60,24 @@ export function RouteFocus() {
  */
 export function FocusClear() {
   useEffect(() => {
+    // A control focused by tapping or clicking it is where the finger already is: scrolling then would move it out
+    // from under the finger (a course tile half under the header jumped 80px). Focus sent elsewhere by script after a
+    // tap (an error's field) is still cleared.
+    let touched: { at: number; node: Node | null } = { at: -Infinity, node: null };
+    const onPointer = (e: PointerEvent) => { touched = { at: performance.now(), node: e.target as Node | null }; };
     const onFocus = (e: FocusEvent) => {
       const el = e.target as HTMLElement | null;
-      if (!el || el === document.body || !(el instanceof HTMLElement) || el.closest("dialog")) return;
+      if (el instanceof HTMLElement && performance.now() - touched.at < 1000 && touched.node && (el.closest("label") ?? el).contains(touched.node)) return;
+      if (movingToHeading || !el || el === document.body || !(el instanceof HTMLElement) || el.closest("dialog")) return;
       // After the browser's own scroll-into-view for this focus change.
       requestAnimationFrame(() => clear(el));
     };
     const clear = (el: HTMLElement) => {
       if (document.activeElement !== el) return;
+      // A control inside a bar that's pinned to an edge (the tab bar, a sticky action bar) is always in view: scrolling
+      // "to clear" it would nudge the page on every tap of a tab, and cancel the tab's own scroll back to the top.
+      const own = el.closest<HTMLElement>("[data-obscures]");
+      if (own && /^(fixed|sticky)$/.test(getComputedStyle(own).position)) return;
       const box = (el.matches("input.sr-only") && el.closest("label")) || el;
       const r = box.getBoundingClientRect();
       if (!r.height) return;
@@ -78,8 +97,12 @@ export function FocusClear() {
       if (r.bottom > bottom - 2 && r.height < bottom - top) window.scrollBy({ top: r.bottom - bottom + gap, behavior: "instant" });
       else if (r.top < top + 2) window.scrollBy({ top: r.top - top - gap, behavior: "instant" });
     };
+    document.addEventListener("pointerdown", onPointer, true);
     document.addEventListener("focusin", onFocus);
-    return () => document.removeEventListener("focusin", onFocus);
+    return () => {
+      document.removeEventListener("pointerdown", onPointer, true);
+      document.removeEventListener("focusin", onFocus);
+    };
   }, []);
   return null;
 }

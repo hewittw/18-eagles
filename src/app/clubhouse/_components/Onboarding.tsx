@@ -23,10 +23,36 @@ export function setupStep(store: ReturnType<typeof useClub>["store"]) {
   return 3;
 }
 
+// Each answer replaces its question in place, so a quick second tap (a double tap, an impatient tap) would land on
+// whatever took its place: the bag's Continue sits exactly where the home course's did. Pointer clicks in the first
+// moments after a step changes are dropped; keyboard clicks (detail 0) always go through.
+let ghostUntil = 0;
+let ghostGuard = false;
+function dropGhostClick(e: MouseEvent) {
+  if (e.detail > 0 && performance.now() < ghostUntil) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
+
+/**
+ * The element with this id that's on screen. The router keeps pages it has shown mounted but hidden, so a plain
+ * getElementById can find a hidden copy that can't take focus.
+ */
+export function visibleById(id: string): HTMLElement | null {
+  return Array.from(document.querySelectorAll<HTMLElement>(`[id="${id}"]`)).find((e) => e.getClientRects().length > 0) ?? null;
+}
+
 /** Move focus to the next question's heading once it replaces the one just answered. */
 export function focusHeading(...ids: string[]) {
+  ghostUntil = performance.now() + 450;
+  if (!ghostGuard) {
+    ghostGuard = true;
+    document.addEventListener("click", dropGhostClick, true);
+    document.addEventListener("mousedown", dropGhostClick, true); // nor does it move focus off the new heading
+  }
   requestAnimationFrame(() => {
-    const h = ids.map((id) => document.getElementById(id)).find(Boolean);
+    const h = ids.map(visibleById).find(Boolean);
     if (!h) return;
     h.tabIndex = -1;
     h.style.outline = "none";
@@ -76,7 +102,7 @@ export function SetupSteps({ step, homeCourse }: { step: number; homeCourse?: st
               </span>
               {done ? (
                 <button type="button" onClick={() => reopenStep(i, homeCourse)} className="-my-2 flex min-h-tap flex-1 items-center justify-between gap-3 rounded-md px-2 text-left text-[1rem] font-semibold text-on-green transition-colors is-hover:bg-white/10">
-                  <span>{label}<span className="sr-only">, done</span></span>
+                  <span>{label}<span className="sr-only">, done.</span></span>{" "}
                   <span className="text-[0.85rem] font-medium text-paper-3 underline-offset-2">Change<span className="sr-only"> {label.toLowerCase()}</span></span>
                 </button>
               ) : (
@@ -126,7 +152,7 @@ export function HomeCourseStep() {
     if (!pick) {
       setError("Choose the course you play most, or add yours.");
       // The first tile reads its group's error; with no tiles showing (a search with no match), the search box does.
-      focusInvalid(document.querySelector<HTMLInputElement>("input[name=home-course]") ?? document.getElementById("home-q"));
+      focusInvalid(Array.from(document.querySelectorAll<HTMLInputElement>("input[name=home-course]")).find((e) => e.closest("label")?.getClientRects().length) ?? visibleById("home-q"));
       return;
     }
     patchProfile({ homeCourse: pick });
@@ -169,7 +195,16 @@ export function HomeCourseStep() {
           </ul>
         ) : null}
         {!all && !q.trim() && list.length > 8 && (
-          <Button className="mt-4" onClick={() => setAll(true)}>Show all {list.length} courses</Button>
+          <Button
+            className="mt-4"
+            onClick={() => {
+              setAll(true);
+              // The button goes away: put focus on the first course it revealed, where the button was.
+              requestAnimationFrame(() => document.querySelectorAll<HTMLInputElement>("input[name=home-course]")[8]?.focus());
+            }}
+          >
+            Show all {list.length} courses
+          </Button>
         )}
         {!list.length && (
           <p className="rounded-xl bg-paper-3 p-5 text-ink-2">No course matches “{q}”. Add it below and it becomes your home course.</p>
@@ -197,7 +232,9 @@ export function HomeCourseStep() {
 function CourseRadio({ course, checked, describedBy, onPick }: { course: Course; checked: boolean; describedBy?: string; onPick: () => void }) {
   return (
     <label className="group/cr relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card transition-[transform,box-shadow] duration-150 is-pressed:scale-[0.98] has-checked:border-green has-checked:ring-2 has-checked:ring-green has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus">
-      <input type="radio" name="home-course" value={course.slug} checked={checked} onChange={onPick} aria-describedby={describedBy} className="sr-only" />
+      {/* Centred in the tile: a tap focuses the radio (Chrome), and the browser scrolls a focused element clear of the
+          scroll padding. At the tile's top edge that moved a tile half under the header; at its centre it stays put. */}
+      <input type="radio" name="home-course" value={course.slug} checked={checked} onChange={onPick} aria-describedby={describedBy} className="sr-only left-1/2 top-1/2" />
       <span className="relative block aspect-[16/10] bg-tint">
         {/* Augusta is also the hero photo; eager here too, so both copies of it load the same way. */}
         {course.hero ? (

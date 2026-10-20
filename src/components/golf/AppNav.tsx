@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import type { MouseEvent } from "react";
 import { cx } from "../ui/cx";
 
 export type NavKey = "clubhouse" | "courses" | "cards" | "stats" | "locker";
@@ -25,6 +27,17 @@ export function NavIcon({ k, className }: { k: NavKey; className?: string }) {
   );
 }
 
+/**
+ * Tapping the tab for the page you're already on goes back to its top (as an iOS tab bar does), the same at every size.
+ * A sub-page (Log a round under Cards) still navigates to the tab's page.
+ */
+function toTopIfHere(e: MouseEvent<HTMLAnchorElement>, href: string) {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+  if (window.location.pathname.replace(/\/$/, "") !== href) return;
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+
 export type AppNavProps = {
   current?: NavKey;
   /** bar: the desktop top bar (inline links). tabs: the phone tab bar (icons over labels). */
@@ -47,6 +60,7 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
                 <Link
                   href={n.href}
                   aria-current={on ? "page" : undefined}
+                  onClick={(e) => toTopIfHere(e, n.href)}
                   className={cx(
                     "relative flex min-h-tile w-full flex-col items-center justify-center gap-0.5 px-0.5 pb-1 pt-1.5 transition-colors duration-150 -outline-offset-4",
                     on ? "text-green" : "text-ink-2 is-hover:text-ink is-pressed:text-green",
@@ -74,6 +88,7 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
               <Link
                 href={n.href}
                 aria-current={on ? "page" : undefined}
+                onClick={(e) => toTopIfHere(e, n.href)}
                 className={cx(
                   "caps relative flex min-h-tile items-center gap-2 px-2.5 text-[0.85rem] tracking-[0.14em] transition-colors duration-150 lg:px-4 lg:tracking-[0.16em]",
                   on ? "text-gold" : "text-paper-3 is-hover:text-on-green",

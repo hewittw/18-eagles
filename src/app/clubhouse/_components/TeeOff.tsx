@@ -1,10 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, ChoiceGroup } from "@/components/ui";
 import type { Course } from "@/lib/course-types";
 import { holesFor } from "@/lib/courses";
 import { startRound } from "@/lib/round-actions";
+import { swallowStrayTap } from "@/lib/hooks";
 import type { Nine } from "@/lib/types";
 
 /**
@@ -16,6 +17,9 @@ export function TeeOff({ course, rememberedTee, tone = "paper", label }: { cours
   const [tee, setTee] = useState<string>(rememberedTee && course.tees.some((t) => t.name === rememberedTee) ? rememberedTee : course.tees[Math.min(1, course.tees.length - 1)].name);
   const [nine, setNine] = useState<Nine>("18");
   const [busy, setBusy] = useState(false);
+  // The router keeps this page alive (hidden) while the hole screen shows, and its effects are cleaned up then: so
+  // browser Back brings the button back ready, not stuck on its spinner.
+  useEffect(() => () => setBusy(false), []);
   const nineHoles = course.holes.length === 9;
   const first = holesFor(course, nineHoles ? "18" : nine)[0].n;
 
@@ -57,6 +61,7 @@ export function TeeOff({ course, rememberedTee, tone = "paper", label }: { cours
           loading={busy}
           onClick={() => {
             setBusy(true);
+            swallowStrayTap(); // a double tap's second tap would land on the hole screen's controls
             const id = startRound(course, tee, nineHoles ? "18" : nine);
             router.push(`/clubhouse/rounds/${id}/${first}`);
           }}
