@@ -75,6 +75,8 @@ export function CourseList() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                // Esc clears the search, as Chrome does natively (Safari doesn't).
+                onKeyDown={(e) => { if (e.key === "Escape" && query) { e.preventDefault(); setQuery(""); } }}
                 placeholder="Search by name or place"
                 autoComplete="off"
                 enterKeyHint="search"

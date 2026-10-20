@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { BigNumber, ClubUsage, DistributionBar, fmtDate, fmtToPar, HoleHeat, PageHeader, ParTypeBars, Segmented, TrendChart, type TrendPoint } from "@/components/golf";
-import { Button, ButtonLink, Callout, Field, SectionHeading, Select } from "@/components/ui";
+import { Button, ButtonLink, Callout, Field, focusTarget, SectionHeading, Select } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { breakdown, DEFAULT_FILTERS, goalTarget, type Filters, type HoleFilter, type Range } from "@/lib/stats";
@@ -281,7 +281,8 @@ function StatsBody() {
                     <Button key={p.slug} variant="secondary" size="sm" onClick={() => {
                       setFilters({ ...filters, course: p.slug });
                       // This button goes away; land on the section's heading, just above that course's holes.
-                      requestAnimationFrame(() => { const h = document.getElementById("heat-h"); if (h) { h.tabIndex = -1; h.style.outline = "none"; h.focus(); } });
+                      // (focusTarget: the tabindex goes once focus leaves, so a later tap on the heading can't grab focus and scroll.)
+                      requestAnimationFrame(() => { const h = document.getElementById("heat-h"); if (h) { h.style.outline = "none"; focusTarget(h); } });
                     }}>
                       {p.course.shortName}
                     </Button>

@@ -27,9 +27,16 @@ export function AddCourseForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   // "Add “Balboa Park” as a course" from the search: the name they searched for wins over an old draft.
+  // Then drop it from the address, so a reload keeps what they typed over it (the draft) instead of re-filling it.
   useEffect(() => {
-    if (prefill) setD((p) => ({ ...p, name: prefill }));
+    if (!prefill) return;
+    setD((p) => ({ ...p, name: prefill }));
+    const u = new URL(window.location.href);
+    u.searchParams.delete("name");
+    window.history.replaceState(window.history.state, "", u.pathname + u.search + u.hash);
   }, [prefill, setD]);
+  // Back from the new course's page shows this form again (the router keeps it mounted): ready to use, not stuck saving.
+  useEffect(() => () => setSaving(false), []);
 
   const taken = useMemo(() => courses.map((c) => c.name), [courses]);
   const errors: Errors<CourseField> = submitted ? validateCourse(d, taken) : {};
@@ -65,6 +72,7 @@ export function AddCourseForm() {
     const asHome = params.get("then") === "home";
     update((s) => ({ ...s, customCourses: [...s.customCourses, course], profile: asHome ? { ...s.profile, homeCourse: course.slug } : s.profile }));
     clearDraft();
+    setSubmitted(false);
     toast({ message: asHome ? `Added ${course.name} as your home course` : `Added ${course.name}` });
     router.push(asHome ? "/clubhouse" : `/clubhouse/courses/${course.slug}`);
   }
@@ -136,7 +144,7 @@ export function AddCourseForm() {
         </Field>
 
         <Field id={ID.rating} label="Course rating" hint={`For those tees, from the scorecard. Usually near par, like ${par === 36 ? "35.4" : "71.3"}.`} error={errors.rating}>
-          {(a) => <NumberInput {...a} decimal value={d.rating} onChange={(e) => set("rating", e.target.value)} className="max-w-[10rem]" />}
+          {(a) => <NumberInput {...a} decimal value={d.rating} onChange={(e) => set("rating", e.target.value.replace(",", "."))} className="max-w-[10rem]" />}
         </Field>
 
         <Field id={ID.slope} label="Slope" hint="A whole number from 55 to 155, like 128. 113 is average." error={errors.slope}>
