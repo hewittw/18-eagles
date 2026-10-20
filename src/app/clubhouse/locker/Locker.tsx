@@ -135,7 +135,7 @@ export function Locker() {
           </div>
           <dl className="grid grid-cols-3 divide-x divide-white/20 text-center sm:grid-cols-1 sm:divide-x-0 sm:divide-y sm:text-left">
             <div className="px-2 sm:px-0 sm:pb-3"><dt className="caps whitespace-nowrap text-[0.7rem] text-gold sm:text-label">In the bag</dt><dd className="mt-0.5 font-numeral text-[1.5rem] font-semibold tabular-nums">{inBag} clubs</dd></div>
-            <div className="px-2 sm:px-0 sm:py-3"><dt className="caps text-label text-gold">Goal</dt><dd className="mt-0.5 font-numeral text-[1.5rem] font-semibold">{goal ? goal.label : "None yet"}</dd></div>
+            <div className="px-2 sm:px-0 sm:py-3"><dt className="caps text-label text-gold">Goal</dt><dd className="mt-0.5 whitespace-nowrap font-numeral text-[1.5rem] font-semibold max-[25rem]:text-[1.25rem]">{goal ? goal.label : "None yet"}</dd></div>
             <div className="px-2 sm:px-0 sm:pt-3"><dt className="caps text-label text-gold">Honors</dt><dd className="mt-0.5 font-numeral text-[1.5rem] font-semibold tabular-nums">{earned.length}</dd></div>
           </dl>
         </div>

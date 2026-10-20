@@ -90,7 +90,7 @@ export function AddCourseForm() {
   return (
     <Page>
       <PageHeader
-        back={{ href: "/clubhouse/courses", label: "Courses" }}
+        back={params.get("then") === "home" ? { href: "/clubhouse", label: "Clubhouse" } : { href: "/clubhouse/courses", label: "Courses" }}
         eyebrow="Not in the course book?"
         title="Add a course"
         lede="Copy it from the scorecard. It takes about a minute, and then it's ready to play and counts toward your index."

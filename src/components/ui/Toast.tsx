@@ -44,6 +44,7 @@ export function ToastProvider({ children, bottomOffset }: { children: ReactNode;
     <Ctx.Provider value={api}>
       {children}
       <div
+        data-toast
         role="status"
         aria-live="polite"
         aria-atomic="false"
@@ -56,6 +57,23 @@ export function ToastProvider({ children, bottomOffset }: { children: ReactNode;
       </div>
     </Ctx.Provider>
   );
+}
+
+/** After Undo or Dismiss removes the toast, put keyboard focus back where it was, not on the page body. */
+let lastFocus: HTMLElement | null = null;
+if (typeof document !== "undefined") {
+  document.addEventListener("focusin", (e) => {
+    const t = e.target as HTMLElement;
+    if (!t.closest?.("[data-toast]")) lastFocus = t;
+  });
+}
+function restoreFocus() {
+  requestAnimationFrame(() => {
+    const a = document.activeElement;
+    if (a && a !== document.body && a.isConnected && !(a as HTMLElement).closest("[data-toast]")) return;
+    const back = lastFocus?.isConnected && lastFocus.getClientRects().length ? lastFocus : document.querySelector<HTMLElement>("main h1");
+    back?.focus({ preventScroll: true });
+  });
 }
 
 function ToastCard({ item, onDone }: { item: Item; onDone: () => void }) {
@@ -81,8 +99,8 @@ function ToastCard({ item, onDone }: { item: Item; onDone: () => void }) {
   return (
     <Toast
       message={item.message}
-      action={item.action ? { label: item.action.label, onClick: () => { item.action!.onClick(); onDone(); } } : undefined}
-      onDismiss={onDone}
+      action={item.action ? { label: item.action.label, onClick: () => { item.action!.onClick(); onDone(); restoreFocus(); } } : undefined}
+      onDismiss={() => { onDone(); restoreFocus(); }}
       onPause={setPaused}
       className="pointer-events-auto animate-toast"
     />

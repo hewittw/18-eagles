@@ -93,7 +93,7 @@ export function ChoiceGroup<T extends string>({ legend, options, value, onChange
                 checked={checked}
                 disabled={o.disabled}
                 onChange={() => onChange(o.value)}
-                className="peer sr-only"
+                className="peer sr-only left-1/2 top-1/2"
               />
               {o.art ? (
                 <span aria-hidden="true" className="flex h-12 items-center justify-center">{o.art}</span>

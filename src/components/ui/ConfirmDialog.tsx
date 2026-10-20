@@ -23,12 +23,14 @@ export function ConfirmDialog({ open, title, body, confirmLabel, cancelLabel, on
   const opener = useRef<HTMLElement | null>(null);
   const id = useId();
 
+  const openedAt = useRef(0);
   useEffect(() => {
     const d = ref.current;
     if (!d) return;
     if (open && !d.open) {
       opener.current = document.activeElement as HTMLElement | null;
       d.showModal();
+      openedAt.current = performance.now();
       cancelRef.current?.focus();
     } else if (!open && d.open) {
       d.close();
@@ -50,7 +52,10 @@ export function ConfirmDialog({ open, title, body, confirmLabel, cancelLabel, on
       ref={ref}
       aria-labelledby={`${id}-t`}
       aria-describedby={`${id}-b`}
-      onClick={(e) => { if (e.target === ref.current) onCancel(); }}
+      onClick={(e) => {
+        // A backdrop click cancels, but not the second half of the double click that opened the dialog.
+        if (e.target === ref.current && performance.now() - openedAt.current > 350) onCancel();
+      }}
       className="m-auto w-[min(32rem,calc(100vw-2rem))] max-w-none border border-ink bg-paper p-0 text-ink shadow-lift backdrop:bg-ink/55 backdrop:backdrop-blur-[1px] open:animate-fade"
     >
       <div className="tex-paper p-6 sm:p-8">
