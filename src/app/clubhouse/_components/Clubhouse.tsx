@@ -15,6 +15,7 @@ import { patchProfile, update } from "@/lib/store";
 import type { Goal, Store } from "@/lib/types";
 import { parseIndex } from "@/lib/validate";
 import { Page, Placeholder } from "./Placeholder";
+import { NextChallenge } from "./Challenge";
 import { BagStep, focusHeading, HomeCourseStep, setupStep, SetupSteps } from "./Onboarding";
 import { TeeOff } from "./TeeOff";
 
@@ -118,6 +119,8 @@ export function Clubhouse() {
           </div>
           <CoursePlate course={teeCourse} />
         </section>}
+
+        {step === 3 && <NextChallenge />}
 
         {step === 3 && !store.profile.goal && <GoalQuestion />}
 
