@@ -24,6 +24,8 @@ milestone. Then read `AGENTS.md` (always loaded), `docs/assignment.md`, `docs/br
 ## Status (update this block at every milestone)
 _Last updated: 2026-10-19, ~6:15pm Chicago. Background agents stopped at the usage limit (resets 6:20pm); the main session continued._
 
+**iOS-app restyle (user: "these need to be buttons not links… like 18 Birdies, in this theme")**: foundations + Clubhouse DONE (commit e4d27a2: iOS radii, `bg-tint` secondary buttons, `src/components/ui/ActionList.tsx` rows/tiles, frosted white phone tab bar). In flight: restyle agent A (courses/**, CourseCard, locker), agent B (rounds/**, stats/**, hole screen, golf score components). Also running: a11y agent 1 (axe + 11 viewports → docs/verification.md) and a11y agent 2 (keyboard/semantics → docs/verification-keyboard.md). After all land: re-run axe/matrix, push, deploy, notify user.
+
 **Masters re-skin: DONE and deployed** (commit "restyle: re-skin to masters.com…"). White pages, Masters green
 #006747, yellow #FCE300, red #BA0C2F; Newsreader / Libre Franklin / Oswald; photo hero on the Clubhouse. Waiting on the
 user's reaction. If they want more, the levers are `src/app/globals.css` @theme, `src/components/tokens.ts` (then
