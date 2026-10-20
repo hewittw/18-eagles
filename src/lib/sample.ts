@@ -56,7 +56,7 @@ export function sampleSeason(custom: Course[] = []): Store {
     ...s,
     bag: DEFAULT_BAG.map((c) => ({ ...c })),
     rounds,
-    profile: { enteredIndex: 16.8, goal: "90", homeCourse: home ? home.slug : null, lastTee, welcomedAt: Date.now() - 130 * 864e5 },
+    profile: { enteredIndex: 16.8, goal: "90", homeCourse: home ? home.slug : null, lastTee, welcomedAt: Date.now() - 130 * 864e5, bagSetAt: Date.now() - 130 * 864e5 },
     lastVisit: Date.now() - 5 * 864e5,
   };
 }

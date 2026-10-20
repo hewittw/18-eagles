@@ -19,10 +19,10 @@ export function ToggleChip({ pressed, onPressedChange, children, size = "sm", cl
       disabled={disabled}
       onClick={() => onPressedChange(!pressed)}
       className={cx(
-        "inline-flex select-none items-center gap-2 rounded-xs border font-medium leading-none transition-[background-color,border-color,color,transform] duration-150",
+        "inline-flex select-none items-center gap-2 rounded-full border font-medium leading-none transition-[background-color,border-color,color,transform] duration-150",
         size === "sm" ? "min-h-tap px-3.5 text-[0.95rem]" : "min-h-12 px-4 text-[1rem]",
         "border-rule-strong bg-paper-2 text-ink is-hover:border-ink is-hover:bg-paper-3 is-pressed:translate-y-px",
-        "aria-pressed:border-green-3 aria-pressed:bg-green-3 aria-pressed:text-on-green",
+        "aria-pressed:border-green-3 aria-pressed:bg-green-3 aria-pressed:text-on-green aria-pressed:is-hover:border-green-2 aria-pressed:is-hover:bg-green-2",
         "disabled:cursor-not-allowed disabled:border-dashed disabled:bg-transparent disabled:text-ink-2 disabled:translate-y-0",
         className,
       )}

@@ -10,10 +10,12 @@ import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { nextUnplayed } from "@/lib/round-actions";
 import { goalTarget, honors as honorsOf, summarize, type RoundSummary } from "@/lib/stats";
+import { sampleSeason } from "@/lib/sample";
 import { patchProfile, update } from "@/lib/store";
 import type { Goal, Store } from "@/lib/types";
 import { parseIndex } from "@/lib/validate";
 import { Page, Placeholder } from "./Placeholder";
+import { BagStep, focusHeading, HomeCourseStep, setupStep, SetupSteps } from "./Onboarding";
 import { TeeOff } from "./TeeOff";
 
 const GOALS: { value: Goal; label: string }[] = [
@@ -47,6 +49,7 @@ export function Clubhouse() {
   if (!ready) return <Placeholder />;
 
   const welcomed = store.profile.welcomedAt != null || store.rounds.length > 0;
+  const step = setupStep(store);
   const last = done[0];
   const teeCourse = last ? last.course : defaultHome(store.profile.homeCourse, store.customCourses);
   const activeCourse = active ? course(active.courseSlug) : undefined;
@@ -54,7 +57,7 @@ export function Clubhouse() {
 
   return (
     <>
-      <Hero store={store} welcomed={welcomed} handicap={handicap} done={done} photo={(teeCourse.hero ?? course("augusta-national")?.hero) || null} />
+      <Hero store={store} welcomed={welcomed} step={step} handicap={handicap} done={done} photo={(teeCourse.hero ?? course("augusta-national")?.hero) || null} />
 
       <Page className="grid grid-cols-[minmax(0,1fr)] gap-14 md:gap-20">
         {active && activeCourse && (
@@ -74,19 +77,21 @@ export function Clubhouse() {
           </section>
         )}
 
-        {welcomed && !store.profile.goal && <GoalQuestion />}
+        {step === 0 && <JustLooking />}
+        {step === 1 && <HomeCourseStep />}
+        {step === 2 && <BagStep />}
 
-        <section aria-labelledby="tee-off" className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
+        {step === 3 && <section aria-labelledby="tee-off" className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
           <div className="min-w-0">
             <SectionHeading
               id="tee-off"
-              eyebrow={last ? "Coming back" : "Your first round"}
+              eyebrow={last ? "Coming back" : "Your first round · you're set"}
               title={lastHere ? `Last time at ${teeCourse.shortName}: ${lastHere.gross}. Beat it.` : `Tee off at ${teeCourse.shortName}`}
               lede={
                 lastHere ? (
                   <>Your best here is {Math.min(...done.filter((d) => d.course.slug === teeCourse.slug && d.holes.length === 18).map((d) => d.gross))}. Your tees are remembered.</>
                 ) : (
-                  <>Your home course is ready with the tees you&apos;d play. Tap your score on each hole; clubs and notes are optional.</>
+                  <>Pick your tees and go. On each hole, tap the clubs you hit (they count your score) or just tap the score; putts and notes are optional.</>
                 )
               }
             />
@@ -112,7 +117,9 @@ export function Clubhouse() {
             </ul>
           </div>
           <CoursePlate course={teeCourse} />
-        </section>
+        </section>}
+
+        {step === 3 && !store.profile.goal && <GoalQuestion />}
 
         {freshHonors.length > 0 && (
           <section aria-labelledby="honors">
@@ -168,7 +175,7 @@ export function Clubhouse() {
 }
 
 // ───────────────────────── the hero: the handicap, or the one question ─────────────────────────
-function Hero({ store, welcomed, handicap, done, photo }: { store: Store; welcomed: boolean; handicap: ReturnType<typeof useClub>["handicap"]; done: RoundSummary[]; photo: { src: string; alt: string; credit: string } | null }) {
+function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; welcomed: boolean; step: number; handicap: ReturnType<typeof useClub>["handicap"]; done: RoundSummary[]; photo: { src: string; alt: string; credit: string } | null }) {
   const goal = store.profile.goal;
   const avg18 = done.filter((d) => d.holes.length === 18).slice(0, 5);
   const recentAvg = avg18.length ? avg18.reduce((a, d) => a + d.gross, 0) / avg18.length : null;
@@ -188,9 +195,14 @@ function Hero({ store, welcomed, handicap, done, photo }: { store: Store; welcom
         <div className="min-w-0">
           <p className="caps text-label text-gold">The Clubhouse</p>
           <h1 id="hero-title" className="mt-2 font-display text-display-2 text-on-green">
-            {welcomed ? (done.length ? "Welcome back." : "Your locker is ready.") : "Welcome to 18 Eagles."}
+            {welcomed ? (done.length ? "Welcome back." : step < 3 ? "Let\u2019s set up your locker." : "Your locker is ready.") : "Welcome to 18 Eagles."}
           </h1>
-          {welcomed ? (
+          {welcomed && step < 3 ? (
+            <p className="mt-5 max-w-xl font-serif text-lede text-paper-3">
+              {step === 1 ? "Pick the course you play most, and it opens ready to play every time." : "Last one: the clubs you carry become your buttons on every hole."}
+              {store.profile.enteredIndex != null && <> Your index of {formatIndex(store.profile.enteredIndex)} is saved.</>}
+            </p>
+          ) : welcomed ? (
             <div className="mt-8">
               {handicap.display != null ? (
                 <BigNumber
@@ -221,11 +233,11 @@ function Hero({ store, welcomed, handicap, done, photo }: { store: Store; welcom
             </div>
           ) : (
             <p className="mt-5 max-w-xl font-serif text-lede text-paper-3">
-              A golf journal that keeps every card. Start with your Handicap Index, then play your first hole. It takes a minute.
+              A golf journal that keeps every card and works out your handicap from them. Three quick questions (your index, your course, your bag), then play your first hole.
             </p>
           )}
         </div>
-        {!welcomed ? <IndexQuestion /> : <MiniBoard done={done} />}
+        {!welcomed ? <IndexQuestion /> : step < 3 ? <SetupSteps step={step} /> : <MiniBoard done={done} />}
       </div>
     </section>
   );
@@ -280,13 +292,14 @@ function IndexQuestion() {
       return;
     }
     patchProfile({ enteredIndex: r.value, welcomedAt: Date.now() });
-    focusHeading("hero-title");
+    focusHeading("setup-home");
   };
   return (
     <Card padding="lg" className="w-full max-w-md justify-self-start md:justify-self-end">
       <form onSubmit={submit} noValidate className="grid gap-5">
         <div>
-          <h2 className="font-serif text-xl font-bold text-ink">Do you have a Handicap Index?</h2>
+          <p className="caps text-label text-gold-ink">Step 1 of 3</p>
+          <h2 className="mt-1 font-serif text-xl font-bold text-ink">Do you have a Handicap Index?</h2>
           <p className="mt-1 text-ink-2">We&apos;ll use it until your own cards take over.</p>
         </div>
         <Field label="Your Handicap Index" hint="Like 12.4. A plus handicap is written +1.2." error={error}>
@@ -294,7 +307,7 @@ function IndexQuestion() {
         </Field>
         <Button type="submit" variant="primary" size="lg" block>Use this index</Button>
         <div className="border-t border-rule pt-4">
-          <Button type="button" variant="secondary" block onClick={() => { patchProfile({ enteredIndex: null, welcomedAt: Date.now() }); focusHeading("hero-title"); }}>
+          <Button type="button" variant="secondary" block onClick={() => { patchProfile({ enteredIndex: null, welcomedAt: Date.now() }); focusHeading("setup-home"); }}>
             Not yet: I&apos;ll earn one
           </Button>
           <p className="mt-2 text-center text-sm text-ink-2">It takes three cards. Your first can be today.</p>
@@ -304,12 +317,25 @@ function IndexQuestion() {
   );
 }
 
+/** Under the first question: a way in for someone who only wants to look around first. */
+function JustLooking() {
+  return (
+    <section aria-labelledby="just-looking" className="grid gap-4 rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card sm:grid-cols-[1fr_auto] sm:items-center sm:p-6">
+      <div>
+        <h2 id="just-looking" className="font-serif text-xl font-bold text-ink">Just looking?</h2>
+        <p className="mt-1 max-w-measure text-ink-2">Explore a sample season: 13 rounds at Rancho Santa Fe, Torrey Pines, Pebble Beach and St Andrews, with a handicap, stats and honors. Erase it from the Locker when you&apos;re ready to start your own.</p>
+      </div>
+      <Button onClick={() => { update(() => sampleSeason()); focusHeading("hero-title"); }}>Explore a sample season</Button>
+    </section>
+  );
+}
+
 function GoalQuestion() {
   // Held locally until saved, so arrow keys can move through the choices without committing the first one.
   const [g, setG] = useState<Goal | null>(null);
   return (
     <section aria-labelledby="goal-q">
-      <SectionHeading id="goal-q" eyebrow="One more question" title="What are you playing for?" lede="Your stats will measure against it. Change it anytime in the Locker." />
+      <SectionHeading id="goal-q" eyebrow="Optional" title="What are you playing for?" lede="Your stats will measure against it. Change it anytime in the Locker." />
       <div className="mt-6 max-w-2xl">
         <ChoiceGroup legend="Your goal" hideLegend layout="grid" size="lg" value={g} onChange={setG} options={GOALS} />
         <Button variant="primary" size="md" className="mt-4" disabled={!g} onClick={() => { if (!g) return; patchProfile({ goal: g }); focusHeading("tee-off"); }}>
@@ -373,17 +399,6 @@ function CoursePlate({ course }: { course: NonNullable<ReturnType<ReturnType<typ
 }
 
 /** Strokes from a recent average to the goal: "Break 90" means 89 or better; scratch means par 72. */
-/** Move focus to a heading after the control that had it disappears (no visible ring on a non-control). */
-function focusHeading(id: string) {
-  requestAnimationFrame(() => {
-    const h = document.getElementById(id);
-    if (!h) return;
-    h.tabIndex = -1;
-    h.style.outline = "none";
-    h.focus();
-  });
-}
-
 const toGo = (avg: number, g: Goal) => avg - (g === "scratch" ? goalTarget[g] : goalTarget[g] - 1);
 
 function progressLine(entries: Store["rounds"][number]["entries"], holes: { n: number; par: number }[]) {

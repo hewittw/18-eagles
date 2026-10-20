@@ -27,7 +27,7 @@ export const DEFAULT_BAG: Club[] = [
   { id: "7w", name: "7-wood", short: "7w", kind: "wood", inBag: false },
 ];
 
-const EMPTY_PROFILE: Profile = { enteredIndex: null, goal: null, homeCourse: null, lastTee: {}, welcomedAt: null };
+const EMPTY_PROFILE: Profile = { enteredIndex: null, goal: null, homeCourse: null, lastTee: {}, welcomedAt: null, bagSetAt: null };
 
 export function emptyStore(): Store {
   return { v: 1, profile: { ...EMPTY_PROFILE }, bag: DEFAULT_BAG.map((c) => ({ ...c })), rounds: [], customCourses: [], honorsSeen: [], lastVisit: null };

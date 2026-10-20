@@ -48,6 +48,7 @@ export type Profile = {
   homeCourse: string | null; // course slug
   lastTee: Record<string, string>; // courseSlug → tee name, so tees are remembered
   welcomedAt: number | null; // first time the hero question was answered or skipped
+  bagSetAt: number | null; // when the golfer confirmed their bag on the first visit
 };
 
 export type Store = {
