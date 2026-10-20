@@ -44,6 +44,17 @@ export function TrendChart({
     return w.reduce((a, p) => a + p.value, 0) / w.length;
   });
   const ticks = points.length ? niceTicks(lo, hi, 4) : [];
+  // Where the goal's label goes: at the line's right end, left end, or middle, above or below it,
+  // whichever spot has the fewest round markers (and average-line points) under the pill.
+  const goalTag = goal ? (() => {
+    const w = Math.min(W - L - R, Math.round(goal.label.length * 7.2 + 18));
+    const gy = y(goal.value);
+    const marks = points.flatMap((p, i) => [[x(i), y(p.value)], ...(avgOn ? [[x(i), y(roll[i])]] : [])]);
+    const spots = [W - R - w, L + 6, L + (W - L - R - w) / 2].flatMap((sx) => [{ x: sx, y: gy - 28 }, { x: sx, y: gy + 6 }]).filter((t) => t.y > 0 && t.y + 22 < H - B + 4);
+    const hits = (t: { x: number; y: number }) => marks.filter(([mx, my]) => mx > t.x - 9 && mx < t.x + w + 9 && my > t.y - 9 && my < t.y + 31).length;
+    const best = spots.reduce<{ x: number; y: number } | null>((a, t) => (a == null || hits(t) < hits(a) ? t : a), null);
+    return best ? { ...best, w } : null;
+  })() : null;
   const first = points[0], last = points[points.length - 1];
   const summary = !points.length
     ? "No rounds match these filters yet."
@@ -65,17 +76,23 @@ export function TrendChart({
               <text x={L - 8} y={y(t)} dy="0.32em" textAnchor="end" className="fill-ink-2 font-numeral text-[13px] tabular-nums">{fmt(t)}</text>
             </g>
           ))}
-          {goal && (
-            <g>
-              <line x1={L} x2={W - R} y1={y(goal.value)} y2={y(goal.value)} stroke="var(--color-gold-ink)" strokeWidth={1.5} strokeDasharray="6 5" />
-              <text x={W - R} y={y(goal.value) - 6} textAnchor="end" className="fill-ink-2 text-[13px]">{goal.label}</text>
-            </g>
-          )}
           {points.length > 1 && (
             <>
               <polyline fill="none" stroke={avgOn ? "var(--color-rule-strong)" : "var(--color-green)"} strokeWidth={avgOn ? 1.5 : 3} strokeLinejoin="round" points={points.map((p, i) => `${x(i)},${y(p.value)}`).join(" ")} />
               {avgOn && <polyline fill="none" stroke="var(--color-green)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" points={roll.map((v, i) => `${x(i)},${y(v)}`).join(" ")} />}
             </>
+          )}
+          {goal && (
+            <g>
+              <line x1={L} x2={W - R} y1={y(goal.value)} y2={y(goal.value)} stroke="var(--color-gold-ink)" strokeWidth={1.5} strokeDasharray="6 5" />
+              {/* The label on a paper pill, beside the line where no point sits under it */}
+              {goalTag && (
+                <g>
+                  <rect x={goalTag.x} y={goalTag.y} width={goalTag.w} height={22} rx={11} fill="var(--color-paper)" stroke="var(--color-gold-ink)" strokeWidth={1} />
+                  <text x={goalTag.x + goalTag.w / 2} y={goalTag.y + 11} dy="0.34em" textAnchor="middle" className="fill-gold-ink text-[13px] font-semibold">{goal.label}</text>
+                </g>
+              )}
+            </g>
           )}
           {points.map((p, i) => (
             <g

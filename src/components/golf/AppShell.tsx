@@ -3,7 +3,7 @@ import { Suspense, type ReactNode } from "react";
 import { SkipLink } from "../ui/SkipLink";
 import { cx } from "../ui/cx";
 import { AppNav, type NavKey } from "./AppNav";
-import { CurrentNav } from "./CurrentNav";
+import { CurrentNav, PhoneTabBar } from "./CurrentNav";
 import { Wordmark } from "./Wordmark";
 
 export type AppShellProps = {
@@ -29,6 +29,12 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
         <CurrentNav variant={variant} />
       </Suspense>
     );
+
+  const tabBar = (tabs: ReactNode) => (
+    <div data-obscures className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-paper/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
+      {tabs}
+    </div>
+  );
 
   if (preview) {
     const phone = previewLayout === "phone";
@@ -67,9 +73,12 @@ export function AppShell({ children, current, preview, previewLayout = "phone" }
           <p>Your rounds are saved in this browser only, on this device. Clearing the browser&apos;s data erases them, so export a copy from the Locker.</p>
         </div>
       </footer>
-      <div data-obscures className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-paper/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-150 md:hidden">
-        {nav("tabs")}
-      </div>
+      {/* Phones only; left out on the hole screen, where the hole's action bar takes the bottom edge. */}
+      {current ? tabBar(nav("tabs")) : (
+        <Suspense fallback={tabBar(nav("tabs"))}>
+          <PhoneTabBar>{tabBar(nav("tabs"))}</PhoneTabBar>
+        </Suspense>
+      )}
     </div>
   );
 }

@@ -55,7 +55,9 @@ export function IndexLedger({ handicap: h }: { handicap: HandicapState }) {
                 <thead>
                   <tr className="border-b border-rule">
                     {["Date", "Course", "Adj. gross", "Differential", "Index"].map((c, i) => (
-                      <th key={c} scope="col" className={`caps py-2.5 pr-3 text-[0.74rem] text-ink-2 first:pl-3 sm:pr-4 ${i >= 2 ? "text-right" : ""} ${i === 0 || i === 4 ? "hidden sm:table-cell" : ""} ${i === 1 ? "pl-3 sm:pl-0" : ""}`}>{c === "Index" ? <span>Counts<span className="sr-only"> toward your index</span></span> : c}</th>
+                      <th key={c} scope="col" className={`caps py-2.5 pr-3 text-[0.74rem] text-ink-2 first:pl-3 sm:pr-4 ${i >= 2 ? "text-right" : ""} ${i === 0 || i === 4 ? "hidden sm:table-cell" : ""} ${i === 1 ? "pl-3 sm:pl-0" : ""}`}>{c === "Index" ? <span>Counts<span className="sr-only"> toward your index</span></span>
+                        : c === "Adj. gross" ? <span className="whitespace-nowrap"><span aria-hidden="true" className="max-sm:hidden">Adj. gross</span><span aria-hidden="true" className="sm:hidden">Gross</span><span className="sr-only">Adjusted gross</span></span>
+                        : c}</th>
                     ))}
                   </tr>
                 </thead>
@@ -69,8 +71,12 @@ export function IndexLedger({ handicap: h }: { handicap: HandicapState }) {
                         <th scope="row" className="py-2.5 pl-3 pr-3 text-[0.98rem] font-normal sm:pl-0 sm:pr-4">
                           <span className={`block font-numeral text-[0.9rem] tabular-nums sm:hidden ${counts ? "text-paper-3" : "text-ink-2"}`}>{fmtDate(d.date, { month: "short", day: "numeric", year: "2-digit" })}</span>
                           <Link href={`/clubhouse/rounds/${d.roundIds[0]}`} className={`inline-block min-h-6 rounded-xs py-1 font-semibold transition-colors ${counts ? "text-on-green is-hover:text-gold" : "text-green is-hover:text-green-2"}`}>
-                            {d.courseName}
-                            <svg viewBox="0 0 10 16" className="ml-1.5 inline-block h-3 w-2 align-[-0.05em] opacity-70" aria-hidden="true"><path d="M2 2 L8 8 L2 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            {/* The chevron stays on the line with the name's last word */}
+                            {d.courseName.split(" ").slice(0, -1).join(" ")}{d.courseName.includes(" ") ? " " : ""}
+                            <span className="whitespace-nowrap">
+                              {d.courseName.split(" ").pop()}
+                              <svg viewBox="0 0 10 16" className="ml-1.5 inline-block h-3 w-2 align-[-0.05em] opacity-70" aria-hidden="true"><path d="M2 2 L8 8 L2 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </span>
                           </Link>
                           {isDrop && <span className={`caps ml-2 text-[0.7rem] ${counts ? "text-gold" : "text-gold-ink"}`}>Drops next</span>}
                         </th>

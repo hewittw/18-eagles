@@ -15,6 +15,9 @@ import { Page, Placeholder } from "../../../_components/Placeholder";
 const count = (xs: string[], id: string) => xs.filter((x) => x === id).length;
 // iOS inset grouping: a small caps caption above a rounded white card.
 const caption = "caps mb-2 px-1 text-[0.74rem] text-ink-2";
+// One half of the phone action bar (equal columns, see below): one line, a little tighter on phones.
+const half = "whitespace-nowrap max-sm:gap-2 max-sm:px-3 max-sm:text-base";
+const ordinal = (k: number) => `${k}${k % 100 >= 11 && k % 100 <= 13 ? "th" : (["th", "st", "nd", "rd"][k % 10] ?? "th")}`;
 const group = "rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-5";
 
 export function HoleScreen({ id, holeParam }: { id: string; holeParam: string }) {
@@ -77,44 +80,48 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
   return (
     <>
       <DocTitle title={`Hole ${n}${hole.name ? ` · ${hole.name}` : ""} · ${c.shortName} · 18 Eagles`} />
-      <Page className="!pt-4 md:!pt-8">
-        <Link href={back.href} className="-ml-1 mb-4 inline-flex min-h-tap items-center gap-1.5 rounded-full bg-tint py-1 pl-2.5 pr-4 text-[0.95rem] font-semibold text-green transition-[background-color,transform] duration-150 is-hover:bg-tint-2 is-pressed:scale-[0.98]">
+      <Page className="!pt-3 md:!pt-8">
+        <Link href={back.href} className="-ml-1 mb-3 inline-flex sm:mb-4 min-h-tap items-center gap-1.5 rounded-full bg-tint py-1 pl-2.5 pr-4 text-[0.95rem] font-semibold text-green transition-[background-color,transform] duration-150 is-hover:bg-tint-2 is-pressed:scale-[0.98]">
           <svg viewBox="0 0 10 16" className="h-4 w-2.5 shrink-0" aria-hidden="true"><path d="M8 2 L2 8 L8 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           {back.label}
         </Link>
 
-        {/* Where you are: the course, the hole, and the running score, on a Masters-green card */}
-        <header className="tex-locker on-green grid grid-cols-[minmax(0,1fr)] gap-5 rounded-2xl px-5 py-5 shadow-card sm:px-7 sm:py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-10">
-          <div className="min-w-0">
-            <p className="caps text-label text-gold">{c.shortName} · {round.teeName} tees{round.status === "complete" ? " · editing a finished card" : ""}</p>
-            <h1 className="mt-1 font-display text-display-2 text-on-green">
-              Hole {n}
-              {hole.name && <span className="font-serif text-[0.55em] italic text-paper-3"> · {hole.name}</span>}
-            </h1>
-            <dl className="mt-4 grid max-w-md grid-cols-3 divide-x divide-white/25">
-              {[["Par", String(hole.par)], ["Yards", String(yards)], ["Stroke index", String(hole.hcp)]].map(([k, v]) => (
-                <div key={k} className="min-w-0 px-2.5 first:pl-0 sm:px-4">
-                  <dt className="caps whitespace-nowrap text-[0.62rem] tracking-[0.04em] text-gold sm:text-[0.68rem] sm:tracking-[0.08em]">{k}</dt>
-                  <dd className="mt-0.5 font-numeral text-[1.9rem] font-semibold leading-none tabular-nums text-on-green">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <p className="flex flex-wrap items-baseline gap-x-3 rounded-xl bg-black/15 px-4 py-3 font-numeral text-lg tabular-nums text-paper-3 md:flex-col md:items-end md:gap-0.5 md:text-right" aria-live="polite">
+        {/* Where you are: the course, the hole, and the running score, on a Masters-green card.
+            Phones: the score chip sits beside the hole number, so the score tiles start on the first screen. */}
+        <header className="tex-locker on-green grid grid-cols-[minmax(0,1fr)] rounded-2xl px-5 py-4 shadow-card sm:px-7 sm:py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-x-10 md:[grid-template-areas:'e_c'_'h_c'_'d_c']">
+          <p className="caps text-balance text-label text-gold max-sm:tracking-[0.1em] md:[grid-area:e]">{c.shortName} · {round.teeName} tees{round.status === "complete" ? " · editing a finished card" : ""}</p>
+          <div className="mt-1 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 md:contents">
+          <h1 className="min-w-0 font-display text-display-2 text-on-green md:mt-1 md:[grid-area:h]">
+            Hole {n}
+            {hole.name && <span className="font-serif text-[0.55em] italic text-paper-3"> · {hole.name}</span>}
+          </h1>
+          <p className="ml-auto flex min-w-0 flex-col items-end rounded-xl bg-black/15 px-3.5 py-2 text-right font-numeral tabular-nums text-paper-3 md:self-end md:[grid-area:c] md:px-4 md:py-3 md:text-lg" aria-live="polite">
             {played.length ? (
               <>
-                <span className="caps text-[0.7rem] text-gold">Through {played.length}<span className="sr-only">, </span></span>
-                <span className="text-[2rem] font-semibold leading-none text-on-green">{toParText(toPar)}<span className="sr-only">, </span></span>
-                <span>{gross} strokes</span>
+                <span className="caps text-[0.66rem] text-gold md:text-[0.7rem]">Through {played.length}<span className="sr-only">, </span></span>
+                <span className="text-[1.6rem] font-semibold leading-none text-on-green md:text-[2rem]">{toParText(toPar)}<span className="sr-only">, </span></span>
+                <span className="text-[0.92rem] md:text-lg">{gross} strokes</span>
               </>
             ) : (
               <span className="text-on-green">Hole {idx + 1} of {holes.length}</span>
             )}
           </p>
+          </div>
+          {/* One row of three; under 18em of width (large text on a phone) the three stack instead. */}
+          <dl className="mt-3 grid max-w-md grid-cols-3 divide-x divide-white/25 max-[18em]:grid-cols-1 max-[18em]:gap-3 max-[18em]:divide-x-0 sm:mt-4 md:[grid-area:d]">
+            {([["Par", String(hole.par)], ["Yards", String(yards)], ["Stroke index", String(hole.hcp)]] as const).map(([k, v]) => (
+              <div key={k} className="min-w-0 px-2.5 first:pl-0 max-[18em]:px-0 sm:px-4">
+                <dt className="caps whitespace-nowrap text-[0.62rem] tracking-[0.04em] text-gold sm:text-[0.68rem] sm:tracking-[0.08em]">{k}</dt>
+                <dd className="mt-0.5 font-numeral text-[1.9rem] font-semibold leading-none tabular-nums text-on-green">{v}</dd>
+                {/* Plain words for the jargon: where the hole ranks, hardest (1) to easiest */}
+                {k === "Stroke index" && <dd className="mt-1 whitespace-nowrap text-[0.78rem] leading-tight text-paper-3 max-[18em]:whitespace-normal">{ordinal(hole.hcp)}<span className="max-sm:hidden">-hardest hole</span><span className="sm:hidden"> hardest</span></dd>}
+              </div>
+            ))}
+          </dl>
         </header>
 
 
-        <div className="mt-6 grid gap-7 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-10">
+        <div className="mt-5 grid gap-7 sm:mt-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-10">
           <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-7">
             <section aria-labelledby="score-h">
               <h2 id="score-h" className={caption}>Your score</h2>
@@ -122,7 +129,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
                 <ScoreTiles par={hole.par} value={e.strokes} label={`Score for hole ${n}`} holeLabel={`Hole ${n}`} onChange={(v) => { setKeep(false); patch({ strokes: v }); }} />
               </div>
               {/* The putts, clubs, note and the 18-hole card come before the bottom bar in Tab order: a way past them. */}
-              <div className="mt-2 empty:hidden"><SkipTo href="#hole-next">{next ? `Skip to Hole ${next.n}` : round.status === "complete" ? "Skip to Back to the card" : "Skip to Finish round"}</SkipTo></div>
+              <div className="mt-2 empty:hidden"><SkipTo href="#hole-next">{next ? `Skip to Hole ${next.n}` : round.status === "complete" ? "Skip to Back to card" : "Skip to Finish round"}</SkipTo></div>
             </section>
 
             {/* Always mounted, so the question is announced when it appears */}
@@ -195,17 +202,18 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
       </Page>
 
       {/* Moving on: an app's bottom action bar, sticky above the phone tab bar, at the bottom on desktop */}
-      <div data-obscures className="sticky bottom-[calc(var(--tabbar)+env(safe-area-inset-bottom))] z-30 border-t border-rule bg-paper/92 shadow-[0_-8px_24px_-16px_rgb(0_0_0/0.35)] backdrop-blur-xl backdrop-saturate-150 md:bottom-0">
-        <div className="mx-auto grid max-w-ledger grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 px-4 py-2.5 sm:px-6 md:flex md:justify-between md:py-3 lg:px-8">
+      <div data-obscures className="sticky bottom-[var(--tabbar)] z-30 max-[18em]:static border-t border-rule bg-paper/92 shadow-[0_-8px_24px_-16px_rgb(0_0_0/0.35)] backdrop-blur-xl backdrop-saturate-150 pb-[env(safe-area-inset-bottom)] md:bottom-0">
+        {/* Two equal halves on phones, the same width on every hole (Finish round too); one column once large text needs it. */}
+        <div className="mx-auto grid max-w-ledger grid-cols-[repeat(auto-fit,minmax(min(100%,8em),1fr))] items-center gap-2.5 px-4 py-2.5 sm:px-6 md:flex md:justify-between md:py-3 lg:px-8">
           {prev ? (
-            <ButtonLink href={`/clubhouse/rounds/${round.id}/${prev.n}`} variant="secondary" size="lg" icon={<ArrowIcon dir="left" />}>Hole {prev.n}</ButtonLink>
-          ) : <span />}
+            <ButtonLink href={`/clubhouse/rounds/${round.id}/${prev.n}`} variant="secondary" size="lg" className={half} icon={<ArrowIcon dir="left" />}>Hole {prev.n}</ButtonLink>
+          ) : <span className={half} aria-hidden="true" />}
           {next ? (
-            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}/${next.n}`} variant="primary" size="lg" className="flex-row-reverse md:min-w-60" icon={<ArrowIcon />}>Hole {next.n}</ButtonLink>
+            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}/${next.n}`} variant="primary" size="lg" className={cx(half, "flex-row-reverse md:min-w-60")} icon={<ArrowIcon />}>Hole {next.n}</ButtonLink>
           ) : round.status === "complete" ? (
-            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}`} variant="primary" size="lg" className="md:min-w-60">Back to the card</ButtonLink>
+            <ButtonLink id="hole-next" href={`/clubhouse/rounds/${round.id}`} variant="primary" size="lg" className={cx(half, "md:min-w-60")}>Back to card</ButtonLink>
           ) : (
-            <Button id="hole-next" variant="primary" size="lg" className="md:min-w-60" onClick={() => (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
+            <Button id="hole-next" variant="primary" size="lg" className={cx(half, "md:min-w-60")} onClick={() => (missing.length ? setFinishing(true) : finish())}>Finish round</Button>
           )}
         </div>
         <div aria-live="polite">

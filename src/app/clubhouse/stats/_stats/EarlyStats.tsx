@@ -1,6 +1,6 @@
 "use client";
 import { PageHeader } from "@/components/golf";
-import { ButtonLink } from "@/components/ui";
+import { ArrowIcon, ButtonLink, Icon } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { goalTarget } from "@/lib/stats";
@@ -32,11 +32,12 @@ export function EarlyStats() {
             {goalText ? "After your first card, the trend draws this line so you can see how far off it you are." : "Choose one and it's drawn across your trend."}
             {handicap.entered != null && ` You play off ${formatIndex(handicap.entered)} until 3 cards earn a calculated index.`}
           </p>
-          {!goalText && <ButtonLink href="/clubhouse/locker" variant="secondary" tone="green" size="sm" className="mt-4">Choose a goal in the Locker</ButtonLink>}
+          {!goalText && <ButtonLink href="/clubhouse/locker" variant="quiet" tone="green" size="sm" className="-ml-3 mt-2 flex-row-reverse" icon={<ArrowIcon />}>Choose a goal in the Locker</ButtonLink>}
         </div>
-        <div className="grid gap-2.5 sm:flex sm:flex-wrap">
-          <ButtonLink href="/clubhouse" variant="primary" tone="green" size="lg">Tee off</ButtonLink>
-          <ButtonLink href="/clubhouse/rounds/new" variant="secondary" tone="green" size="lg">Log a round you&apos;ve played</ButtonLink>
+        {/* One primary, one secondary: the same size, side by side from sm, the same width stacked on phones */}
+        <div className="grid gap-2.5 sm:grid-cols-2 md:min-w-[26rem]">
+          <ButtonLink href="/clubhouse" variant="primary" tone="green" size="lg" icon={<Icon name="play" />}>Tee off</ButtonLink>
+          <ButtonLink href="/clubhouse/rounds/new" variant="secondary" tone="green" size="lg" icon={<Icon name="pencil" />}>Log a round</ButtonLink>
         </div>
       </section>
 

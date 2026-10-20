@@ -3,10 +3,13 @@ import type { Hole } from "@/lib/course-types";
 import { SCORE_TYPES, scoreLabel, type ScoreType } from "@/lib/stats";
 import { ChartFrame, fmtToPar } from "./chart-frame";
 
-// Score types read like the traditional card: red for under par, ink for par, greens for over.
+// Score types read like the traditional card: red under par, ink for par, Fairway green for bogey, then a dark
+// brass for double (a different hue from the green, not a shade of it) and grey for worse. Every fill is ≥ 3:1 on
+// the white card; 2px white gaps separate the segments, and the legend and table carry the names and counts.
+const brass = "color-mix(in oklab, var(--color-gold) 50%, var(--color-ink))";
 const typeFill: Record<ScoreType, string> = {
   albatross: "var(--color-under)", eagle: "var(--color-under)", birdie: "var(--color-under)",
-  par: "var(--color-ink)", bogey: "var(--color-green)", double: "var(--color-green-3)", "triple+": "var(--color-ink-2)",
+  par: "var(--color-ink)", bogey: "var(--color-green)", double: brass, "triple+": "var(--color-ink-2)",
 };
 const typeOpacity: Record<ScoreType, number> = { albatross: 1, eagle: 1, birdie: 0.75, par: 1, bogey: 1, double: 1, "triple+": 0.7 };
 
@@ -21,9 +24,9 @@ export function DistributionBar({ types, holes }: { types: Record<ScoreType, num
       summary={holes ? `${holes} holes: ${Math.round(parOrBetter)}% par or better. ${shown.map((t) => `${scoreLabel[t]} ${types[t]}`).join(", ")}.` : "No holes match these filters yet."}
       table={{ columns: ["Score", "Holes", "Share"], rows: SCORE_TYPES.map((t) => [scoreLabel[t], types[t], `${Math.round(pct(t))}%`]) }}
     >
-      <div className="flex h-11 w-full overflow-hidden rounded-md" aria-hidden>
+      <div className="flex h-11 w-full gap-[2px] overflow-hidden rounded-md" aria-hidden>
         {shown.map((t) => (
-          <div key={t} style={{ width: `${pct(t)}%`, background: typeFill[t], opacity: typeOpacity[t] }} className="h-full border-r border-paper last:border-r-0" />
+          <div key={t} style={{ flexGrow: types[t], background: typeFill[t], opacity: typeOpacity[t] }} className="h-full min-w-[3px] basis-0" />
         ))}
       </div>
       <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm @lg:grid-cols-4" aria-hidden>

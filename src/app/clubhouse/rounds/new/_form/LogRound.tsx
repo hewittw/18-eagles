@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, type FormEvent } from "react";
 import { PageHeader, toParText } from "@/components/golf";
-import { Button, ChoiceGroup, DateInput, Field, NumberInput, Select, TextArea, useToast, cx } from "@/components/ui";
+import { Button, ChoiceGroup, DateInput, ErrorIcon, Field, NumberInput, Select, TextArea, useToast, cx } from "@/components/ui";
 import type { Course } from "@/lib/course-types";
 import { defaultHome, holesFor } from "@/lib/courses";
 import { useClub, useDraft } from "@/lib/hooks";
@@ -13,6 +13,13 @@ import { validateDate, validateStrokes, validateTotal } from "@/lib/validate";
 import { Page, Placeholder } from "../../../_components/Placeholder";
 
 type Mode = "total" | "holes";
+// The same rules as validateStrokes, said short enough for one scorecard box (still saying what to do).
+const shortStrokeError = (raw: string, par: number) => {
+  if (!raw.trim()) return "Enter a score";
+  const n = Number(raw);
+  const max = Math.max(15, par + 10);
+  return !Number.isInteger(n) || n < 1 ? "Enter a whole number" : n > max ? `Enter ${max} or less` : undefined;
+};
 // iOS inset grouping: a small caps caption above a rounded white card.
 const caption = "caps mb-2 px-1 text-[0.74rem] text-ink-2";
 const group = "rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-6";
@@ -82,6 +89,11 @@ function LogRoundForm() {
   const entered = holes.filter((h) => !validateStrokes(d.strokes[h.n] ?? "", h.par));
   const runGross = entered.reduce((a, h) => a + Number(d.strokes[h.n]), 0);
   const runPar = entered.reduce((a, h) => a + h.par, 0);
+  // The card's two nines, each with its Out / In once every hole in it is filled.
+  const sumOf = (hs: typeof holes) => (hs.every((h) => !validateStrokes(d.strokes[h.n] ?? "", h.par)) ? hs.reduce((a, h) => a + Number(d.strokes[h.n]), 0) : null);
+  const nines = holes.length > 9
+    ? [{ label: "Front nine", holes: holes.slice(0, 9) }, { label: "Back nine", holes: holes.slice(9) }].map((g) => ({ ...g, sum: sumOf(g.holes) }))
+    : [{ label: nine === "back" ? "Back nine" : "Front nine", holes, sum: null }];
 
   const submit = (ev: FormEvent) => {
     ev.preventDefault();
@@ -172,23 +184,50 @@ function LogRoundForm() {
             {(a) => <NumberInput {...a} value={d.total} onChange={(e) => set((p) => ({ ...p, total: e.target.value }))} className="max-w-[9rem]" />}
           </Field>
         ) : (
-          <fieldset className="grid">
-            <legend className="mb-1 font-serif text-[1.25rem] font-semibold text-ink">Strokes on each hole</legend>
-            {holes.map((h) => (
-              <div key={h.n} className="border-b border-rule/80 py-3.5 last-of-type:border-b-0">
-              <Field id={`log-h${h.n}`} label={`Hole ${h.n} · par ${h.par}`} hint={h.name} error={err(`log-h${h.n}`)}>
-                {(a) => (
-                  <NumberInput
-                    {...a}
-                    value={d.strokes[h.n] ?? ""}
-                    onChange={(e) => set((p) => ({ ...p, strokes: { ...p.strokes, [h.n]: e.target.value } }))}
-                    className="max-w-[7rem]"
-                  />
+          <fieldset className="grid min-w-0">
+            <legend className="mb-3 font-serif text-[1.25rem] font-semibold text-ink">Strokes on each hole</legend>
+            {/* A scorecard grid, one nine at a time (3 across on phones, all 9 from sm). Each box keeps its own
+                visible label, and the DOM runs hole 1 to 18, so Tab and screen readers go in playing order. */}
+            {nines.map((nine) => (
+              <div key={nine.label} className="mb-5 min-w-0">
+                {nines.length > 1 && (
+                  <p className="caps mb-2 flex items-baseline justify-between px-0.5 text-[0.72rem] text-ink-2" aria-hidden="true">
+                    <span>{nine.label}</span>
+                    <span className="font-numeral text-[0.95rem] normal-case tracking-normal tabular-nums">{nine.sum == null ? "" : `${nine.label === "Front nine" ? "Out" : "In"} ${nine.sum}`}</span>
+                  </p>
                 )}
-              </Field>
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-9 sm:gap-1.5">
+                  {nine.holes.map((h) => {
+                    const id = `log-h${h.n}`;
+                    const e = err(id) && shortStrokeError(d.strokes[h.n] ?? "", h.par);
+                    return (
+                      <div key={h.n} className="grid min-w-0 content-start gap-1">
+                        <label htmlFor={id} className="grid leading-tight">
+                          <span className="font-numeral text-[1rem] font-semibold tabular-nums text-ink">Hole {h.n}</span>
+                          <span className="text-[0.8rem] text-ink-2">Par {h.par}</span>
+                        </label>
+                        <NumberInput
+                          id={id}
+                          aria-invalid={e ? true : undefined}
+                          aria-describedby={e ? `${id}-err` : undefined}
+                          value={d.strokes[h.n] ?? ""}
+                          onChange={(ev) => set((p) => ({ ...p, strokes: { ...p.strokes, [h.n]: ev.target.value } }))}
+                          className="px-2 text-center font-numeral text-[1.15rem] tabular-nums"
+                        />
+                        {e && (
+                          <p id={`${id}-err`} className="flex items-start gap-1 text-[0.8rem] font-medium leading-snug text-error">
+                            <ErrorIcon />
+                            <span>{e}</span>
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             ))}
-            <p role="status" className="mt-2 rounded-lg bg-paper-3 px-4 py-3 font-numeral text-[1.2rem] font-medium tabular-nums text-ink">
+            {/* The running total: sticky at the bottom (above the phone tab bar) while the holes are on screen */}
+            <p role="status" data-obscures className="sticky bottom-[calc(var(--tabbar)+env(safe-area-inset-bottom)+0.5rem)] z-10 rounded-lg border border-rule/70 bg-paper-3/95 px-4 py-2.5 font-numeral text-[1.05rem] font-medium sm:py-3 sm:text-[1.2rem] tabular-nums text-ink shadow-card backdrop-blur-xl md:bottom-4">
               {entered.length ? (
                 <>
                   Total {runGross} through {entered.length} of {holes.length}

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Club, ClubKind } from "@/lib/types";
 import { Button } from "../ui/Button";
 import { cx } from "../ui/cx";
+import { byClubOrder } from "@/lib/store";
 
 export type ClubPickerProps = {
   bag: Club[];
@@ -31,7 +32,8 @@ const GROUPS: { kind: ClubKind; label: string }[] = [
  * "Dr → 7i → Pt", with Remove last and Clear (Clear can be undone). Every change is announced politely.
  */
 export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15, disabled }: ClubPickerProps) {
-  const clubs = bag.filter((c) => c.inBag);
+  // Natural order within each kind (3-iron, 4-iron, 5-iron…), whatever order the bag was saved in.
+  const clubs = bag.filter((c) => c.inBag).sort(byClubOrder);
   const firstId = GROUPS.flatMap((g) => clubs.filter((c) => c.kind === g.kind))[0]?.id;
   const byId = new Map(bag.map((c) => [c.id, c]));
   const [said, setSaid] = useState("");

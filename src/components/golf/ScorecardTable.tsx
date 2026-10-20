@@ -57,7 +57,7 @@ export function ScorecardTable({ holes, entries, currentHole, onSelectHole, comp
   const totalToPar = toParOf(holes);
 
   return (
-    <div role="region" aria-label={`${caption}${played ? `, ${played} of ${holes.length} holes played` : ""}. Scrolls sideways on small screens.`} tabIndex={0} className="scroll-x rounded-xl border border-rule/70 bg-paper-2 shadow-card">
+    <div role="region" aria-label={`${caption}${played ? `, ${played} of ${holes.length} holes played` : ""}. Scrolls sideways on small screens.`} tabIndex={0} className="scroll-x relative rounded-xl border border-rule/70 bg-paper-2 shadow-card">
       <table className={cx("w-full min-w-max border-collapse text-center", compact ? "text-[0.95rem]" : "text-[1.02rem]")}>
         <caption className="sr-only">
           {caption}.{total != null ? ` ${total} strokes through ${played} ${played === 1 ? "hole" : "holes"}, ${toParSpoken(totalToPar!)}.` : " No holes played yet."}

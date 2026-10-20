@@ -1,4 +1,5 @@
 "use client";
+import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { AppNav, type NavKey } from "./AppNav";
 
@@ -13,4 +14,18 @@ export function CurrentNav({ variant }: { variant: "bar" | "tabs" }) {
     : path === "/clubhouse" || path === "/clubhouse/" || path.startsWith("/clubhouse/trophies") ? "clubhouse"
     : undefined;
   return <AppNav current={current} variant={variant} />;
+}
+
+/** A hole being played: /clubhouse/rounds/[id]/[hole]. Not the list, Log a round, or the card. */
+export const isHoleRoute = (path: string) => /^\/clubhouse\/rounds\/(?!new\/)[^/]+\/[^/]+\/?$/.test(path);
+
+/**
+ * The phone tab bar, left out on the hole screen: scoring is a focused flow (as iOS hides the tab bar in one),
+ * so the hole's own action bar takes the bottom edge. `--tabbar` drops to 0 there, so everything that clears
+ * the tab bar (sticky bars, the footer's padding) closes up. The way out stays: the back pill and the header logo.
+ */
+export function PhoneTabBar({ children }: { children: ReactNode }) {
+  const path = usePathname() ?? "";
+  if (isHoleRoute(path)) return <style>{`@media (width < 48rem) { :root { --tabbar: 0px; } }`}</style>;
+  return children;
 }

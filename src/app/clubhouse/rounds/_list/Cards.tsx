@@ -56,7 +56,7 @@ function CardsBody() {
       <PageHeader
         eyebrow="Every round"
         title="Cards"
-        lede={total ? `${total} ${total === 1 ? "card" : "cards"} in the book, newest first. A star marks the ones counting toward your index.` : undefined}
+        lede={total ? `${total} ${total === 1 ? "card" : "cards"} in the book, newest first. The ones tagged Counts make up your index.` : undefined}
         actions={<ButtonLink href="/clubhouse/rounds/new" size="sm" icon={<Icon name="plus" className="size-5" />} variant={active || !total ? "secondary" : "primary"}>Log a past round</ButtonLink>}
       />
 
@@ -75,9 +75,10 @@ function CardsBody() {
           </div>
         </section>
       ) : (
-        <div className="gap-8 lg:columns-2">
+        // One column, newest month first, so the book reads straight down (two columns zigzagged the months).
+        <div className="grid max-w-3xl gap-8 lg:gap-10">
           {months.map((g) => (
-            <section key={g.key} aria-labelledby={`m-${g.key}`} className="mb-8 min-w-0 break-inside-avoid lg:mb-10">
+            <section key={g.key} aria-labelledby={`m-${g.key}`} className="min-w-0">
               <div className="flex items-baseline justify-between gap-4 px-1 pb-2.5">
                 <h2 id={`m-${g.key}`} className="font-display text-[1.45rem] leading-tight text-ink">{g.label}</h2>
                 <p className="caps text-[0.74rem] text-ink-2">{g.rows.length} {g.rows.length === 1 ? "card" : "cards"}</p>

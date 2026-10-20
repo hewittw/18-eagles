@@ -33,8 +33,8 @@ export function Stats() {
   return <StatsBody />;
 }
 
-const RANGE_OPTIONS: { value: Range; label: string }[] = [
-  { value: "5", label: "Last 5" }, { value: "10", label: "Last 10" }, { value: "20", label: "Last 20" }, { value: "year", label: "This year" }, { value: "all", label: "All" },
+const RANGE_OPTIONS: { value: Range; label: string; short?: string }[] = [
+  { value: "5", label: "Last 5" }, { value: "10", label: "Last 10" }, { value: "20", label: "Last 20" }, { value: "year", label: "This year", short: "Year" }, { value: "all", label: "All" },
 ];
 const HOLE_OPTIONS: { value: HoleFilter; label: string }[] = [{ value: "all", label: "All" }, { value: "18", label: "18" }, { value: "9", label: "9" }];
 
