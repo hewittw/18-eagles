@@ -23,7 +23,7 @@ export function SectionHeading({ eyebrow, title, level = 2, action, id, numeral,
     <div className={cx("min-w-0", className)}>
       <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
         <div className="min-w-0">
-          {eyebrow && <p className={cx("caps text-label", green ? "text-gold" : "text-gold-ink")}>{eyebrow}</p>}
+          {eyebrow && <p className={cx("caps text-label text-balance", green ? "text-gold" : "text-gold-ink")}>{eyebrow}</p>}
           <H id={id} className={cx("mt-1 flex items-baseline gap-3 font-display font-normal", level === 2 ? "text-display-2" : "text-title", green ? "text-on-green" : "text-ink")}>
             {numeral && <span className={cx("font-display text-[0.6em]", green ? "text-gold" : "text-gold-ink")} aria-hidden="true">{numeral}</span>}
             <span className="min-w-0 text-balance">{title}</span>
@@ -31,7 +31,7 @@ export function SectionHeading({ eyebrow, title, level = 2, action, id, numeral,
         </div>
         {action && <div className="shrink-0">{action}</div>}
       </div>
-      {lede && <p className={cx("mt-3 max-w-measure font-serif text-lede", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
+      {lede && <p className={cx("mt-3 max-w-measure font-serif text-lede text-pretty", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
     </div>
   );
 }

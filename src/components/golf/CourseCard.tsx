@@ -12,13 +12,15 @@ export type CourseCardProps = {
   meta?: ReactNode;
   /** The card's heading level; h3 under a page's h2 sections by default. */
   headingLevel?: 2 | 3;
+  /** The golfer's own home course (profile.homeCourse): the only card that wears the "Home" badge. */
+  home?: boolean;
   /** Load the photo eagerly (the first row of a list). */
   eager?: boolean;
   className?: string;
 };
 
 export const TAG_LABEL: Record<string, string> = {
-  "major-host": "Major host", links: "Links", parkland: "Parkland", coastal: "Coastal", desert: "Desert", home: "Home course", "bucket-list": "Bucket list",
+  "major-host": "Major host", links: "Links", parkland: "Parkland", coastal: "Coastal", desert: "Desert", home: "Local", "bucket-list": "Bucket list",
 };
 
 const ORD = ["", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth"];
@@ -31,11 +33,16 @@ export const placeOf = (c: Course) => [c.city, c.region, c.country === "Scotland
  * signature hole), the name in the serif, the place, and par · yards from the back tee. Compact enough for two
  * across on a phone. The whole tile is one link.
  */
-export function CourseCard({ course, href, meta, headingLevel = 3, eager, className }: CourseCardProps) {
+export function CourseCard({ course, href, meta, headingLevel = 3, home, eager, className }: CourseCardProps) {
   const H = headingLevel === 2 ? "h2" : "h3";
   const back = course.tees[0];
   const sig = course.holes.find((h) => h.n === course.signatureHole) ?? course.holes[0];
-  const badge = course.tags.includes("home") ? "home" : course.tags.includes("yours") ? "yours" : null;
+  // The data's "home" tag means a local course (San Diego, Chicago), so it is not the golfer's Home: only their pick is.
+  const badge = home ? "home" : course.tags.includes("yours") ? "yours" : null;
+  // The short name fits the tile; the full name is kept for screen readers (and on the course page). When the
+  // short name isn't inside the full one ("Bethpage Black"), both are read so the visible words stay in the name.
+  const short = course.shortName || course.name;
+  const contained = short !== course.name && course.name.includes(short);
   return (
     <Link
       href={href}
@@ -63,8 +70,14 @@ export function CourseCard({ course, href, meta, headingLevel = 3, eager, classN
         )}
       </div>
       <div className="flex flex-1 flex-col px-3 pb-3 pt-2.5 sm:px-4 sm:pb-4 sm:pt-3">
-        <H className="line-clamp-2 font-display text-[1.08rem] leading-[1.18] font-normal text-ink sm:text-[1.3rem]">{course.name}</H>
-        <p className="mt-0.5 truncate text-[0.85rem] text-ink-2 sm:text-[0.92rem]">{placeOf(course)}</p>
+        <H className="line-clamp-2 font-display text-[1.08rem] leading-[1.18] font-normal text-balance text-ink sm:text-[1.3rem]">
+          {contained ? (
+            <><span aria-hidden="true">{short}</span><span className="sr-only">{course.name}</span></>
+          ) : (
+            <>{short}{short !== course.name && <span className="sr-only">, {course.name}</span>}</>
+          )}
+        </H>
+        <p className="mt-0.5 line-clamp-2 text-pretty text-[0.85rem] leading-snug text-ink-2 sm:text-[0.92rem]">{placeOf(course)}</p>
         <p className="mt-2 font-numeral text-[0.95rem] font-medium tabular-nums text-ink sm:text-[1.02rem]">
           Par {back.par} <span aria-hidden="true" className="text-ink-2">·</span> {back.yards.toLocaleString("en-US")}
           <span className="text-ink-2"> yds</span>

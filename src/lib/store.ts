@@ -6,11 +6,16 @@ import type { Club, HoleEntry, Profile, Round, Store } from "./types";
 
 export const STORAGE_KEY = "18eagles:v1";
 
+// In the natural order (longest club first within each kind), whether or not a club starts in the bag.
 export const DEFAULT_BAG: Club[] = [
   { id: "dr", name: "Driver", short: "Dr", kind: "wood", inBag: true },
   { id: "3w", name: "3-wood", short: "3w", kind: "wood", inBag: true },
   { id: "5w", name: "5-wood", short: "5w", kind: "wood", inBag: true },
+  { id: "7w", name: "7-wood", short: "7w", kind: "wood", inBag: false },
+  { id: "3h", name: "3-hybrid", short: "3h", kind: "hybrid", inBag: false },
   { id: "4h", name: "4-hybrid", short: "4h", kind: "hybrid", inBag: true },
+  { id: "3i", name: "3-iron", short: "3i", kind: "iron", inBag: false },
+  { id: "4i", name: "4-iron", short: "4i", kind: "iron", inBag: false },
   { id: "5i", name: "5-iron", short: "5i", kind: "iron", inBag: true },
   { id: "6i", name: "6-iron", short: "6i", kind: "iron", inBag: true },
   { id: "7i", name: "7-iron", short: "7i", kind: "iron", inBag: true },
@@ -21,11 +26,17 @@ export const DEFAULT_BAG: Club[] = [
   { id: "sw", name: "Sand wedge (56°)", short: "56°", kind: "wedge", inBag: true },
   { id: "lw", name: "Lob wedge (60°)", short: "60°", kind: "wedge", inBag: true },
   { id: "pt", name: "Putter", short: "Pt", kind: "putter", inBag: true },
-  { id: "3i", name: "3-iron", short: "3i", kind: "iron", inBag: false },
-  { id: "4i", name: "4-iron", short: "4i", kind: "iron", inBag: false },
-  { id: "3h", name: "3-hybrid", short: "3h", kind: "hybrid", inBag: false },
-  { id: "7w", name: "7-wood", short: "7w", kind: "wood", inBag: false },
 ];
+
+const CLUB_RANK = new Map(DEFAULT_BAG.map((c, i) => [c.id, i]));
+/**
+ * Sort comparator for listing clubs in their natural order (Driver … Putter), wherever they're listed. A saved
+ * bag keeps the order it was stored in (older bags put the clubs left out last), so sort at display time:
+ * `[...bag].sort(byClubOrder)`. Clubs not in the default set keep their place after the known ones.
+ */
+export function byClubOrder(a: Pick<Club, "id">, b: Pick<Club, "id">) {
+  return (CLUB_RANK.get(a.id) ?? DEFAULT_BAG.length) - (CLUB_RANK.get(b.id) ?? DEFAULT_BAG.length);
+}
 
 const EMPTY_PROFILE: Profile = { name: null, enteredIndex: null, goal: null, homeCourse: null, lastTee: {}, welcomedAt: null, bagSetAt: null };
 

@@ -39,7 +39,7 @@ export function AppNav({ current, variant = "bar", label = "18 Eagles", classNam
   if (variant === "tabs") {
     return (
       <nav aria-label={label} className={className}>
-        <ul className="grid min-h-[var(--tabbar)] grid-cols-5">
+        <ul className="mx-auto grid min-h-[var(--tabbar)] w-full max-w-xl grid-cols-5">
           {NAV.map((n) => {
             const on = current === n.key;
             return (

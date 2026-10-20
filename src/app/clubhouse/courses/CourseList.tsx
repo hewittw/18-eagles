@@ -7,11 +7,11 @@ import { useClub } from "@/lib/hooks";
 import { Page, Placeholder } from "../_components/Placeholder";
 import { recordAt, recordLine } from "./_lib/record";
 
-type Filter = "all" | "home" | "majors" | "usa" | "scotland" | "yours";
+type Filter = "all" | "local" | "majors" | "usa" | "scotland" | "yours";
 
 const matches: Record<Filter, (c: Course) => boolean> = {
   all: () => true,
-  home: (c) => c.tags.includes("home"),
+  local: (c) => c.tags.includes("home"), // the data's "home" tag: courses local to San Diego and Chicago
   majors: (c) => c.tags.includes("major-host"),
   usa: (c) => c.country === "USA" && !c.tags.includes("yours"),
   scotland: (c) => c.country === "Scotland" && !c.tags.includes("yours"),
@@ -20,9 +20,9 @@ const matches: Record<Filter, (c: Course) => boolean> = {
 
 const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
 
-/** Home courses first, then the golfer's own, then the library in name order. */
-function rank(c: Course) {
-  return c.tags.includes("home") ? 0 : c.tags.includes("yours") ? 1 : 2;
+/** The golfer's home course first, then local courses, then the ones they added, then the library in name order. */
+function rank(c: Course, homeSlug: string | null) {
+  return c.slug === homeSlug ? 0 : c.tags.includes("home") ? 1 : c.tags.includes("yours") ? 2 : 3;
 }
 
 export function CourseList() {
@@ -30,7 +30,8 @@ export function CourseList() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
 
-  const sorted = useMemo(() => [...courses].sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name)), [courses]);
+  const homeSlug = store.profile.homeCourse;
+  const sorted = useMemo(() => [...courses].sort((a, b) => rank(a, homeSlug) - rank(b, homeSlug) || a.name.localeCompare(b.name)), [courses, homeSlug]);
   const hasYours = courses.some((c) => c.tags.includes("yours"));
   const active: Filter = filter === "yours" && !hasYours ? "all" : filter;
 
@@ -43,7 +44,7 @@ export function CourseList() {
 
   const options: { value: Filter; label: string }[] = [
     { value: "all", label: "All" },
-    { value: "home", label: "Home" },
+    { value: "local", label: "Local" },
     { value: "majors", label: "Majors" },
     { value: "usa", label: "USA" },
     { value: "scotland", label: "Scotland" },
@@ -102,11 +103,12 @@ export function CourseList() {
                   href={`/clubhouse/courses/${c.slug}`}
                   eager={i < 8}
                   headingLevel={2}
+                  home={c.slug === homeSlug}
                   className="w-full"
                   meta={
-                    <span className={`flex min-w-0 items-center gap-1.5 text-[0.8rem] font-medium sm:text-[0.85rem] ${rec.rounds ? "text-green" : "text-ink-2"}`}>
-                      {rec.rounds > 0 && <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-green" />}
-                      <span className="truncate">{recordLine(rec)}</span>
+                    <span className={`flex min-w-0 items-start gap-1.5 text-[0.8rem] leading-snug font-medium sm:text-[0.85rem] ${rec.rounds ? "text-green" : "text-ink-2"}`}>
+                      {rec.rounds > 0 && <span aria-hidden="true" className="mt-[0.5em] size-1.5 shrink-0 rounded-full bg-green" />}
+                      <span className="min-w-0 text-pretty">{recordLine(rec)}</span>
                     </span>
                   }
                 />

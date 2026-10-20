@@ -30,14 +30,16 @@ export function PageHeader({ title, eyebrow, back, actions, lede, tone = "paper"
           {back.label}
         </Link>
       )}
-      <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+      {/* Phones: the actions sit beside the title (or wrap under it). From lg, with a lede, they sit at the right
+          and line up with the lede's last line instead of floating at the h1's mid-height. */}
+      <div className={cx("flex flex-wrap items-end justify-between gap-x-8 gap-y-4", !!lede && !!actions && "lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-y-0")}>
         <div className="min-w-0">
-          {eyebrow && <p className={cx("caps text-label", green ? "text-gold" : "text-gold-ink")}>{eyebrow}</p>}
+          {eyebrow && <p className={cx("caps text-label text-balance", green ? "text-gold" : "text-gold-ink")}>{eyebrow}</p>}
           <h1 className={cx("mt-1.5 font-display text-display-1 font-normal text-balance", green ? "text-on-green" : "text-ink")}>{title}</h1>
         </div>
-        {actions && <div className="flex min-w-0 max-w-full flex-wrap gap-2">{actions}</div>}
+        {actions && <div className={cx("flex min-w-0 max-w-full flex-wrap gap-2", !!lede && "lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-end")}>{actions}</div>}
+        {lede && <p className={cx("-mt-1 w-full max-w-measure font-serif text-lede text-pretty lg:col-start-1 lg:mt-3", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
       </div>
-      {lede && <p className={cx("mt-3 max-w-measure font-serif text-lede", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
     </header>
   );
 }

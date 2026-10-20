@@ -129,8 +129,18 @@ export function TrophyRoom() {
       {/* Crystal */}
       <section aria-labelledby="tr-crystal">
         <SectionHeading id="tr-crystal" eyebrow="Won every time" title="Crystal" lede="For the shots you remember: eagles, aces and birdie runs, hole by hole cards only." />
-        <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {crystal.map((d) => <CrystalTile key={d.id} def={d} wins={wins(d.id)} fresh={wins(d.id).some((e) => isFresh(e, store.honorsSeen, since))} />)}
+        {/* Five pieces, balanced at every width: 2 + 2 + one wide on a phone, 3 + 2 on a 6-track grid, then 5 across. */}
+        <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-6 lg:grid-cols-5">
+          {crystal.map((d, i) => (
+            <CrystalTile
+              key={d.id}
+              def={d}
+              wins={wins(d.id)}
+              fresh={wins(d.id).some((e) => isFresh(e, store.honorsSeen, since))}
+              wide={crystal.length % 2 === 1 && i === crystal.length - 1}
+              className={cx(i < 3 ? "sm:col-span-2" : "sm:col-span-3", "lg:col-span-1")}
+            />
+          ))}
         </ul>
       </section>
 
@@ -165,16 +175,24 @@ export function TrophyRoom() {
   );
 }
 
-function CrystalTile({ def, wins, fresh }: { def: TrophyDef; wins: EarnedTrophy[]; fresh: boolean }) {
+function CrystalTile({ def, wins, fresh, wide, className }: { def: TrophyDef; wins: EarnedTrophy[]; fresh: boolean; wide?: boolean; className?: string }) {
   const latest = wins[0];
   return (
-    <li className={cx("relative flex min-w-0 flex-col items-center rounded-xl border p-4 text-center shadow-card", latest ? "border-rule/70 bg-paper-2" : "border-dashed border-rule-strong bg-paper-3/60 shadow-none")}>
+    <li
+      className={cx(
+        "relative flex min-w-0 flex-col items-center rounded-xl border p-4 text-center shadow-card",
+        latest ? "border-rule/70 bg-paper-2" : "border-dashed border-rule-strong bg-paper-3/60 shadow-none",
+        // The odd one out on a phone spans both columns and lies on its side: art left, words right.
+        wide && "max-sm:col-span-2 max-sm:grid max-sm:grid-cols-[auto_minmax(0,1fr)] max-sm:items-center max-sm:gap-x-4 max-sm:text-left max-sm:[&>:is(p,h3,a)]:col-start-2 max-sm:justify-items-start",
+        className,
+      )}
+    >
       {latest && <span aria-hidden="true" className="trophy-sheen" />}
       {fresh && <span className="caps absolute right-2 top-2 rounded-xs bg-green px-1.5 py-0.5 text-[0.62rem] text-on-green">New</span>}
-      <div className={cx("size-20 sm:size-24", !latest && "text-rule-strong")}>
+      <div className={cx("size-20 sm:size-24", !latest && "text-rule-strong", wide && "max-sm:row-span-4 max-sm:row-start-1 max-sm:self-center")}>
         <TrophyArt art={def.art} tier="crystal" locked={!latest} className="size-full" />
       </div>
-      <p className="caps mt-2 text-[0.66rem] text-gold-ink">{latest ? `Crystal · won ${times(wins.length)}` : "Crystal · not won yet"}</p>
+      <p className="caps mt-2 whitespace-nowrap text-[0.66rem] text-gold-ink">{latest ? `Won ${times(wins.length)}` : "Not won yet"}</p>
       <h3 className="mt-1 font-serif text-lg leading-tight text-ink">{def.name}</h3>
       {latest ? (
         <>

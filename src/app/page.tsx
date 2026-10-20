@@ -12,7 +12,7 @@ const statusStyle: Record<Status, string> = {
 
 function StatusTag({ s }: { s: Status }) {
   return (
-    <span className={`inline-block rounded-full px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.12em] ${statusStyle[s]}`}>
+    <span className={`inline-block w-fit shrink-0 self-start justify-self-start whitespace-nowrap sm:self-auto rounded-full px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.12em] ${statusStyle[s]}`}>
       {s}
     </span>
   );
@@ -21,8 +21,8 @@ function StatusTag({ s }: { s: Status }) {
 export default function Hub() {
   return (
     <main id="main" className="mx-auto w-full max-w-[1120px] px-6 pb-32 pt-16 md:px-10">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#53565A]">
-        Design, Build, Ship · Assignment 3 · Patterns &amp; Flows
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-balance text-[#53565A]">
+        Design, Build, Ship&nbsp;· Assignment 3&nbsp;· Patterns &amp; Flows
       </p>
       <h1 className="mt-4 font-display text-5xl font-normal leading-[0.95] tracking-[-0.02em] text-[#006747] md:text-7xl">18 Eagles</h1>
       <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#53565A]">

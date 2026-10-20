@@ -8,7 +8,7 @@ import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { withSampleSeason } from "@/lib/sample";
 import { honors } from "@/lib/stats";
-import { exportJSON, importJSON, patchProfile, resetAll, todayISO, update } from "@/lib/store";
+import { byClubOrder, exportJSON, importJSON, patchProfile, resetAll, todayISO, update } from "@/lib/store";
 import type { ClubKind, Goal } from "@/lib/types";
 import { parseIndex } from "@/lib/validate";
 import { Page, Placeholder } from "../_components/Placeholder";
@@ -111,9 +111,19 @@ export function Locker() {
           <div className="grid grid-cols-6 gap-1.5 sm:hidden" aria-hidden="true">
             {Array.from({ length: 6 }).map((_, i) => <span key={i} className="h-1.5 rounded-full bg-black/35" />)}
           </div>
-          <div className="brass-plate relative rounded-lg px-10 py-5 text-center">
-            <Screw className="left-2.5 top-1/2 -translate-y-1/2" />
-            <Screw className="right-2.5 top-1/2 -translate-y-1/2" />
+          {/* Brushed brass: a warm gold sweep (never the flat Brass token), an engraved rule inset from the edge,
+              a bevel of light on top and shade below. Text is Deep Green: 4.55:1 at the darkest corner stop
+              (#c49a42), 8:1+ across the bright middle where the words sit. */}
+          <div
+            className="relative rounded-lg px-10 py-5 text-center text-[#00402B] [text-shadow:0_1px_0_rgb(255_255_255/0.35)]"
+            style={{
+              background: "linear-gradient(135deg, #c9a24a 0%, #e9cf85 30%, #f4e2a2 48%, #dcbc66 68%, #c49a42 100%)",
+              boxShadow: "inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(90 64 18 / .45), 0 2px 0 #7a5a1e, 0 8px 18px rgb(0 0 0 / .32)",
+            }}
+          >
+            <span aria-hidden="true" className="pointer-events-none absolute inset-[7px] rounded-[5px] border border-[#8a6a2c]/60 shadow-[0_1px_0_rgb(255_255_255/0.45),inset_0_1px_0_rgb(255_255_255/0.45)]" />
+            <Screw className="left-3.5 top-1/2 -translate-y-1/2" />
+            <Screw className="right-3.5 top-1/2 -translate-y-1/2" />
             <p className="caps text-[0.75rem] tracking-[0.3em]">{profile.name ? `${profile.name} · Locker No. 18` : "Locker No. 18"}</p>
             <p className="mt-1 font-display text-[2.1rem] leading-none uppercase tracking-[0.06em]">
               {handicap.display != null ? formatIndex(handicap.display) : "No index yet"}
@@ -144,7 +154,7 @@ export function Locker() {
           )}
           <Group caption={<span role="status" aria-live="polite">{inBag} of {bag.length} clubs in the bag</span>} className="mt-6">
             {KINDS.map(({ kind, label }) => {
-              const clubs = bag.filter((c) => c.kind === kind);
+              const clubs = bag.filter((c) => c.kind === kind).sort(byClubOrder);
               if (!clubs.length) return null;
               return (
                 <div key={kind} className="min-w-0 px-4 py-3.5 sm:px-5" role="group" aria-labelledby={`k-${kind}`}>
