@@ -92,6 +92,7 @@ flowchart TD
 | `/clubhouse/rounds/new` | Form: log a round I've played | — |
 | `/clubhouse/stats` | Breakdowns with filters | Stats |
 | `/clubhouse/locker` | The bag, index and goal, honors, export/reset | Locker |
+| `/clubhouse/trophies` | The Trophy Room: this week's case, crystal, career | — (from the Clubhouse and Locker) |
 
 ## States and errors we design for
 - **Empty:** no rounds → the hero asks three setup questions (index, home course, bag), then the tee off card opens at that course. No blank stats: they show "after 1 round" previews with the goal.
@@ -111,10 +112,16 @@ questions, one at a time, and each answer is saved the moment it's given:
 3. **What's in your bag?** A standard 14 is filled in; tap clubs out or in. These become your buttons on every hole.
 
 Then the Tee off card opens at *your* course with its tees, and one tap puts you on hole 1: learning by doing.
+Under the question, a showcase for newcomers only: the trophies waiting to be won, a still of the one-tap hole screen,
+the handicap worked out for you, the next-round challenge, and course photos from Augusta to St Andrews.
 Someone just looking can tap **Explore a sample season** and see the whole app full (13 rounds, stats, honors).
 How GHIN, 18Birdies and Arccos onboard, and what we took from each: [`docs/research/`](docs/research/).
 
 ## A reason to come back
+- **The Trophy Room, every week.** A trophy case at the top of the Clubhouse resets each Monday: the Low Round of
+  the Week (your best card this week ranked against all of yours: #1 gold, top 3 silver, top quarter bronze), the Jacket
+  (beat your goal this week) and the Challenge Medal. Crystal for eagles, aces and birdie runs, and 22 career trophies
+  (Broke 90, Amen Corner, Course Record, Ten Cards…). Thirty in all, worked out from your cards, never stored.
 - **Your handicap, moving.** The index in big numbers, how it changed since the last card, your low, and which old
   score your next card will push out of the best 8 of 20.
 - **Your challenge for the next round.** After each card, 18 Eagles picks your weakest area from your recent rounds
@@ -122,7 +129,7 @@ How GHIN, 18Birdies and Arccos onboard, and what we took from each: [`docs/resea
   met it, and keeps your streak.
 - **Beat your last card.** "Last time at Torrey South: 88. Beat it.", with the note you left yourself.
 - **Resume.** A round in progress is saved on every tap and waits at the hole you left.
-- **Honors.** First birdie, broke 90, a new best at a course: celebrated on your next visit and kept in the Locker.
+- **New since your last visit.** Trophies won since you were last here are marked New on the shelf.
 
 Everything is saved in localStorage: rounds, the bag, the profile, honors seen, and the time of your last visit.
 

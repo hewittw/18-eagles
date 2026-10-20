@@ -82,6 +82,7 @@ flowchart TD
 | `/clubhouse/rounds/new` | Form: log a round I've played | — |
 | `/clubhouse/stats` | Breakdowns with filters | Stats |
 | `/clubhouse/locker` | The bag, index and goal, honors, export/reset | Locker |
+| `/clubhouse/trophies` | The Trophy Room: this week's case, crystal, career | — (from the Clubhouse and Locker) |
 
 ## States and errors we design for
 - **Empty:** no rounds → the hero asks three setup questions (index, home course, bag), then the tee off card opens at that course. No blank stats: they show "after 1 round" previews with the goal.
