@@ -230,7 +230,7 @@ function LogRoundForm() {
               ["Par", String(par)],
               ["Score", d.mode === "total" ? (validateTotal(d.total, holes.length) ? "—" : d.total) : entered.length ? `${runGross}` : "—"],
             ].map(([k, v]) => (
-              <div key={k} className="min-w-0 rounded-lg bg-white/10 px-3.5 py-3">
+              <div key={k} className="min-w-0 rounded-lg bg-black/15 px-3.5 py-3">
                 <dt className="caps text-[0.68rem] text-gold">{k}</dt>
                 <dd className="mt-1 truncate font-numeral text-[1.5rem] font-semibold leading-none tabular-nums text-on-green">{v}</dd>
               </div>

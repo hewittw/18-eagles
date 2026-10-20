@@ -8,8 +8,8 @@ export function ProcessHeader({ here }: { here: string }) {
         Skip to main content
       </a>
       <header className="border-b border-rule">
-        <nav aria-label="Process" className="mx-auto flex max-w-[1120px] items-center justify-between gap-4 px-6 py-4 font-numeral text-xs uppercase tracking-[0.16em] md:px-10">
-          <Link href="/" className="rounded-sm text-ink hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus">
+        <nav aria-label="Process" className="mx-auto flex max-w-[1120px] items-center justify-between gap-4 px-6 font-numeral text-xs uppercase tracking-[0.16em] md:px-10 py-1">
+          <Link href="/" className="inline-flex min-h-tap items-center rounded-sm text-ink hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus">
             18 Eagles · Process hub
           </Link>
           <span className="text-ink-2" aria-current="page">{here}</span>

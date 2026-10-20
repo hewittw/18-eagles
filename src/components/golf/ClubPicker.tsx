@@ -129,7 +129,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
         })}
       </div>
 
-      <div className="mt-4 grid items-center gap-x-3 gap-y-2 rounded-lg bg-paper-3 px-3.5 py-3 @md:grid-cols-[auto_minmax(0,1fr)_auto]">
+      <div className="mt-4 grid grid-cols-[minmax(0,1fr)] items-center gap-x-3 gap-y-2 rounded-lg bg-paper-3 px-3.5 py-3 @md:grid-cols-[auto_minmax(0,1fr)_auto]">
         <p className="caps shrink-0 text-[0.72rem] text-ink-2">
           {shots.length} {shots.length === 1 ? "shot" : "shots"}
         </p>
@@ -150,7 +150,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
             {cleared ? "Shots cleared." : "No shots yet. Tap the club you hit."}
           </p>
         )}
-        <div className="flex gap-1.5">
+        <div className="flex flex-wrap gap-1.5">
           {cleared ? (
             <Button ref={undoRef} size="sm" variant="secondary" onClick={undoClear}>Undo clear</Button>
           ) : (

@@ -52,7 +52,12 @@ export function Roundel({ size = 36, ring = false }: { size?: number; ring?: boo
         // at small sizes the "18" is drawn as two strokes rather than text (it would set under 10px)
         <path d="M41 26 L43.5 24 V36 M50 24.5 a3 3 0 1 0 0.01 0 M50 30.5 a3.4 3.2 0 1 0 0.01 0" fill="none" stroke="var(--color-gold)" strokeWidth="1.6" />
       )}
-      <text x="50" y={ring ? 71 : 76} textAnchor="middle" className="font-display" fontSize={ring ? 36 : 44} fill="var(--color-on-green)">E</text>
+      {/* The E is defined in <defs> and drawn with <use>, so it isn't read as part of the link's visible label text
+          (the label is the name beside it, "18 Eagles"; WCAG 2.5.3). Same id per size, same glyph, so duplicates agree. */}
+      <defs>
+        <text id={ring ? "wm-e-lg" : "wm-e-sm"} x="50" y={ring ? 71 : 76} textAnchor="middle" className="font-display" fontSize={ring ? 36 : 44} fill="var(--color-on-green)">E</text>
+      </defs>
+      <use href={ring ? "#wm-e-lg" : "#wm-e-sm"} />
       {/* pennant on the E's spine */}
       <line x1={ring ? 64 : 67} y1={ring ? 46 : 44} x2={ring ? 64 : 67} y2={ring ? 31 : 26} stroke="var(--color-gold)" strokeWidth="1.3" />
       <path d={ring ? "M64 31 l8 3 l-8 3 z" : "M67 26 l10 3.6 l-10 3.6 z"} fill="var(--color-under)" />

@@ -69,7 +69,7 @@ export default function ClubButtons() {
               type="button"
               onClick={() => add(c)}
               disabled={n >= MAX}
-              aria-label={`${c.name}${c.carry ? `, ${c.carry} yards` : ""}`}
+              aria-label={`${c.id} ${c.carry || "green"}: ${c.name}${c.carry ? `, ${c.carry} yards` : ""}`}
               className={[
                 "group relative flex min-h-14 flex-col items-start justify-between border px-2.5 py-2 text-left transition-[background-color,transform] duration-150",
                 "border-(--mb-ink)/70 bg-(--mb-tile) text-(--mb-ink)",
@@ -78,7 +78,7 @@ export default function ClubButtons() {
                 isLast ? "bg-(--mb-locker)! text-(--mb-paper)! border-(--mb-locker)" : "",
               ].join(" ")}
             >
-              <span className="f-cond text-[1.6rem] font-semibold leading-none">{c.id}</span>
+              <span className="f-cond text-[1.6rem] font-semibold leading-none">{c.id}</span>{" "}
               <span className={`f-cond text-[0.85rem] font-medium leading-none ${isLast ? "text-(--mb-brass)" : "text-(--mb-pencil)"}`} aria-hidden="true">
                 {c.carry ? `${c.carry}` : "green"}
               </span>

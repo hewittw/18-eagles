@@ -100,7 +100,7 @@ export function CourseList() {
                 <CourseCard
                   course={c}
                   href={`/clubhouse/courses/${c.slug}`}
-                  eager={i < 4}
+                  eager={i < 8}
                   headingLevel={2}
                   className="w-full"
                   meta={

@@ -45,7 +45,7 @@ export default function Research() {
 
         <section aria-labelledby="decided" className="mt-16">
           <h2 id="decided" className="border-t border-rule-strong pt-6 font-display text-3xl text-ink">What we took for our first visit</h2>
-          <div className="mt-6 overflow-x-auto">
+          <div className="mt-6 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus" role="region" aria-label="Patterns we took (scrolls sideways)" tabIndex={0}>
             <table className="w-full min-w-[640px] border-collapse text-left text-[15px]">
               <caption className="sr-only">Patterns from the three apps and what each became in 18 Eagles</caption>
               <thead>
@@ -68,7 +68,7 @@ export default function Research() {
           </div>
         </section>
 
-        {docs.map((a) => (
+        {docs.map((a, ai) => (
           <section key={a.slug} aria-labelledby={`app-${a.slug}`} className="mt-20">
             <div className="border-t border-rule-strong pt-6">
               <p className="font-numeral text-xs uppercase tracking-[0.16em] text-ink-2">Study · {a.by}</p>
@@ -77,11 +77,11 @@ export default function Research() {
             </div>
 
             {a.images.length > 0 && (
-              <ul className="mt-6 flex snap-x gap-4 overflow-x-auto pb-3" aria-label={`${a.name} screenshots`}>
-                {a.images.map((im) => (
+              <ul className="mt-6 flex snap-x gap-4 overflow-x-auto pb-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus" aria-label={`${a.name} screenshots (scrolls sideways)`} tabIndex={0}>
+                {a.images.map((im, ii) => (
                   <li key={im.src} className="w-[200px] shrink-0 snap-start">
                     <figure>
-                      <Image src={im.src} alt={`${a.name} screenshot: ${im.caption}`} width={400} height={866} className="h-auto w-full rounded-md ring-1 ring-rule" sizes="200px" />
+                      <Image loading={ai === 0 && ii < 6 ? "eager" : undefined} src={im.src} alt={`${a.name} screenshot: ${im.caption}`} width={400} height={866} className="h-auto w-full rounded-md ring-1 ring-rule" sizes="200px" />
                       <figcaption className="mt-2 text-xs leading-snug text-ink-2">{im.caption}. <span className="whitespace-nowrap">Screenshot, for study.</span></figcaption>
                     </figure>
                   </li>

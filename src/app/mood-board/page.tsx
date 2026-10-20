@@ -141,7 +141,7 @@ export default function MoodBoardPage() {
       <header className="tex-locker on-dark relative overflow-hidden">
         <div className="mx-auto max-w-[1760px] px-5 pb-16 pt-6 sm:px-8 lg:px-14 lg:pb-24">
           <nav aria-label="Process" className="flex flex-wrap items-center justify-between gap-4 border-b border-(--mb-brass)/50 pb-4">
-            <Link href="/" className="caps text-[0.8rem] text-(--mb-linen) underline-offset-4 hover:underline">
+            <Link href="/" className="caps inline-flex min-h-tap items-center text-[0.8rem] text-(--mb-linen) underline-offset-4 hover:underline">
               18 Eagles · Process hub
             </Link>
             <p className="caps text-[0.8rem] text-(--mb-brass)">Mood board · Clubhouse direction</p>
@@ -641,7 +641,7 @@ export default function MoodBoardPage() {
             Sources, authors and licenses for every collected image are in <span className="f-cond font-semibold text-(--mb-ink)">docs/credits.md</span>.
             Reference notes are in <span className="f-cond font-semibold text-(--mb-ink)">docs/references.md</span>.
           </p>
-          <Link href="/" className="link">Back to the process hub</Link>
+          <Link href="/" className="link inline-flex min-h-tap items-center">Back to the process hub</Link>
         </div>
       </footer>
     </>

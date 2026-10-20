@@ -56,7 +56,7 @@ export function ColorTokens() {
             const fgKey: TokenKey = dark ? "paper" : "ink";
             const border = k === "rule-strong";
             return (
-              <li key={k} className="flex min-h-52 min-w-0 flex-col justify-between gap-4 p-4" style={{ background: t.hex, color: tokens[fgKey].hex }}>
+              <li key={k} className="flex min-h-52 min-w-0 flex-col justify-between gap-4 p-4" style={border ? { background: tokens.paper.hex, color: tokens.ink.hex, boxShadow: `inset 0 0 0 10px ${t.hex}` } : { background: t.hex, color: tokens[fgKey].hex }}>
                 <span>
                   <span className="block font-display text-[1.4rem] leading-tight">{t.name}</span>
                   <code className="mt-1 block font-numeral text-[0.95rem] font-semibold">{k}</code>

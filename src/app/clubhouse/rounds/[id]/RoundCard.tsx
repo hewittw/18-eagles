@@ -71,7 +71,7 @@ export function RoundCard({ id }: { id: string }) {
             ["Birdies or better", round.totalOnly != null ? "—" : String(s.types.birdie + s.types.eagle + s.types.albatross)],
             ["Differential", diff ? diff.value.toFixed(1) : "—"],
           ].map(([k, v]) => (
-            <div key={k} className="min-w-0 rounded-lg bg-white/10 px-3.5 py-3">
+            <div key={k} className="min-w-0 rounded-lg bg-black/15 px-3.5 py-3">
               <dt className="caps truncate text-[0.68rem] text-gold">{k}</dt>
               <dd className="mt-1 font-numeral text-[1.75rem] font-semibold leading-none tabular-nums text-on-green">{v}</dd>
             </div>

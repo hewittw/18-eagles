@@ -84,7 +84,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
         </Link>
 
         {/* Where you are: the course, the hole, and the running score, on a Masters-green card */}
-        <header className="tex-locker on-green grid gap-5 rounded-2xl px-5 py-5 shadow-card sm:px-7 sm:py-6 md:grid-cols-[1fr_auto] md:items-end md:gap-10">
+        <header className="tex-locker on-green grid grid-cols-[minmax(0,1fr)] gap-5 rounded-2xl px-5 py-5 shadow-card sm:px-7 sm:py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-10">
           <div className="min-w-0">
             <p className="caps text-label text-gold">{c.shortName} · {round.teeName} tees{round.status === "complete" ? " · editing a finished card" : ""}</p>
             <h1 className="mt-1 font-display text-display-2 text-on-green">
@@ -100,7 +100,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
               ))}
             </dl>
           </div>
-          <p className="flex items-baseline gap-3 rounded-xl bg-black/15 px-4 py-3 font-numeral text-lg tabular-nums text-paper-3 md:flex-col md:items-end md:gap-0.5 md:text-right" aria-live="polite">
+          <p className="flex flex-wrap items-baseline gap-x-3 rounded-xl bg-black/15 px-4 py-3 font-numeral text-lg tabular-nums text-paper-3 md:flex-col md:items-end md:gap-0.5 md:text-right" aria-live="polite">
             {played.length ? (
               <>
                 <span className="caps text-[0.7rem] text-gold">Through {played.length}<span className="sr-only">, </span></span>
@@ -115,7 +115,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
 
 
         <div className="mt-6 grid gap-7 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-10">
-          <div className="grid min-w-0 content-start gap-7">
+          <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-7">
             <section aria-labelledby="score-h">
               <h2 id="score-h" className={caption}>Your score</h2>
               <div className={group}>
@@ -138,7 +138,7 @@ export function HoleScreen({ id, holeParam }: { id: string; holeParam: string })
 
             <section aria-labelledby="detail-h">
               <h2 id="detail-h" className={caption}>Putts, tee shot, and penalties</h2>
-              <div className={cx(group, "grid gap-6 p-0! sm:grid-cols-2 sm:gap-0")}>
+              <div className={cx(group, "grid grid-cols-[minmax(0,1fr)] gap-6 p-0! sm:grid-cols-2 sm:gap-0")}>
                 <div className="px-4 pt-4 sm:px-5 sm:py-5">
                   <Stepper label="Putts" value={e.putts} min={0} max={10} start={2} size="lg" unit={{ one: "putt", many: "putts" }} hint={puttsErr ? undefined : "Optional. Counts toward putting and greens stats."} onChange={(v) => patch({ putts: v })} />
                   {puttsErr && (
