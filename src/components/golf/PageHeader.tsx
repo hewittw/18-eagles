@@ -13,7 +13,7 @@ export type PageHeaderProps = {
   className?: string;
 };
 
-/** The page's one <h1>: an optional "← Courses" back link, a brass eyebrow, the Caslon title, and the double rule. */
+/** The page's one <h1>: an optional "‹ Courses" back pill, a brass eyebrow, the serif title, and an optional lede. */
 export function PageHeader({ title, eyebrow, back, actions, lede, tone = "paper", className }: PageHeaderProps) {
   const green = tone === "green";
   return (
@@ -22,11 +22,11 @@ export function PageHeader({ title, eyebrow, back, actions, lede, tone = "paper"
         <Link
           href={back.href}
           className={cx(
-            "caps -ml-2 mb-3 inline-flex min-h-tap items-center gap-2 rounded-xs px-2 text-[0.8rem] transition-colors",
-            green ? "text-paper-3 is-hover:text-on-green" : "text-ink-2 is-hover:bg-paper-3 is-hover:text-ink",
+            "-ml-1 mb-4 inline-flex min-h-tap items-center gap-1.5 rounded-full py-1 pl-2.5 pr-4 text-[0.95rem] font-semibold transition-[background-color,transform] duration-150 is-pressed:scale-[0.98]",
+            green ? "bg-white/10 text-on-green is-hover:bg-white/18" : "bg-tint text-green is-hover:bg-tint-2",
           )}
         >
-          <svg width="16" height="10" viewBox="0 0 16 10" aria-hidden="true"><path d="M16 5 H2 M6 1 L2 5 L6 9" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
+          <svg viewBox="0 0 10 16" className="h-4 w-2.5 shrink-0" aria-hidden="true"><path d="M8 2 L2 8 L8 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           {back.label}
         </Link>
       )}
@@ -37,8 +37,7 @@ export function PageHeader({ title, eyebrow, back, actions, lede, tone = "paper"
         </div>
         {actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
       </div>
-      <div className={cx("rule-double mt-4", green ? "text-gold/70" : "text-ink")} aria-hidden="true" />
-      {lede && <p className={cx("mt-4 max-w-measure font-serif text-lede", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
+      {lede && <p className={cx("mt-3 max-w-measure font-serif text-lede", green ? "text-paper-3" : "text-ink-2")}>{lede}</p>}
     </header>
   );
 }

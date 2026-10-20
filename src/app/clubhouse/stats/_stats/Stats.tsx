@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { BigNumber, ClubUsage, DistributionBar, fmtDate, fmtToPar, HoleHeat, PageHeader, ParTypeBars, TrendChart, type TrendPoint } from "@/components/golf";
-import { Button, Callout, ChoiceGroup, Field, SectionHeading, Select, cx } from "@/components/ui";
+import { BigNumber, ClubUsage, DistributionBar, fmtDate, fmtToPar, HoleHeat, PageHeader, ParTypeBars, Segmented, TrendChart, type TrendPoint } from "@/components/golf";
+import { Button, ButtonLink, Callout, Field, SectionHeading, Select } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
 import { useClub } from "@/lib/hooks";
 import { breakdown, DEFAULT_FILTERS, goalTarget, type Filters, type HoleFilter, type Range } from "@/lib/stats";
@@ -113,10 +113,10 @@ function StatsBody() {
       />
 
       {/* The filter bar */}
-      <section aria-labelledby="filters-h" className="tex-linen -mt-4 border border-rule p-4 sm:p-5 md:-mt-8">
+      <section aria-labelledby="filters-h" className="-mt-2 rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-5 md:-mt-4">
         <h2 id="filters-h" className="sr-only">Filters</h2>
-        <div className="grid gap-5 lg:grid-cols-[auto_minmax(14rem,1fr)_auto] lg:items-start lg:gap-8">
-          <ChoiceGroup legend="Range" size="sm" layout="wrap" value={filters.range} onChange={(range) => setFilters({ ...filters, range })} options={RANGE_OPTIONS} />
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(14rem,1fr)_minmax(0,0.8fr)] lg:items-end lg:gap-6">
+          <Segmented legend="Range" value={filters.range} onChange={(range) => setFilters({ ...filters, range })} options={RANGE_OPTIONS} />
           <Field label="Course">
             {(a) => (
               <Select {...a} value={filters.course} onChange={(e) => setFilters({ ...filters, course: e.target.value })}>
@@ -127,9 +127,9 @@ function StatsBody() {
               </Select>
             )}
           </Field>
-          <ChoiceGroup legend="Holes" size="sm" layout="wrap" value={filters.holes} onChange={(holes) => setFilters({ ...filters, holes })} options={HOLE_OPTIONS} />
+          <Segmented legend="Holes" value={filters.holes} onChange={(holes) => setFilters({ ...filters, holes })} options={HOLE_OPTIONS} />
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-rule pt-3">
+        <div className="mt-4 flex min-h-tap flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-rule/80 pt-3">
           <p role="status" className="font-numeral text-[1.05rem] font-medium tabular-nums text-ink">
             {isDefault ? (finished.length === 1 ? "Showing 1 round" : `Showing all ${finished.length} rounds`) : `Showing ${b.count} of ${finished.length} ${finished.length === 1 ? "round" : "rounds"}`}
           </p>
@@ -146,7 +146,7 @@ function StatsBody() {
       ) : (
         <>
           {/* The board: four figures on Locker Green, brass rules between them */}
-          <section aria-labelledby="board-h" className="tex-locker on-green border border-green-3 px-5 py-7 sm:px-8">
+          <section aria-labelledby="board-h" className="tex-locker on-green rounded-2xl px-5 py-7 shadow-card sm:px-8">
             <h2 id="board-h" className="caps text-label text-gold">The board · {scope}{filteredCourse ? ` at ${filteredCourse.shortName}` : ""}</h2>
             <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:divide-x lg:divide-gold/40 lg:gap-x-0 [&>*]:min-w-0 lg:[&>*]:px-7 lg:[&>*:first-child]:pl-0">
               <BigNumber
@@ -190,11 +190,13 @@ function StatsBody() {
                 size="md"
                 face="numeral"
                 label="Best 18"
+                className="col-span-2 lg:col-span-1"
                 value={best ? String(best.gross) : "—"}
                 sub={
                   best ? (
-                    <Link href={`/clubhouse/rounds/${best.round.id}`} className="link text-[1rem]">
-                      {best.course.shortName}, {fmtDate(best.round.date)}<span className="sr-only">: open this card</span>
+                    <Link href={`/clubhouse/rounds/${best.round.id}`} className="-ml-0.5 inline-flex min-h-tap max-w-full items-center gap-1.5 rounded-full bg-white/12 px-3.5 text-[0.95rem] font-semibold text-on-green transition-[background-color,transform] duration-150 is-hover:bg-white/20 is-pressed:scale-[0.98]">
+                      <span className="truncate">{best.course.shortName}, {fmtDate(best.round.date)}</span><span className="sr-only">: open this card</span>
+                      <svg viewBox="0 0 10 16" className="h-3.5 w-2 shrink-0" aria-hidden="true"><path d="M2 2 L8 8 L2 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     </Link>
                   ) : (
                     <span className="text-[1rem]">No 18-hole rounds here</span>
@@ -207,10 +209,9 @@ function StatsBody() {
           {/* I · The trend */}
           <section aria-labelledby="trend-h" className="grid gap-6">
             <SectionHeading id="trend-h" numeral="I" eyebrow="Over time" title="The trend" lede="Lower is better, so the best rounds sit at the top. Select a point to open that card." />
-            <ChoiceGroup<Metric>
+            <Segmented<Metric>
               legend="Show"
-              size="sm"
-              layout="wrap"
+              className="max-w-md"
               value={metric}
               onChange={setMetric}
               options={[{ value: "gross", label: "Score" }, { value: "toPar", label: "To par" }, { value: "index", label: "Index" }]}
@@ -225,17 +226,18 @@ function StatsBody() {
             />
             {trendNote && <p className="-mt-2 text-[0.95rem] text-ink-2">{trendNote}</p>}
             {!store.profile.goal && metric !== "index" && (
-              <p className="-mt-2 text-[0.95rem] text-ink-2">
-                Set a goal in the <Link href="/clubhouse/locker" className="link">Locker</Link> to draw it on the chart.
-              </p>
+              <div className="-mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <p className="text-[0.95rem] text-ink-2">Set a goal and it&apos;s drawn on the chart.</p>
+                <ButtonLink href="/clubhouse/locker" variant="secondary" size="sm">Choose a goal</ButtonLink>
+              </div>
             )}
           </section>
 
           {/* II · How you score */}
-          <section aria-labelledby="score-h" className="grid gap-8">
+          <section aria-labelledby="score-h" className="grid gap-6">
             <SectionHeading id="score-h" numeral="II" eyebrow="Hole by hole" title="How you score" />
             {holeByHole ? (
-              <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+              <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
                 <DistributionBar types={b.types} holes={b.holesPlayed} />
                 <ParTypeBars byPar={b.byPar} />
               </div>
@@ -245,9 +247,9 @@ function StatsBody() {
           </section>
 
           {/* III · On and around the greens */}
-          <section aria-labelledby="greens-h" className="grid gap-8">
+          <section aria-labelledby="greens-h" className="grid gap-6">
             <SectionHeading id="greens-h" numeral="III" eyebrow="The short game" title="Putting and greens" />
-            <dl className="grid grid-cols-1 gap-x-10 gap-y-7 sm:grid-cols-2 lg:grid-cols-5">
+            <dl className="grid grid-cols-2 gap-3 max-lg:[&>*:last-child]:col-span-2 lg:grid-cols-5 lg:gap-4">
               <Figure label="Putts per round" value={b.puttsPerRound == null ? null : b.puttsPerRound.toFixed(1)} explain="Every putt, scaled to 18 holes." missing="Track putts on the hole screen to see this." />
               <Figure label="Putts per hole" value={b.puttsPerHole == null ? null : b.puttsPerHole.toFixed(2)} explain="Under 2.00 means more one-putts than three-putts." missing="Track putts on the hole screen to see this." />
               <Figure label="Greens in regulation" value={b.girPct == null ? null : pct(b.girPct)} explain="On the green with two putts left for par." missing="Track putts on the hole screen to see this." />
@@ -258,13 +260,13 @@ function StatsBody() {
           </section>
 
           {/* IV · The bag */}
-          <section aria-labelledby="bag-h" className="grid gap-8">
+          <section aria-labelledby="bag-h" className="grid gap-6">
             <SectionHeading id="bag-h" numeral="IV" eyebrow="The bag" title="Clubs you reach for" />
             <ClubUsage clubs={b.clubs} />
           </section>
 
           {/* V · One course, hole by hole */}
-          <section aria-labelledby="heat-h" className="grid gap-8">
+          <section aria-labelledby="heat-h" className="grid gap-6">
             <SectionHeading id="heat-h" numeral="V" eyebrow={filteredCourse ? filteredCourse.shortName : "One course"} title="Hole by hole" />
             {filteredCourse && b.holeAverages ? (
               holeByHole ? (
@@ -301,9 +303,11 @@ function StatsBody() {
 
 function NoHoleDetail() {
   return (
-    <p className={cx("max-w-measure text-ink-2")}>
-      These cards were logged as totals. Score a round hole by hole (on the hole screen, or with Hole by hole in{" "}
-      <Link href="/clubhouse/rounds/new" className="link">Log a round</Link>) to fill this in.
-    </p>
+    <div className="grid justify-items-start gap-3 rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
+      <p className="max-w-measure text-ink-2">
+        These cards were logged as totals. Score a round hole by hole, on the hole screen or with Hole by hole when you log a round, to fill this in.
+      </p>
+      <ButtonLink href="/clubhouse/rounds/new" variant="secondary" size="sm">Log a round hole by hole</ButtonLink>
+    </div>
   );
 }

@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { PageHeader } from "@/components/golf";
 import { ButtonLink } from "@/components/ui";
 import { formatIndex } from "@/lib/handicap";
@@ -25,16 +24,17 @@ export function EarlyStats() {
     <Page className="grid gap-12">
       <PageHeader eyebrow="Breakdowns" title="Stats" lede="Your playing over time. It fills in from your first card." />
 
-      <section aria-labelledby="goal-h" className="tex-locker on-green grid gap-6 border border-green-3 px-5 py-8 sm:px-8 md:grid-cols-[1fr_auto] md:items-end">
+      <section aria-labelledby="goal-h" className="tex-locker on-green grid gap-6 rounded-2xl px-5 py-7 shadow-card sm:px-8 sm:py-8 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <h2 id="goal-h" className="caps text-label text-gold">Your goal</h2>
           <p className="mt-2 font-display text-display-2 text-on-green">{goalText ?? "Not chosen yet"}</p>
           <p className="mt-3 max-w-measure text-paper-3">
-            {goalText ? "After your first card, the trend draws this line so you can see how far off it you are." : <>Choose one in the <Link href="/clubhouse/locker" className="link">Locker</Link> and it&apos;s drawn across your trend.</>}
+            {goalText ? "After your first card, the trend draws this line so you can see how far off it you are." : "Choose one and it's drawn across your trend."}
             {handicap.entered != null && ` You play off ${formatIndex(handicap.entered)} until 3 cards earn a calculated index.`}
           </p>
+          {!goalText && <ButtonLink href="/clubhouse/locker" variant="secondary" tone="green" size="sm" className="mt-4">Choose a goal in the Locker</ButtonLink>}
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid gap-2.5 sm:flex sm:flex-wrap">
           <ButtonLink href="/clubhouse" variant="primary" tone="green" size="lg">Tee off</ButtonLink>
           <ButtonLink href="/clubhouse/rounds/new" variant="secondary" tone="green" size="lg">Log a round you&apos;ve played</ButtonLink>
         </div>
@@ -42,13 +42,12 @@ export function EarlyStats() {
 
       <section aria-labelledby="coming-h">
         <h2 id="coming-h" className="font-display text-title text-ink">What you&apos;ll see after your first card</h2>
-        <div className="rule-double mt-3 text-ink" aria-hidden="true" />
-        <ol className="mt-2 grid sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
+        <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
           {SECTIONS.map(([num, title, what]) => (
-            <li key={num} className="grid grid-cols-[2.5rem_1fr] gap-x-2 border-b border-rule py-5">
-              <span className="font-display text-[1.4rem] leading-none text-gold-ink" aria-hidden="true">{num}</span>
+            <li key={num} className="grid grid-cols-[2.75rem_1fr] gap-x-3.5 rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-5">
+              <span className="grid size-11 place-items-center rounded-sm bg-tint font-display text-[1.1rem] leading-none text-green" aria-hidden="true">{num}</span>
               <div>
-                <h3 className="font-serif text-[1.1rem] font-bold leading-snug text-ink">{title}</h3>
+                <h3 className="font-serif text-[1.15rem] font-semibold leading-snug text-ink">{title}</h3>
                 <p className="mt-1 text-[0.98rem] leading-relaxed text-ink-2">{what}</p>
                 {num === "VI" && <p className="mt-2 caps text-[0.74rem] text-gold-ink">{handicap.roundsToFirst} cards to your first calculated index</p>}
               </div>

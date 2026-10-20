@@ -13,6 +13,9 @@ import { validateDate, validateStrokes, validateTotal } from "@/lib/validate";
 import { Page, Placeholder } from "../../../_components/Placeholder";
 
 type Mode = "total" | "holes";
+// iOS inset grouping: a small caps caption above a rounded white card.
+const caption = "caps mb-2 px-1 text-[0.74rem] text-ink-2";
+const group = "rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-6";
 type Draft = { course: string; tee: string; date: string; nine: Nine; mode: Mode; total: string; strokes: Record<string, string>; note: string };
 
 export function LogRound() {
@@ -104,7 +107,11 @@ function LogRoundForm() {
         lede="Add a card from a round you didn't score here. A total is enough for your index; hole by hole fills in your stats too."
       />
 
-      <form onSubmit={submit} noValidate className="mt-10 grid max-w-[36rem] gap-8">
+      <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,38rem)_minmax(0,1fr)] lg:gap-12">
+      <form onSubmit={submit} noValidate className="grid min-w-0 gap-7">
+        <div>
+        <p className={caption}>The round</p>
+        <div className={cx(group, "grid gap-7")}>
         <Field label="Course" hint="Not listed? Add it from Courses first.">
           {(a) => (
             <Select {...a} value={course.slug} onChange={(e) => { setOverride(null); set((p) => ({ ...p, course: e.target.value, tee: "" })); }}>
@@ -145,6 +152,12 @@ function LogRoundForm() {
           />
         )}
 
+        </div>
+        </div>
+
+        <div>
+        <p className={caption}>The score</p>
+        <div className={cx(group, "grid gap-7")}>
         <ChoiceGroup<Mode>
           legend="How do you want to enter it?"
           layout="row"
@@ -159,10 +172,11 @@ function LogRoundForm() {
             {(a) => <NumberInput {...a} value={d.total} onChange={(e) => set((p) => ({ ...p, total: e.target.value }))} className="max-w-[9rem]" />}
           </Field>
         ) : (
-          <fieldset className="grid gap-5">
-            <legend className="mb-1 font-serif text-[1.25rem] font-bold text-ink">Strokes on each hole</legend>
+          <fieldset className="grid">
+            <legend className="mb-1 font-serif text-[1.25rem] font-semibold text-ink">Strokes on each hole</legend>
             {holes.map((h) => (
-              <Field key={h.n} id={`log-h${h.n}`} label={`Hole ${h.n} · par ${h.par}`} hint={h.name} error={err(`log-h${h.n}`)}>
+              <div key={h.n} className="border-b border-rule/80 py-3.5 last-of-type:border-b-0">
+              <Field id={`log-h${h.n}`} label={`Hole ${h.n} · par ${h.par}`} hint={h.name} error={err(`log-h${h.n}`)}>
                 {(a) => (
                   <NumberInput
                     {...a}
@@ -172,8 +186,9 @@ function LogRoundForm() {
                   />
                 )}
               </Field>
+              </div>
             ))}
-            <p role="status" className={cx("border-t-2 border-double border-ink pt-3 font-numeral text-[1.2rem] font-medium tabular-nums text-ink")}>
+            <p role="status" className="mt-2 rounded-lg bg-paper-3 px-4 py-3 font-numeral text-[1.2rem] font-medium tabular-nums text-ink">
               {entered.length ? (
                 <>
                   Total {runGross} through {entered.length} of {holes.length}
@@ -186,17 +201,44 @@ function LogRoundForm() {
           </fieldset>
         )}
 
+        </div>
+        </div>
+
+        <div className={group}>
         <Field label="Note" optional hint="What you'd tell yourself before the next round.">
           {(a) => <TextArea {...a} voice value={d.note} maxLength={500} onChange={(e) => set((p) => ({ ...p, note: e.target.value }))} placeholder="Lag putting was the difference." />}
         </Field>
 
-        <div className="flex flex-wrap items-center gap-3 border-t border-rule pt-6">
-          <Button type="submit" variant="primary" size="lg" loading={saving} loadingLabel="Saving the card">Save the card</Button>
+        </div>
+
+        <div className="grid gap-3 sm:flex sm:flex-wrap sm:items-center">
+          <Button type="submit" variant="primary" size="lg" loading={saving} loadingLabel="Saving the card" className="max-sm:w-full">Save the card</Button>
           {tried && errors.length > 0 && (
             <p className="text-[0.95rem] text-error">{errors.length === 1 ? "One field needs a fix" : `${errors.length} fields need a fix`}. Each one says what to change.</p>
           )}
         </div>
       </form>
+
+      <aside aria-label="The card so far" className="hidden min-w-0 lg:sticky lg:top-24 lg:block lg:self-start">
+        <div className="tex-locker on-green rounded-2xl p-5 shadow-card sm:p-6">
+          <p className="caps text-label text-gold">The card</p>
+          <p className="mt-1 font-display text-title text-on-green">{course.name}</p>
+          <dl className="mt-5 grid grid-cols-2 gap-2">
+            {[
+              ["Tees", teeName],
+              ["Holes", nine === "18" ? `${holes.length}` : nine === "front" ? "Front 9" : "Back 9"],
+              ["Par", String(par)],
+              ["Score", d.mode === "total" ? (validateTotal(d.total, holes.length) ? "—" : d.total) : entered.length ? `${runGross}` : "—"],
+            ].map(([k, v]) => (
+              <div key={k} className="min-w-0 rounded-lg bg-white/10 px-3.5 py-3">
+                <dt className="caps text-[0.68rem] text-gold">{k}</dt>
+                <dd className="mt-1 truncate font-numeral text-[1.5rem] font-semibold leading-none tabular-nums text-on-green">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </aside>
+      </div>
     </Page>
   );
 }

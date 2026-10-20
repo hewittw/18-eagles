@@ -49,11 +49,11 @@ export function IndexLedger({ handicap: h }: { handicap: HandicapState }) {
       <div className="grid gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="min-w-0">
           {n ? (
-            <div className="scroll-x border-y border-ink">
+            <div className="scroll-x rounded-xl border border-rule/70 bg-paper-2 shadow-card">
               <table className="w-full  border-collapse text-left">
                 <caption className="sr-only">Your most recent {n} score differentials, newest first. {k ? `The ${k} lowest count toward your index.` : ""}</caption>
                 <thead>
-                  <tr className="border-b border-ink">
+                  <tr className="border-b border-rule">
                     {["Date", "Course", "Adj. gross", "Differential", "Index"].map((c, i) => (
                       <th key={c} scope="col" className={`caps py-2.5 pr-3 text-[0.74rem] text-ink-2 first:pl-3 sm:pr-4 ${i >= 2 ? "text-right" : ""} ${i === 0 || i === 4 ? "hidden sm:table-cell" : ""} ${i === 1 ? "pl-3 sm:pl-0" : ""}`}>{c === "Index" ? <span>Counts<span className="sr-only"> toward your index</span></span> : c}</th>
                     ))}
@@ -64,11 +64,14 @@ export function IndexLedger({ handicap: h }: { handicap: HandicapState }) {
                     const counts = h.counting.has(keyOf(d));
                     const isDrop = drop && keyOf(drop) === keyOf(d);
                     return (
-                      <tr key={keyOf(d)} className={counts ? "on-green border-b border-gold/30 bg-green-3 text-on-green" : "border-b border-rule"}>
+                      <tr key={keyOf(d)} className={counts ? "on-green border-b border-white/15 bg-green-3 text-on-green last:border-b-0" : "border-b border-rule/80 last:border-b-0"}>
                         <td className="hidden whitespace-nowrap py-2.5 pl-3 pr-4 font-numeral sm:table-cell text-[1rem] tabular-nums">{fmtDate(d.date, { month: "short", day: "numeric", year: "2-digit" })}</td>
                         <th scope="row" className="py-2.5 pl-3 pr-3 text-[0.98rem] font-normal sm:pl-0 sm:pr-4">
                           <span className={`block font-numeral text-[0.9rem] tabular-nums sm:hidden ${counts ? "text-paper-3" : "text-ink-2"}`}>{fmtDate(d.date, { month: "short", day: "numeric", year: "2-digit" })}</span>
-                          <Link href={`/clubhouse/rounds/${d.roundIds[0]}`} className="link">{d.courseName}</Link>
+                          <Link href={`/clubhouse/rounds/${d.roundIds[0]}`} className={`inline-block min-h-6 rounded-xs py-1 font-semibold transition-colors ${counts ? "text-on-green is-hover:text-gold" : "text-green is-hover:text-green-2"}`}>
+                            {d.courseName}
+                            <svg viewBox="0 0 10 16" className="ml-1.5 inline-block h-3 w-2 align-[-0.05em] opacity-70" aria-hidden="true"><path d="M2 2 L8 8 L2 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </Link>
                           {isDrop && <span className={`caps ml-2 text-[0.7rem] ${counts ? "text-gold" : "text-gold-ink"}`}>Drops next</span>}
                         </th>
                         <td className="py-2.5 pr-4 text-right font-numeral text-[1.05rem] tabular-nums">
@@ -96,11 +99,11 @@ export function IndexLedger({ handicap: h }: { handicap: HandicapState }) {
             <p className="text-ink-2">Your differentials appear here, one per 18-hole card (or pair of nines).</p>
           )}
           {n > 0 && (
-            <p className="mt-2 text-[0.92rem] text-ink-2">Adjusted gross caps each hole at net double bogey; your actual score is in brackets when it differs.</p>
+            <p className="mt-2 px-1 text-[0.92rem] text-ink-2">Adjusted gross caps each hole at net double bogey; your actual score is in brackets when it differs.</p>
           )}
         </div>
 
-        <aside className="grid content-start gap-5 text-[0.98rem] leading-relaxed text-ink-2" aria-label="About differentials">
+        <aside className="grid content-start divide-y divide-rule/80 self-start rounded-xl border border-rule/70 bg-paper-2 text-[0.98rem] leading-relaxed text-ink-2 shadow-card [&>div]:p-4 sm:[&>div]:p-5" aria-label="About differentials">
           <div>
             <p className="caps text-label text-gold-ink">A differential</p>
             <p className="mt-1">

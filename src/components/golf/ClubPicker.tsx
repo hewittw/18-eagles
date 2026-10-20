@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import type { Club, ClubKind } from "@/lib/types";
+import { Button } from "../ui/Button";
 import { cx } from "../ui/cx";
 
 export type ClubPickerProps = {
@@ -92,7 +93,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
           if (!inGroup.length) return null;
           return (
             <div key={g.kind} role="group" aria-label={g.label} className="grid min-w-0 grid-cols-1 items-start gap-1.5 @sm:grid-cols-[4.5rem_1fr] @sm:gap-2">
-              <p aria-hidden="true" className="caps text-[0.72rem] text-ink-2 @sm:pt-2">{g.label}</p>
+              <p aria-hidden="true" className="caps text-[0.72rem] text-ink-2 @sm:pt-4">{g.label}</p>
               <div className="grid grid-cols-[repeat(auto-fill,minmax(4.25rem,1fr))] gap-1.5">
                 {inGroup.map((c) => {
                   const isLast = last === c.id;
@@ -104,16 +105,17 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
                       type="button"
                       onClick={() => add(c)}
                       disabled={disabled || full}
-                      aria-label={`${c.name}${carry ? `, carries ${carry} yards` : ""}${isLast ? ", last club used" : ""}`}
+                      // the name starts with the tile's visible text ("7i 160"), so voice control can say what it sees (WCAG 2.5.3)
+                      aria-label={`${c.short}${carry ? ` ${carry}` : c.kind === "putter" ? " green" : ""}: ${c.name}${carry ? `, carries ${carry} yards` : ""}${isLast ? ", last club used" : ""}`}
                       className={cx(
-                        "tile group/c relative flex min-h-tile min-w-0 flex-col items-start justify-between rounded-xs px-2.5 py-2 text-left text-ink",
+                        "group/c relative flex min-h-tile min-w-0 flex-col items-start justify-between rounded-md border border-rule bg-paper-2 px-2.5 py-2 text-left text-ink shadow-card",
                         "transition-[background-color,border-color,transform,color] duration-150",
-                        "is-hover:border-ink is-hover:bg-paper-3 is-pressed:translate-y-px is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green",
-                        "disabled:cursor-not-allowed disabled:translate-y-0 disabled:border-dashed disabled:bg-transparent disabled:text-ink-2",
-                        isLast && "border-green-3! bg-green-3! text-on-green! shadow-none",
+                        "is-hover:border-green/45 is-hover:bg-tint is-pressed:scale-[0.96] is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green",
+                        "disabled:cursor-not-allowed disabled:scale-100 disabled:border-dashed disabled:bg-transparent disabled:text-ink-2 disabled:shadow-none",
+                        isLast && "border-green! bg-green! text-on-green!",
                       )}
                     >
-                      <span aria-hidden="true" className="font-numeral text-[1.55rem] font-semibold leading-none">{c.short}</span>
+                      <span aria-hidden="true" className="font-numeral text-[1.55rem] font-semibold leading-none">{c.short}</span>{" "}
                       <span aria-hidden="true" className={cx("min-h-[0.82rem] font-numeral text-[0.82rem] font-medium leading-none", isLast ? "text-gold" : "text-ink-2")}>
                         {carry ? carry : c.kind === "putter" ? "green" : ""}
                       </span>
@@ -127,7 +129,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
         })}
       </div>
 
-      <div className="mt-4 grid items-center gap-x-3 gap-y-2 border-t border-rule pt-3 @md:grid-cols-[auto_minmax(0,1fr)_auto]">
+      <div className="mt-4 grid items-center gap-x-3 gap-y-2 rounded-lg bg-paper-3 px-3.5 py-3 @md:grid-cols-[auto_minmax(0,1fr)_auto]">
         <p className="caps shrink-0 text-[0.72rem] text-ink-2">
           {shots.length} {shots.length === 1 ? "shot" : "shots"}
         </p>
@@ -136,7 +138,7 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
             {shots.map((s, i) => (
               <li key={i} className="flex items-center">
                 {i > 0 && <span aria-hidden="true" className="px-1.5 text-ink-2">→</span>}
-                <span className={cx("px-0.5", i === shots.length - 1 && "underline decoration-gold-ink decoration-2 underline-offset-4")}>
+                <span className={cx("px-0.5", i === shots.length - 1 && "rounded-xs bg-green px-1.5! text-on-green")}>
                   <span aria-hidden="true">{shortOf(s)}</span>
                   <span className="sr-only">{nameOf(s)}</span>
                 </span>
@@ -150,17 +152,11 @@ export function ClubPicker({ bag, shots, onChange, holeLabel, carries, max = 15,
         )}
         <div className="flex gap-1.5">
           {cleared ? (
-            <button ref={undoRef} type="button" onClick={undoClear} className="caps min-h-tap rounded-xs border border-ink bg-paper-2 px-4 text-[0.82rem] text-ink is-hover:bg-paper-3 is-pressed:translate-y-px">
-              Undo clear
-            </button>
+            <Button ref={undoRef} size="sm" variant="secondary" onClick={undoClear}>Undo clear</Button>
           ) : (
             <>
-              <button ref={removeRef} type="button" onClick={removeLast} disabled={disabled || !shots.length} className="caps min-h-tap rounded-xs border border-ink bg-paper-2 px-4 text-[0.82rem] text-ink is-hover:bg-paper-3 is-pressed:translate-y-px disabled:cursor-not-allowed disabled:border-dashed disabled:border-rule-strong disabled:bg-transparent disabled:text-ink-2">
-                Remove last
-              </button>
-              <button type="button" onClick={clear} disabled={disabled || !shots.length} className="caps min-h-tap rounded-xs px-3 text-[0.82rem] text-ink underline decoration-rule-strong underline-offset-4 is-hover:bg-paper-3 disabled:cursor-not-allowed disabled:no-underline disabled:text-ink-2">
-                Clear
-              </button>
+              <Button ref={removeRef} size="sm" variant="secondary" onClick={removeLast} disabled={disabled || !shots.length}>Remove last</Button>
+              <Button size="sm" variant="quiet" onClick={clear} disabled={disabled || !shots.length}>Clear</Button>
             </>
           )}
         </div>

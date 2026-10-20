@@ -60,7 +60,7 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
         role="radiogroup"
         aria-label={label}
         aria-disabled={disabled || undefined}
-        className="grid grid-cols-3 gap-1.5 @[21rem]:grid-cols-6"
+        className="grid grid-cols-3 gap-2 @[19rem]:grid-cols-6 @[19rem]:gap-1.5 @[30rem]:gap-2.5"
       >
         {nums.map((n, i) => {
           const checked = value === n;
@@ -79,20 +79,20 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
               onKeyDown={(e) => onKey(e, n)}
               style={{ "--i": i } as CSSProperties}
               className={cx(
-                "tile hang group/t relative flex min-h-[4.5rem] min-w-0 flex-col items-center justify-center gap-1 rounded-xs px-1 py-2 text-ink",
-                "transition-[background-color,border-color,transform] duration-150 is-hover:border-ink is-hover:bg-paper-3 is-pressed:translate-y-px",
-                "aria-checked:border-green-3 aria-checked:bg-green-3 aria-checked:text-on-green aria-checked:shadow-none",
-                "disabled:cursor-not-allowed disabled:border-dashed disabled:bg-transparent disabled:text-ink-2",
-                d === 0 && !checked && "border-ink",
+                "hang group/t relative flex min-h-[4.75rem] min-w-0 flex-col items-center justify-center gap-1.5 rounded-lg border bg-paper-2 px-1 py-2 text-ink shadow-card @[30rem]:min-h-[5.5rem]",
+                "transition-[background-color,border-color,transform,box-shadow] duration-150 is-hover:border-green/45 is-hover:bg-tint is-pressed:scale-[0.96]",
+                "aria-checked:border-green aria-checked:bg-green aria-checked:text-on-green aria-checked:shadow-[0_6px_16px_-8px_rgb(0_103_71/0.8)]",
+                "disabled:cursor-not-allowed disabled:border-dashed disabled:bg-transparent disabled:text-ink-2 disabled:shadow-none",
+                d === 0 && !checked ? "border-green/60" : !checked && "border-rule",
               )}
             >
-              <span aria-hidden="true" className={cx("font-numeral text-[2.4rem] font-semibold leading-none tabular-nums", !checked && d < 0 && "text-under")}>
+              <span aria-hidden="true" className={cx("font-numeral text-[2.6rem] font-semibold leading-none tabular-nums @[30rem]:text-[2.9rem]", !checked && d < 0 && "text-under")}>
                 {n}
               </span>
-              <span aria-hidden="true" className={cx("caps text-[0.68rem] leading-none tracking-[0.06em]", checked ? "text-gold" : "text-ink-2")}>
+              <span aria-hidden="true" className={cx("caps text-[0.66rem] leading-none tracking-[0.06em]", checked ? "text-gold" : d === 0 ? "text-green" : "text-ink-2")}>
                 {scoreShort(n, par)}
               </span>
-              {checked && <span aria-hidden="true" className="absolute inset-x-2 top-1 h-0.5 bg-gold" />}
+              {checked && <span aria-hidden="true" className="absolute right-2 top-2 size-1.5 rounded-full bg-gold" />}
             </button>
           );
         })}
@@ -103,8 +103,9 @@ export function ScoreTiles({ par, value, onChange, max = 12, label = "Score", ho
           aria-expanded={showMore}
           disabled={disabled || (value != null && value > high)}
           onClick={() => setMoreOpen((o) => !o)}
-          className="caps mt-1.5 inline-flex min-h-tap items-center gap-2 rounded-xs px-3 text-[0.82rem] text-ink-2 underline decoration-rule-strong underline-offset-4 is-hover:bg-paper-3 is-hover:text-ink disabled:cursor-not-allowed disabled:no-underline"
+          className="mt-3 inline-flex min-h-tap items-center gap-2 rounded-full bg-tint px-4 text-[0.95rem] font-semibold text-green transition-[background-color,transform] duration-150 is-hover:bg-tint-2 is-pressed:scale-[0.98] disabled:cursor-not-allowed disabled:bg-paper-3 disabled:text-ink-2"
         >
+          <svg viewBox="0 0 16 10" className={cx("h-2.5 w-4 transition-transform", showMore && "rotate-180")} aria-hidden="true"><path d="M2 2 L8 8 L14 2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           {showMore ? `Fewer scores` : `More: ${high + 1} or higher`}
         </button>
       )}

@@ -21,7 +21,7 @@ export function DistributionBar({ types, holes }: { types: Record<ScoreType, num
       summary={holes ? `${holes} holes: ${Math.round(parOrBetter)}% par or better. ${shown.map((t) => `${scoreLabel[t]} ${types[t]}`).join(", ")}.` : "No holes match these filters yet."}
       table={{ columns: ["Score", "Holes", "Share"], rows: SCORE_TYPES.map((t) => [scoreLabel[t], types[t], `${Math.round(pct(t))}%`]) }}
     >
-      <div className="flex h-10 w-full overflow-hidden rounded-sm ring-1 ring-rule" aria-hidden>
+      <div className="flex h-11 w-full overflow-hidden rounded-md" aria-hidden>
         {shown.map((t) => (
           <div key={t} style={{ width: `${pct(t)}%`, background: typeFill[t], opacity: typeOpacity[t] }} className="h-full border-r border-paper last:border-r-0" />
         ))}
@@ -29,7 +29,7 @@ export function DistributionBar({ types, holes }: { types: Record<ScoreType, num
       <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm @lg:grid-cols-4" aria-hidden>
         {SCORE_TYPES.filter((t) => t !== "albatross" || types[t] > 0).map((t) => (
           <li key={t} className="flex items-center gap-2 text-ink">
-            <span className="h-3 w-3 shrink-0 rounded-[2px]" style={{ background: typeFill[t], opacity: typeOpacity[t] }} />
+            <span className="size-3 shrink-0 rounded-full" style={{ background: typeFill[t], opacity: typeOpacity[t] }} />
             <span>{scoreLabel[t]}</span>
             <span className="ml-auto font-numeral tabular-nums text-ink-2">{types[t]}</span>
           </li>
@@ -56,8 +56,8 @@ export function ParTypeBars({ byPar }: { byPar: Record<3 | 4 | 5, number | null>
         {([3, 4, 5] as const).map((p) => (
           <li key={p} className="grid grid-cols-[4.5rem_1fr_3.5rem] items-center gap-3">
             <span className="text-sm text-ink">Par {p}s</span>
-            <span className="relative h-7 rounded-sm bg-paper-3">
-              <span className="absolute inset-y-0 left-0 rounded-sm bg-green" style={{ width: `${((byPar[p] == null ? 0 : Math.max(0, byPar[p]!)) / max) * 100}%` }} />
+            <span className="relative h-7 overflow-hidden rounded-full bg-paper-3">
+              <span className="absolute inset-y-0 left-0 rounded-full bg-green" style={{ width: `${((byPar[p] == null ? 0 : Math.max(0, byPar[p]!)) / max) * 100}%` }} />
             </span>
             <span className="text-right font-numeral text-lg tabular-nums text-ink">{byPar[p] == null ? "—" : fmtToPar(byPar[p]!)}</span>
           </li>
@@ -82,8 +82,8 @@ export function ClubUsage({ clubs }: { clubs: { club: { id: string; name: string
         {sorted.map((c) => (
           <li key={c.club.id} className="grid grid-cols-[3rem_1fr_auto] items-center gap-3 text-sm">
             <span className="font-numeral text-ink">{c.club.short}</span>
-            <span className="relative h-5 rounded-sm bg-paper-3">
-              <span className="absolute inset-y-0 left-0 rounded-sm bg-green-3" style={{ width: `${(c.shots / max) * 100}%` }} />
+            <span className="relative h-5 overflow-hidden rounded-full bg-paper-3">
+              <span className="absolute inset-y-0 left-0 rounded-full bg-green-3" style={{ width: `${(c.shots / max) * 100}%` }} />
             </span>
             <span className="w-28 text-right font-numeral tabular-nums text-ink-2">
               {c.shots}{c.fairwayTries ? ` · ${Math.round((c.fairwayHit / c.fairwayTries) * 100)}% fwy` : ""}
@@ -110,8 +110,8 @@ export function HoleHeat({ rows, courseName }: { rows: { hole: Hole; avgToPar: n
     >
       <ol className="grid grid-cols-6 gap-1.5 @xl:grid-cols-9" aria-hidden>
         {rows.map((r) => (
-          <li key={r.hole.n} className="flex aspect-square flex-col items-center justify-center rounded-sm text-center" style={{ background: r.n ? tint(r.avgToPar) : "transparent", color: r.n ? textOn(r.avgToPar) : "var(--color-ink-2)", outline: r.n ? undefined : "1px dashed var(--color-rule-strong)" }}>
-            <span className="text-[11px] leading-none opacity-80">{r.hole.n}</span>
+          <li key={r.hole.n} className="flex aspect-square flex-col items-center justify-center rounded-md text-center" style={{ background: r.n ? tint(r.avgToPar) : "transparent", color: r.n ? textOn(r.avgToPar) : "var(--color-ink-2)", outline: r.n ? undefined : "1px dashed var(--color-rule-strong)" }}>
+            <span className="text-[11px] leading-none">{r.hole.n}</span>
             <span className="mt-1 font-numeral text-base leading-none tabular-nums">{r.n ? fmtToPar(r.avgToPar) : "·"}</span>
           </li>
         ))}

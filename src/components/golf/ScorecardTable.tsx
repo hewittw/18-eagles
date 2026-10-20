@@ -57,27 +57,27 @@ export function ScorecardTable({ holes, entries, currentHole, onSelectHole, comp
   const totalToPar = toParOf(holes);
 
   return (
-    <div role="region" aria-label={`${caption}${played ? `, ${played} of ${holes.length} holes played` : ""}. Scrolls sideways on small screens.`} tabIndex={0} className="scroll-x rounded-xs border border-ink bg-paper-2">
+    <div role="region" aria-label={`${caption}${played ? `, ${played} of ${holes.length} holes played` : ""}. Scrolls sideways on small screens.`} tabIndex={0} className="scroll-x rounded-xl border border-rule/70 bg-paper-2 shadow-card">
       <table className={cx("w-full min-w-max border-collapse text-center", compact ? "text-[0.95rem]" : "text-[1.02rem]")}>
         <caption className="sr-only">
           {caption}.{total != null ? ` ${total} strokes through ${played} ${played === 1 ? "hole" : "holes"}, ${toParSpoken(totalToPar!)}.` : " No holes played yet."}
         </caption>
         <thead>
-          <tr className="border-b border-ink">
+          <tr className="border-b border-rule">
             <th scope="row" className={rowHead}>Hole</th>
             {cols.map((c) =>
               isSeg(c) ? (
                 <th key={c.key} scope="col" className={cx("caps text-[0.75rem]", segCell, cell, compact ? "min-w-11" : "min-w-14")}>{c.label}</th>
               ) : (
-                <th key={c.n} scope="col" className={cx("relative font-numeral text-[1.1rem] font-semibold tabular-nums", compact ? "min-w-9" : "min-w-11", cur(c) && "bg-paper-3", onSelectHole ? "p-0.5" : cell)}>
-                  {cur(c) && <span aria-hidden="true" className="absolute inset-x-1 top-0 h-[3px] bg-gold-ink" />}
+                <th key={c.n} scope="col" className={cx("relative font-numeral text-[1.1rem] font-semibold tabular-nums", compact ? "min-w-9" : "min-w-11", cur(c) && "bg-tint/60", onSelectHole ? "p-0.5" : cell)}>
+                  {cur(c) && !onSelectHole && <span aria-hidden="true" className="absolute inset-x-1 top-0 h-[3px] rounded-full bg-green" />}
                   {onSelectHole ? (
                     <button
                       type="button"
                       onClick={() => onSelectHole(c.n)}
                       aria-current={cur(c) ? "step" : undefined}
                       aria-label={`Hole ${c.n}${c.name ? `, ${c.name}` : ""}${cur(c) ? ", current hole" : ""}`}
-                      className="grid min-h-tap w-full min-w-9 place-items-center rounded-xs underline decoration-rule-strong underline-offset-4 is-hover:bg-paper-3 is-hover:decoration-ink is-pressed:translate-y-px"
+                      className={cx("grid min-h-tap w-full min-w-tap place-items-center rounded-xs transition-[background-color,transform] duration-150 is-pressed:scale-[0.94]", cur(c) ? "bg-green text-on-green is-hover:bg-green-2" : "text-green is-hover:bg-tint is-pressed:bg-tint-2")}
                     >
                       {c.n}
                     </button>
@@ -98,7 +98,7 @@ export function ScorecardTable({ holes, entries, currentHole, onSelectHole, comp
               <th scope="row" className={rowHead}>Name</th>
               {cols.map((c) =>
                 isSeg(c) ? <td key={c.key} className={segCell} /> : (
-                  <td key={c.n} className={cx("max-w-[5.5rem] px-1 py-1.5 align-top font-serif text-[0.78rem] leading-tight text-ink-2 italic", cur(c) && "bg-paper-3")}>{c.name ?? ""}</td>
+                  <td key={c.n} className={cx("max-w-[5.5rem] px-1 py-1.5 align-top font-serif text-[0.78rem] leading-tight text-ink-2 italic", cur(c) && "bg-tint/60")}>{c.name ?? ""}</td>
                 ),
               )}
             </tr>
@@ -110,18 +110,18 @@ export function ScorecardTable({ holes, entries, currentHole, onSelectHole, comp
                 isSeg(c) ? (
                   <td key={c.key} className={cx(segCell, cell)}>{sum(c.holes, (h) => h.yards)?.toLocaleString("en-US")}</td>
                 ) : (
-                  <td key={c.n} className={cx(cell, cur(c) && "bg-paper-3")}>{c.yards}</td>
+                  <td key={c.n} className={cx(cell, cur(c) && "bg-tint/60")}>{c.yards}</td>
                 ),
               )}
             </tr>
           )}
-          <tr className="tex-linen border-b border-ink">
+          <tr className="border-b border-rule bg-paper-3">
             <th scope="row" className={cx(rowHead, "bg-paper-3!")}>Par</th>
             {cols.map((c) =>
               isSeg(c) ? (
                 <td key={c.key} className={cx(segCell, cell)}>{sum(c.holes, (h) => h.par)}</td>
               ) : (
-                <td key={c.n} className={cx(cell, "font-semibold", cur(c) && "bg-[color-mix(in_srgb,var(--color-ink)_8%,transparent)]")}>{c.par}</td>
+                <td key={c.n} className={cx(cell, "font-semibold", cur(c) && "bg-tint")}>{c.par}</td>
               ),
             )}
           </tr>
@@ -143,7 +143,7 @@ export function ScorecardTable({ holes, entries, currentHole, onSelectHole, comp
                 );
               }
               return (
-                <td key={c.n} className={cx(compact ? "px-0.5 py-1" : "px-1 py-2", cur(c) && "bg-paper-3")}>
+                <td key={c.n} className={cx(compact ? "px-0.5 py-1" : "px-1 py-2", cur(c) && "bg-tint/60")}>
                   <ScoreMark strokes={strokesOf(c)} par={c.par} size={compact ? "sm" : "md"} />
                 </td>
               );
@@ -156,7 +156,7 @@ export function ScorecardTable({ holes, entries, currentHole, onSelectHole, comp
                 isSeg(c) ? (
                   <td key={c.key} className={cx(segCell, cell)}>{sum(c.holes, (h) => entries[h.n]?.putts)}</td>
                 ) : (
-                  <td key={c.n} className={cx(cell, "text-ink-2", cur(c) && "bg-paper-3")}>{entries[c.n]?.putts ?? ""}</td>
+                  <td key={c.n} className={cx(cell, "text-ink-2", cur(c) && "bg-tint/60")}>{entries[c.n]?.putts ?? ""}</td>
                 ),
               )}
             </tr>

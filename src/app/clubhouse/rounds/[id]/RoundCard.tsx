@@ -39,7 +39,7 @@ export function RoundCard({ id }: { id: string }) {
   };
 
   return (
-    <Page className="grid gap-12 md:gap-16">
+    <Page className="grid gap-10 md:gap-14">
       <DocTitle title={`${c.shortName}, ${fmtDate(round.date)}: ${round.totalOnly ?? s.gross} · 18 Eagles`} />
       <PageHeader
         back={{ href: "/clubhouse/rounds", label: "Cards" }}
@@ -55,10 +55,10 @@ export function RoundCard({ id }: { id: string }) {
         </Callout>
       )}
 
-      <section aria-labelledby="totals" className="tex-locker on-green -mx-4 grid gap-8 px-4 py-8 sm:mx-0 sm:rounded-xs sm:px-8 md:grid-cols-[auto_1fr] md:items-end md:gap-14">
+      <section aria-labelledby="totals" className="tex-locker on-green grid gap-7 rounded-2xl px-5 py-7 shadow-card sm:px-8 sm:py-8 md:grid-cols-[auto_1fr] md:items-center md:gap-12">
         <h2 id="totals" className="sr-only">Totals</h2>
         <BigNumber tone="green" face="numeral" label={playing ? "So far" : "Total"} value={String(s.gross)} spoken={`${s.gross} strokes, ${toParText(s.toPar)} to par`} sub={<span className={s.toPar < 0 ? "text-[#f0b3a8]" : ""}>{toParText(s.toPar)} · par {s.par}</span>} />
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {[
             ["Out", s.front != null ? String(s.front) : "—"],
             ["In", s.back != null ? String(s.back) : "—"],
@@ -69,25 +69,30 @@ export function RoundCard({ id }: { id: string }) {
             ["Birdies or better", round.totalOnly != null ? "—" : String(s.types.birdie + s.types.eagle + s.types.albatross)],
             ["Differential", diff ? diff.value.toFixed(1) : "—"],
           ].map(([k, v]) => (
-            <div key={k}>
-              <dt className="caps text-[0.72rem] text-gold">{k}</dt>
-              <dd className="mt-1 font-numeral text-3xl font-semibold tabular-nums text-on-green">{v}</dd>
+            <div key={k} className="min-w-0 rounded-lg bg-white/10 px-3.5 py-3">
+              <dt className="caps truncate text-[0.68rem] text-gold">{k}</dt>
+              <dd className="mt-1 font-numeral text-[1.75rem] font-semibold leading-none tabular-nums text-on-green">{v}</dd>
             </div>
           ))}
         </dl>
       </section>
 
       {story.length > 0 && (
-        <section aria-labelledby="story" className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-14">
+        <section aria-labelledby="story" className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-8">
           <div>
             <SectionHeading id="story" eyebrow="Attested" title="The story of the round" />
-            <ul className="mt-5 grid gap-3 font-serif text-lede text-ink">
-              {story.map((line) => <li key={line} className="border-l-2 border-rule-strong pl-4">{line}</li>)}
+            <ul className="mt-5 divide-y divide-rule/80 overflow-hidden rounded-xl border border-rule/70 bg-paper-2 font-serif text-[1.1rem] leading-snug text-ink shadow-card">
+              {story.map((line) => (
+                <li key={line} className="flex items-start gap-3.5 px-4 py-3.5 sm:px-5">
+                  <span aria-hidden="true" className="mt-[0.45em] size-2 shrink-0 rounded-full bg-green" />
+                  <span className="min-w-0">{line}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="grid content-start gap-4">
             {diff && (
-              <div className="rounded-xs border border-rule bg-paper-2 p-5">
+              <div className="rounded-xl border border-rule/70 bg-paper-2 p-5 shadow-card">
                 <p className="caps text-label text-gold-ink">Toward your index</p>
                 <p className="mt-2 text-ink">
                   Score differential <strong className="font-numeral text-xl tabular-nums">{diff.value.toFixed(1)}</strong>
@@ -106,7 +111,7 @@ export function RoundCard({ id }: { id: string }) {
             {earned.length > 0 && (
               <ul className="flex flex-wrap gap-3" aria-label="Honors from this round">
                 {earned.map((h) => (
-                  <li key={h.id} className="brass-plate rounded-xs px-5 py-3">
+                  <li key={h.id} className="brass-plate rounded-lg px-5 py-3">
                     <p className="font-display text-xl leading-tight">{h.title}</p>
                     <p className="caps mt-1 text-[0.72rem]">{h.detail}</p>
                   </li>
@@ -118,7 +123,7 @@ export function RoundCard({ id }: { id: string }) {
       )}
 
       {round.totalOnly == null && (
-        <section aria-labelledby="card-h">
+        <section aria-labelledby="card-h" className="min-w-0">
           <SectionHeading id="card-h" eyebrow="Hole by hole" title="The card" lede="Select a hole number to change it." />
           <div className="mt-6">
             <ScorecardTable holes={s.holes} entries={round.entries} teeName={round.teeName} caption={`Scorecard, ${c.shortName}, ${fmtDate(round.date)}`} onSelectHole={(n) => router.push(`/clubhouse/rounds/${round.id}/${n}`)} />
@@ -128,16 +133,16 @@ export function RoundCard({ id }: { id: string }) {
 
       <section aria-labelledby="note-h" className="max-w-2xl">
         <SectionHeading id="note-h" title="Your note on the round" level={2} />
-        <div className="mt-4">
+        <div className="mt-4 rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-5">
           <Field label="Note" optional hideLabel hint="It shows on the clubhouse the next time you play.">
             {(a) => <TextArea {...a} voice rows={3} value={round.note} onChange={(e) => setRoundNote(round.id, e.target.value)} placeholder="Lag putting was the difference." />}
           </Field>
         </div>
       </section>
 
-      <section aria-labelledby="manage" className="border-t border-rule pt-6">
+      <section aria-labelledby="manage" className="max-w-2xl">
         <h2 id="manage" className="sr-only">Manage this card</h2>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-xl border border-rule/70 bg-paper-2 p-4 shadow-card sm:p-5">
           <Button variant="danger" onClick={remove}>Delete this card</Button>
           <p className="text-sm text-ink-2">You&apos;ll have a few seconds to undo.</p>
         </div>
