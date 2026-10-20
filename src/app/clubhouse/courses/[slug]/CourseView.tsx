@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect } from "react";
 import { HoleIllustration, PageHeader, ScorecardTable, TeeSwatch, placeOf } from "@/components/golf";
-import { ButtonLink, Callout, Card, SectionHeading } from "@/components/ui";
+import { ActionList, ActionRow, ButtonLink, Callout, Card, SectionHeading } from "@/components/ui";
 import type { CourseImage } from "@/lib/course-types";
 import { useClub } from "@/lib/hooks";
 import { nextUnplayed } from "@/lib/round-actions";
@@ -48,7 +47,7 @@ export function CourseView({ slug }: { slug: string }) {
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(20rem,1fr)] lg:gap-10">
         {/* The hero: the photograph, or a drawing of the signature hole */}
         <div className="min-w-0">
-          <figure className="min-w-0 border border-rule bg-paper-2">
+          <figure className="min-w-0 overflow-hidden rounded-2xl border border-rule/70 bg-paper-2 shadow-card">
             {c.hero ? (
               <div className="relative aspect-[3/2] overflow-hidden bg-paper-3">
                 <Image src={c.hero.src} alt={c.hero.alt} fill priority sizes="(max-width: 1024px) 100vw, 60vw" className="object-cover" />
@@ -56,7 +55,7 @@ export function CourseView({ slug }: { slug: string }) {
             ) : (
               <HoleIllustration hole={sig} seed={c.slug} orientation="landscape" className="block h-auto w-full" />
             )}
-            <figcaption className="caps flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-rule px-3 py-2 text-[0.72rem] text-ink-2">
+            <figcaption className="caps flex flex-wrap justify-between gap-x-4 gap-y-1 px-4 py-2.5 text-[0.72rem] text-ink-2">
               <span>
                 {c.hero ? `${c.shortName} · photograph` : `Hole ${sig.n}${sig.name ? ` · ${sig.name}` : ""} · drawn, not surveyed`}
               </span>
@@ -68,7 +67,7 @@ export function CourseView({ slug }: { slug: string }) {
             <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3" role="list" aria-label="More photographs">
               {c.gallery.map((g) => (
                 <li key={g.src} className="min-w-0">
-                  <figure className="border border-rule bg-paper-2">
+                  <figure className="overflow-hidden rounded-lg border border-rule/70 bg-paper-2">
                     <div className="relative aspect-[4/3] overflow-hidden bg-paper-3">
                       <Image src={g.src} alt={g.alt} fill sizes="(max-width: 640px) 50vw, 20vw" className="object-cover" />
                     </div>
@@ -78,13 +77,15 @@ export function CourseView({ slug }: { slug: string }) {
             </ul>
           )}
 
-          <dl className="mt-8 grid grid-cols-1 border-t border-ink sm:grid-cols-2">
+          <p className="caps mt-8 px-1 text-label text-ink-2">About the course</p>
+          <dl className="mt-2 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-rule/70 bg-rule/70 shadow-card sm:grid-cols-2">
             {facts.map(([k, v]) => (
-              <div key={k} className="grid grid-cols-[7rem_1fr] gap-3 border-b border-rule py-3 sm:pr-4">
-                <dt className="caps pt-0.5 text-label text-ink-2">{k}</dt>
-                <dd className="min-w-0 text-ink">{v}</dd>
+              <div key={k} className="flex min-h-13 items-baseline justify-between gap-4 bg-paper-2 px-4 py-3">
+                <dt className="shrink-0 text-ink">{k}</dt>
+                <dd className="min-w-0 text-right text-ink-2">{v}</dd>
               </div>
             ))}
+            {facts.length % 2 === 1 && <div aria-hidden="true" className="hidden bg-paper-2 sm:block" />}
           </dl>
         </div>
 
@@ -93,25 +94,23 @@ export function CourseView({ slug }: { slug: string }) {
           <section aria-labelledby="record-h">
             <SectionHeading id="record-h" title="Your record here" level={2} />
             {rec.rounds === 0 ? (
-              <p className="mt-4 font-serif text-lede text-ink-2">Your first round here. The card below is ready when you are.</p>
+              <p className="mt-3 font-serif text-lede text-ink-2">Your first round here. The card below is ready when you are.</p>
             ) : (
               <>
-                <dl className="mt-4 grid grid-cols-3 gap-2">
+                <dl className="mt-4 grid grid-cols-3 divide-x divide-rule/80 overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card">
                   <Stat label="Rounds" value={String(rec.rounds)} />
                   <Stat label="Best" value={rec.best != null ? String(rec.best) : rec.bestNine != null ? `${rec.bestNine}` : "—"} sub={rec.best == null && rec.bestNine != null ? "for 9" : undefined} />
                   <Stat label="Average" value={rec.average != null ? rec.average.toFixed(1) : "—"} sub={rec.average == null ? "18 holes" : undefined} />
                 </dl>
                 {rec.last && (
-                  <div className="mt-4 border-l-2 border-link pl-4">
-                    <p className="caps text-label text-ink-2">
-                      Last time · <Link className="link normal-case tracking-normal" href={`/clubhouse/rounds/${rec.last.id}`}>{formatDay(rec.last.date)}</Link>
-                    </p>
-                    {rec.last.note ? (
-                      <p className="mt-1 font-serif text-[1.1rem] italic leading-snug text-link">“{rec.last.note}”</p>
-                    ) : (
-                      <p className="mt-1 text-[0.95rem] text-ink-2">No note on that card.</p>
-                    )}
-                  </div>
+                  <ActionList className="mt-3" label="Your last card here">
+                    <ActionRow
+                      href={`/clubhouse/rounds/${rec.last.id}`}
+                      icon="cards"
+                      title={`Last time · ${formatDay(rec.last.date)}`}
+                      detail={rec.last.note ? <span className="font-serif italic">“{rec.last.note}”</span> : "No note on that card"}
+                    />
+                  </ActionList>
                 )}
               </>
             )}
@@ -121,13 +120,18 @@ export function CourseView({ slug }: { slug: string }) {
             <h2 id="teeoff-h" className="font-display text-title text-ink">Tee off</h2>
             <p className="mt-1 text-[0.95rem] text-ink-2">Choose your tees, then score as you play. Every tap is saved.</p>
             {active && (
-              <Callout className="mt-4" title={active.courseSlug === c.slug ? "You have a round going here" : "A round is already in progress"}>
-                {active.courseSlug === c.slug ? "Pick up where you left off, or start a new card below." : `You started a card at ${activeCourse?.shortName ?? "another course"} on ${formatDay(active.date)}.`}{" "}
-                {activeCourse && (
-                  <Link className="link font-medium" href={`/clubhouse/rounds/${active.id}/${nextUnplayed(active, activeCourse)}`}>
-                    Resume at hole {nextUnplayed(active, activeCourse)}
-                  </Link>
-                )}
+              <Callout
+                className="mt-4"
+                title={active.courseSlug === c.slug ? "You have a round going here" : "A round is already in progress"}
+                action={
+                  activeCourse && (
+                    <ButtonLink href={`/clubhouse/rounds/${active.id}/${nextUnplayed(active, activeCourse)}`} variant="secondary" size="sm">
+                      Resume at hole {nextUnplayed(active, activeCourse)}
+                    </ButtonLink>
+                  )
+                }
+              >
+                {active.courseSlug === c.slug ? "Pick up where you left off, or start a new card below." : `You started a card at ${activeCourse?.shortName ?? "another course"} on ${formatDay(active.date)}.`}
               </Callout>
             )}
             <div className="mt-5">
@@ -151,12 +155,12 @@ export function CourseView({ slug }: { slug: string }) {
         </ul>
       </section>
 
-      <details className="group mt-10 max-w-measure border-t border-rule pt-2">
-        <summary className="caps flex min-h-tap cursor-pointer list-none items-center gap-2 text-label text-ink-2 is-hover:text-ink [&::-webkit-details-marker]:hidden">
-          <svg viewBox="0 0 10 10" className="size-2.5 transition-transform group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true"><path d="M3 1 L7 5 L3 9" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>
+      <details className="group mt-10 max-w-measure overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card">
+        <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-4 font-semibold text-ink -outline-offset-2 is-hover:bg-paper-3 sm:px-5 [&::-webkit-details-marker]:hidden">
           About this data
+          <svg viewBox="0 0 10 16" className="h-4 w-2.5 shrink-0 text-rule-strong transition-transform group-open:rotate-90 motion-reduce:transition-none" aria-hidden="true"><path d="M2 2 L8 8 L2 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </summary>
-        <div className="grid gap-4 pb-4 pt-2 text-[0.95rem] leading-relaxed text-ink-2">
+        <div className="grid gap-4 border-t border-rule/80 px-4 pb-5 pt-4 text-[0.95rem] leading-relaxed text-ink-2 sm:px-5">
           <p>{c.dataNotes}</p>
           {estimated.length > 0 && (
             <p>
@@ -171,7 +175,7 @@ export function CourseView({ slug }: { slug: string }) {
                 {photos.map((p) => (
                   <li key={p.src}>
                     {p.credit}, {p.license}.{" "}
-                    <a className="link" href={p.sourceUrl} target="_blank" rel="noreferrer">Source<span className="sr-only"> for the photo by {p.credit} (opens in a new tab)</span></a>
+                    <a className="link inline-flex min-h-6 items-center" href={p.sourceUrl} target="_blank" rel="noreferrer">Source<span className="sr-only"> for the photo by {p.credit} (opens in a new tab)</span></a>
                   </li>
                 ))}
               </ul>
@@ -183,7 +187,7 @@ export function CourseView({ slug }: { slug: string }) {
               <ul className="mt-1 grid gap-1" role="list">
                 {c.sources.map((s) => (
                   <li key={s} className="min-w-0 break-words">
-                    <a className="link" href={s} target="_blank" rel="noreferrer">{s.replace(/^https?:\/\/(www\.)?/, "")}</a>
+                    <a className="link inline-flex min-h-6 items-center" href={s} target="_blank" rel="noreferrer">{s.replace(/^https?:\/\/(www\.)?/, "")}</a>
                   </li>
                 ))}
               </ul>
@@ -197,7 +201,7 @@ export function CourseView({ slug }: { slug: string }) {
 
 function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="tile flex flex-col items-center px-2 py-3 text-center">
+    <div className="flex flex-col items-center px-2 py-3.5 text-center">
       <dt className="caps text-label text-ink-2">{label}</dt>
       <dd className="mt-1 font-numeral text-[2.2rem] font-semibold leading-none tabular-nums text-ink">
         {value}

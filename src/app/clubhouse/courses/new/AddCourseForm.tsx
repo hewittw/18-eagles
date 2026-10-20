@@ -80,11 +80,15 @@ export function AddCourseForm() {
 
       <form ref={formRef} noValidate onSubmit={onSubmit} className="mt-8 grid max-w-xl gap-7" aria-describedby={errorCount ? "c-summary" : undefined}>
         {restored && !prefill && (
-          <Callout title="We kept what you typed">
-            Your unsaved course is just as you left it.{" "}
-            <button type="button" className="link font-medium" onClick={() => { clearDraft(); setSubmitted(false); }}>
-              Start over with a blank form
-            </button>
+          <Callout
+            title="We kept what you typed"
+            action={
+              <Button variant="secondary" size="sm" onClick={() => { clearDraft(); setSubmitted(false); }}>
+                Start over with a blank form
+              </Button>
+            }
+          >
+            Your unsaved course is just as you left it.
           </Callout>
         )}
 
@@ -112,9 +116,9 @@ export function AddCourseForm() {
           {errors.pars && (
             <p id="c-pars-err" className="mt-2 flex items-start gap-2 text-[0.95rem] font-medium text-error"><ErrorIcon /><span>{errors.pars}</span></p>
           )}
-          <ol className="mt-3 grid gap-1 border-t border-rule pt-2" role="list">
+          <ol className="mt-3 divide-y divide-rule/80 overflow-hidden rounded-xl border border-rule/70 bg-paper-2 shadow-card" role="list">
             {d.pars.map((p, i) => (
-              <li key={i} className={`grid grid-cols-[3.25rem_1fr] items-center gap-3 ${i === 9 ? "mt-2 border-t border-ink pt-3" : ""}`}>
+              <li key={i} className={`grid grid-cols-[3.25rem_1fr] items-center gap-3 px-4 py-2 ${i === 9 ? "border-t-4! border-t-paper-3!" : ""}`}>
                 <span aria-hidden="true" className="font-numeral text-[1.15rem] font-semibold tabular-nums text-ink">
                   <span className="caps mr-1 text-[0.72rem] text-ink-2">No.</span>{i + 1}
                 </span>
@@ -122,7 +126,7 @@ export function AddCourseForm() {
               </li>
             ))}
           </ol>
-          <p className="caps mt-3 text-label text-ink" aria-live="polite">Par {par} for {d.pars.length} holes</p>
+          <p className="caps mt-3 px-1 text-label text-ink" aria-live="polite">Par {par} for {d.pars.length} holes</p>
         </fieldset>
 
         <Field id={ID.teeName} label="Tees" hint="The tees you play, as the card names them, like “White” or “Blue”." error={errors.teeName}>
