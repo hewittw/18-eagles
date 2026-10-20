@@ -15,7 +15,7 @@ export default function Flows() {
   const routes = md.match(/## Routes[^\n]*\n([\s\S]*?)\n## /)?.[1] ?? "";
   const rows = routes.split("\n").filter((l) => l.startsWith("| `")).map((l) => l.split("|").slice(1, -1).map((c) => c.trim()));
   const states = md.split("## States and errors we design for")[1] ?? "";
-  const sizes: Record<number, [number, number]> = { 0: [421, 774], 1: [1119, 1412], 2: [1250, 703] };
+  const sizes: Record<number, [number, number]> = { 0: [791, 1125], 1: [1119, 1412], 2: [1539, 736] };
 
   return (
     <>
@@ -30,18 +30,18 @@ export default function Flows() {
           <section key={d.title} aria-labelledby={`flow-${i}`} className="mt-16">
             <h2 id={`flow-${i}`} className="border-t border-rule-strong pt-6 font-display text-3xl text-ink">{d.title.replace(/^\d+ · /, "")}</h2>
             <div className="mt-6 overflow-x-auto rounded-md border border-rule bg-[#ffffff] p-4 md:p-8">
-              <Image src={d.src} alt={`Flow diagram: ${d.title}. The same steps are listed in the Mermaid source below.`} width={sizes[i][0]} height={sizes[i][1]} className="mx-auto h-auto w-full" style={{ maxWidth: sizes[i][0] * 1.1 }} unoptimized />
+              <Image loading="eager" src={d.src} alt={`Flow diagram: ${d.title}. The same steps are listed in the Mermaid source below.`} width={sizes[i][0]} height={sizes[i][1]} className="mx-auto h-auto w-full" style={{ maxWidth: sizes[i][0] * 1.1 }} unoptimized />
             </div>
             <details className="mt-3">
-              <summary className="cursor-pointer rounded-sm text-sm text-ink-2 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus">Mermaid source (text version)</summary>
-              <pre className="mt-3 overflow-x-auto rounded-md bg-paper-3 p-4 text-xs leading-relaxed text-ink">{d.code}</pre>
+              <summary className="cursor-pointer rounded-sm py-1 text-sm text-ink-2 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus">Mermaid source (text version)</summary>
+              <pre tabIndex={0} role="region" aria-label={`Mermaid source: ${d.title}`} className="mt-3 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus rounded-md bg-paper-3 p-4 text-xs leading-relaxed text-ink">{d.code}</pre>
             </details>
           </section>
         ))}
 
         <section aria-labelledby="routes" className="mt-16">
           <h2 id="routes" className="border-t border-rule-strong pt-6 font-display text-3xl text-ink">A page for each step</h2>
-          <div className="mt-6 overflow-x-auto">
+          <div className="mt-6 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus" role="region" aria-label="Routes (scrolls sideways)" tabIndex={0}>
             <table className="w-full min-w-[600px] border-collapse text-left text-[15px]">
               <thead>
                 <tr className="border-b border-rule-strong font-numeral text-xs uppercase tracking-[0.14em] text-ink-2">

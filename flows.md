@@ -7,8 +7,10 @@ A personal golf round journal. Everything is saved on this device (localStorage)
 
 ## The three flows
 
-1. **First visit:** I open 18 Eagles → the big handicap space asks one question (enter my index, or earn one with
-   3 rounds) and my goal (Break 100 / 90 / 80 / scratch) → my home course is already chosen → I tap **Tee off** → I'm on hole 1.
+1. **First visit:** I open 18 Eagles → three quick questions on the Clubhouse itself, each saved as I answer: my
+   Handicap Index (or "Not yet: I'll earn one"), **where I usually play** (pick my home course from photo tiles, or add it),
+   and **what's in my bag** (a standard set is filled in; I tap clubs out or in) → the Tee off card opens at *my* course
+   with its tees → I tap **Tee off** → I'm on hole 1. (Just looking? "Explore a sample season" fills it with 13 rounds.)
 2. **Main task:** I choose a course → I pick my tees → I score each hole (score tiles, putts, fairway, penalties,
    clubs, a note) → after the last hole I see my card, the story of the round, and what changed.
 3. **Coming back:** I open 18 Eagles → I see my handicap and how it moved, and any unfinished round to resume → "Last time at
@@ -17,15 +19,19 @@ A personal golf round journal. Everything is saved on this device (localStorage)
 ### 1 · First visit (nothing saved)
 ```mermaid
 flowchart TD
-  A0([Open /clubhouse]) --> A1{"Know your<br/>Handicap Index?"}
-  A1 -- "Yes" --> A2["Type it in the hero<br/>(saved as entered)"]
-  A1 -- "Not yet" --> A3["Earn one:<br/>0 of 3 rounds"]
-  A2 --> A4["Pick a goal:<br/>Break 100 · 90 · 80 · Scratch"]
-  A3 --> A4
-  A4 --> A5["Tee off card: home course preselected,<br/>tees remembered, bag pre-filled"]
+  A0([Open /clubhouse]) --> A1{"Step 1 of 3<br/>Know your Handicap Index?"}
+  A1 -- "Yes" --> A2["Type it in the hero<br/>(error next to the field if it's not a number)"]
+  A1 -- "Not yet" --> A3["Earn one:<br/>0 of 3 cards"]
+  A0 -- "Just looking" --> D1(["Explore a sample season<br/>13 rounds, stats, honors"])
+  A2 --> B1["Step 2 of 3 · Where do you usually play?<br/>search · photo tiles · pick one"]
+  A3 --> B1
+  B1 -- "Not listed" --> B2([Add a course form])
+  B1 -- "Make it my home course" --> B3["Step 3 of 3 · What's in your bag?<br/>standard set filled in · tap clubs out or in"]
+  B3 -- "That's my bag" --> A5["Tee off card at my home course<br/>tees · All 18 / Front 9 / Back 9"]
   A5 -- "Tee off" --> A6([Hole 1])
-  A5 -- "Log a round I've played" --> A7([Log a round form])
-  A5 -- "Another course" --> A8([Courses])
+  A5 -- "Log a past round" --> A7([Log a round form])
+  A5 -- "Choose another course" --> A8([Courses])
+  A5 -.-> G1["Optional: what are you playing for?<br/>Break 100 · 90 · 80 · Scratch"]
 ```
 
 ### 2 · Main task: play a round
@@ -56,6 +62,7 @@ flowchart TD
   R1 --> R2{"Unfinished round?"}
   R2 -- "Yes" --> R3["Resume at the hole I left"] --> R6([Hole screen])
   R2 -- "No" --> R4["Last time at Torrey South: 88. Beat it.<br/>last round's note · goal progress · new honors"]
+  R4 --> C1["Your challenge for the next round<br/>last round: met or missed · streak"]
   R4 -- "Tee off again" --> R5([The course, tees remembered])
   R4 --> T1["Stats: breakdowns + filters over time"]
   R4 --> H1["Cards: every round"]
@@ -77,7 +84,7 @@ flowchart TD
 | `/clubhouse/locker` | The bag, index and goal, honors, export/reset | Locker |
 
 ## States and errors we design for
-- **Empty:** no rounds → the hero asks, the tee off card is ready. No blank stats: they show "after 1 round" previews with the goal.
+- **Empty:** no rounds → the hero asks three setup questions (index, home course, bag), then the tee off card opens at that course. No blank stats: they show "after 1 round" previews with the goal.
 - **One round:** the stats are honest ("1 round") and the handicap tracker reads 1 of 3.
 - **In progress:** autosaved on every tap; resume from the clubhouse; the hole screen remembers the last hole.
 - **9 holes:** front or back nine; 9-hole scores pair up toward the index.
