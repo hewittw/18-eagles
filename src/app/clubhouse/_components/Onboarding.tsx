@@ -22,9 +22,9 @@ export function setupStep(store: ReturnType<typeof useClub>["store"]) {
 }
 
 /** Move focus to the next question's heading once it replaces the one just answered. */
-export function focusHeading(id: string) {
+export function focusHeading(...ids: string[]) {
   requestAnimationFrame(() => {
-    const h = document.getElementById(id);
+    const h = ids.map((id) => document.getElementById(id)).find(Boolean);
     if (!h) return;
     h.tabIndex = -1;
     h.style.outline = "none";
@@ -32,8 +32,22 @@ export function focusHeading(id: string) {
   });
 }
 
+/** Reopen an answered step. Later answers are kept, so going back never loses anything. */
+let lastHome: string | null = null; // the pick before "Back", so the course step reopens with it selected
+
+export function reopenStep(i: number, homeCourse?: string | null) {
+  if (homeCourse) lastHome = homeCourse;
+  if (i === 0) {
+    patchProfile({ welcomedAt: null });
+    focusHeading("index-q");
+  } else if (i === 1) {
+    patchProfile({ homeCourse: null });
+    focusHeading("setup-home");
+  }
+}
+
 /** Three steps as a row of numbered pills: done ones ticked, the current one filled. For the green hero. */
-export function SetupSteps({ step }: { step: number }) {
+export function SetupSteps({ step, homeCourse }: { step: number; homeCourse?: string | null }) {
   return (
     <div className="min-w-0 justify-self-start md:justify-self-end">
       <p className="caps text-label text-gold">Set up your locker</p>
@@ -46,8 +60,17 @@ export function SetupSteps({ step }: { step: number }) {
               <span className={`grid size-8 shrink-0 place-items-center rounded-full font-numeral text-base font-semibold ${done ? "bg-gold text-green-3" : now ? "bg-on-green text-green-3" : "border border-white/50 text-on-green"}`} aria-hidden="true">
                 {done ? "✓" : i + 1}
               </span>
-              <span className="text-[1rem] font-semibold text-on-green">{label}</span>
-              <span className="sr-only">{done ? ", done" : now ? ", current step" : ", to do"}</span>
+              {done ? (
+                <button type="button" onClick={() => reopenStep(i, homeCourse)} className="-my-2 flex min-h-tap flex-1 items-center justify-between gap-3 rounded-md px-2 text-left text-[1rem] font-semibold text-on-green transition-colors is-hover:bg-white/10">
+                  <span>{label}<span className="sr-only">, done</span></span>
+                  <span className="text-[0.85rem] font-medium text-paper-3 underline-offset-2">Change<span className="sr-only"> {label.toLowerCase()}</span></span>
+                </button>
+              ) : (
+                <>
+                  <span className="text-[1rem] font-semibold text-on-green">{label}</span>
+                  <span className="sr-only">{now ? ", current step" : ", to do"}</span>
+                </>
+              )}
             </li>
           );
         })}
@@ -62,11 +85,21 @@ export function SetupSteps({ step }: { step: number }) {
   );
 }
 
+function BackButton({ onClick, children }: { onClick: () => void; children: string }) {
+  return (
+    <button type="button" onClick={onClick} className="-ml-1 mb-4 inline-flex min-h-tap items-center gap-1.5 rounded-full bg-tint py-1 pl-2.5 pr-4 text-[0.95rem] font-semibold text-green transition-[background-color,transform] duration-150 is-hover:bg-tint-2 is-pressed:scale-[0.98]">
+      <svg viewBox="0 0 10 16" className="h-4 w-2.5 shrink-0" aria-hidden="true"><path d="M8 2 L2 8 L8 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      {children}
+    </button>
+  );
+}
+
 // ───────────────────────── step 2: the home course ─────────────────────────
 export function HomeCourseStep() {
-  const { courses } = useClub();
+  const { courses, store } = useClub();
   const [q, setQ] = useState("");
-  const [pick, setPick] = useState<string | null>(null);
+  // Coming back to this step keeps the earlier pick (it's cleared from the profile, not forgotten here).
+  const [pick, setPick] = useState<string | null>(() => store.profile.homeCourse ?? lastHome);
   const [error, setError] = useState<string | undefined>();
   const [all, setAll] = useState(false);
   const list = useMemo(() => {
@@ -88,6 +121,7 @@ export function HomeCourseStep() {
   return (
     <section aria-labelledby="setup-home" className="grid gap-6">
       <div>
+        <BackButton onClick={() => reopenStep(0)}>Back to your index</BackButton>
         <p className="caps text-label text-gold-ink">Step 2 of 3</p>
         <h2 id="setup-home" className="mt-1 font-display text-display-2 text-ink">Where do you usually play?</h2>
         <p className="mt-3 max-w-measure font-serif text-lede text-ink-2">Your home course opens ready to play each time, with its tees, pars and yardages. You can play any course whenever you like.</p>
@@ -185,6 +219,7 @@ export function BagStep() {
   return (
     <section aria-labelledby="setup-bag" className="grid gap-6">
       <div>
+        <BackButton onClick={() => reopenStep(1, store.profile.homeCourse)}>Back to your home course</BackButton>
         <p className="caps text-label text-gold-ink">Step 3 of 3</p>
         <h2 id="setup-bag" className="mt-1 font-display text-display-2 text-ink">What&apos;s in your bag?</h2>
         <p className="mt-3 max-w-measure font-serif text-lede text-ink-2">These become the club buttons on every hole: tap the club you hit, and the shots count your score. A standard set is filled in; tap a club to take it out or put it in.</p>
@@ -219,7 +254,6 @@ export function BagStep() {
       {error && <p className="font-medium text-error" role="alert">{error}</p>}
       <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 -mx-4 flex flex-wrap items-center gap-3 border-t border-rule bg-paper/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
         <Button variant="primary" size="lg" onClick={save} className="max-sm:flex-1">That&apos;s my bag</Button>
-        <Button variant="quiet" onClick={() => { patchProfile({ homeCourse: null }); focusHeading("setup-home"); }}>Change home course</Button>
       </div>
     </section>
   );

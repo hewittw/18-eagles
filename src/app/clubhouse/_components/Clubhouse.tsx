@@ -240,7 +240,7 @@ function Hero({ store, welcomed, step, handicap, done, photo }: { store: Store; 
             </p>
           )}
         </div>
-        {!welcomed ? <IndexQuestion /> : step < 3 ? <SetupSteps step={step} /> : <MiniBoard done={done} />}
+        {!welcomed ? <IndexQuestion /> : step < 3 ? <SetupSteps step={step} homeCourse={store.profile.homeCourse} /> : <MiniBoard done={done} />}
       </div>
     </section>
   );
@@ -283,7 +283,9 @@ function Tracker({ n }: { n: number }) {
 
 /** The first visit's one question, asked in the hero itself (no wizard, no tour). */
 function IndexQuestion() {
-  const [raw, setRaw] = useState("");
+  const { store } = useClub();
+  // Coming back with "Back to your index" shows what was typed before.
+  const [raw, setRaw] = useState(store.profile.enteredIndex != null ? formatIndex(store.profile.enteredIndex) : "");
   const [error, setError] = useState<string | undefined>();
   const input = useRef<HTMLInputElement>(null);
   const submit = (e: FormEvent) => {
@@ -295,14 +297,14 @@ function IndexQuestion() {
       return;
     }
     patchProfile({ enteredIndex: r.value, welcomedAt: Date.now() });
-    focusHeading("setup-home");
+    focusHeading("setup-home", "setup-bag", "tee-off");
   };
   return (
     <Card padding="lg" className="w-full max-w-md justify-self-start md:justify-self-end">
       <form onSubmit={submit} noValidate className="grid gap-5">
         <div>
           <p className="caps text-label text-gold-ink">Step 1 of 3</p>
-          <h2 className="mt-1 font-serif text-xl font-bold text-ink">Do you have a Handicap Index?</h2>
+          <h2 id="index-q" className="mt-1 font-serif text-xl font-bold text-ink">Do you have a Handicap Index?</h2>
           <p className="mt-1 text-ink-2">We&apos;ll use it until your own cards take over.</p>
         </div>
         <Field label="Your Handicap Index" hint="Like 12.4. A plus handicap is written +1.2." error={error}>
@@ -310,7 +312,7 @@ function IndexQuestion() {
         </Field>
         <Button type="submit" variant="primary" size="lg" block>Use this index</Button>
         <div className="border-t border-rule pt-4">
-          <Button type="button" variant="secondary" block onClick={() => { patchProfile({ enteredIndex: null, welcomedAt: Date.now() }); focusHeading("setup-home"); }}>
+          <Button type="button" variant="secondary" block onClick={() => { patchProfile({ enteredIndex: null, welcomedAt: Date.now() }); focusHeading("setup-home", "setup-bag", "tee-off"); }}>
             Not yet: I&apos;ll earn one
           </Button>
           <p className="mt-2 text-center text-sm text-ink-2">It takes three cards. Your first can be today.</p>
