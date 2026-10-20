@@ -44,9 +44,9 @@ export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md"
   const atMin = value == null || value <= min;
   const atMax = value != null && value >= max;
   const b =
-    "grid shrink-0 place-items-center rounded-xs border border-ink bg-paper-2 font-numeral font-semibold leading-none text-ink transition-[background-color,transform] duration-150 " +
-    "is-hover:bg-paper-3 is-pressed:translate-y-px is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green " +
-    "disabled:cursor-not-allowed disabled:translate-y-0 disabled:border-dashed disabled:border-rule-strong disabled:bg-transparent disabled:text-ink-2";
+    "grid shrink-0 place-items-center rounded-full border border-green/25 bg-tint font-numeral font-semibold leading-none text-green transition-[background-color,transform] duration-150 " +
+    "is-hover:bg-tint-2 is-pressed:scale-95 is-pressed:border-green is-pressed:bg-green is-pressed:text-on-green " +
+    "disabled:cursor-not-allowed disabled:scale-100 disabled:border-rule disabled:bg-paper-3 disabled:text-ink-2";
   return (
     <div className="min-w-0">
       <p id={`${id}-l`} className="text-[1rem] font-medium text-ink">{label}</p>
@@ -57,7 +57,7 @@ export function Stepper({ label, value, onChange, min = 0, max = 99, size = "md"
         </button>
         <span
           className={cx(
-            "tile grid min-w-[4.25rem] place-items-center px-3 font-numeral font-semibold leading-none tabular-nums",
+            "grid min-w-[4.25rem] place-items-center rounded-sm bg-paper-3 px-3 font-numeral font-semibold leading-none tabular-nums",
             size === "lg" ? "text-[2.2rem]" : "text-[1.7rem]",
             value == null && "text-ink-2",
           )}
